@@ -35,32 +35,26 @@
                 android:orientation="vertical"
                 android:padding="@dimen/space_md">
 
-                <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/toggleVehicle"
+                <!-- Your vehicle (Step 10): chips are created in code from My Vehicles -->
+                <TextView
+                    style="@style/Widget.ParkEase.Text.Overline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/booking_your_vehicle" />
+
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_sm"
-                    app:selectionRequired="true"
-                    app:singleSelection="true">
+                    android:layout_marginBottom="@dimen/space_xs"
+                    android:scrollbars="none">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnVehicleCar"
-                        style="@style/Widget.ParkEase.Button.Secondary.Small"
-                        android:layout_width="0dp"
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipVehicles"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/vehicle_car"
-                        app:icon="@drawable/ic_car" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnVehicleBike"
-                        style="@style/Widget.ParkEase.Button.Secondary.Small"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/vehicle_bike"
-                        app:icon="@drawable/ic_bike" />
-                </com.google.android.material.button.MaterialButtonToggleGroup>
+                        app:singleLine="true"
+                        app:singleSelection="true" />
+                </HorizontalScrollView>
 
                 <LinearLayout
                     android:layout_width="match_parent"

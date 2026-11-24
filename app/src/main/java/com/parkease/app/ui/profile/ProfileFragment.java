@@ -29,6 +29,7 @@ import com.parkease.app.repository.DataCallback;
 import com.parkease.app.repository.UserRepository;
 import com.parkease.app.ui.common.AppNavigator;
 import com.parkease.app.ui.common.LogoutHelper;
+import com.parkease.app.ui.customer.vehicle.VehiclesActivity;
 import com.parkease.app.utils.Constants;
 import com.parkease.app.utils.ImageUtils;
 import com.parkease.app.utils.InsetsHelper;
@@ -88,6 +89,8 @@ public class ProfileFragment extends Fragment {
         binding.header.tvHeaderTitle.setText(R.string.profile_title);
         binding.header.tvHeaderSubtitle.setText(R.string.profile_subtitle);
 
+        setupMenuRow(binding.menuVehicles, R.drawable.ic_car, R.string.vehicles_title, R.string.vehicles_menu_sub,
+                v -> startActivity(new Intent(requireContext(), VehiclesActivity.class)));
         setupMenuRow(binding.menuEdit, R.drawable.ic_edit, R.string.profile_edit, R.string.profile_edit_sub,
                 v -> startActivity(new Intent(requireContext(), EditProfileActivity.class)));
         setupMenuRow(binding.menuPassword, R.drawable.ic_key, R.string.profile_change_password,

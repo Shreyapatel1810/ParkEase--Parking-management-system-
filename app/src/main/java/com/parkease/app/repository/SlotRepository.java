@@ -19,6 +19,7 @@ import com.parkease.app.models.ParkingLocation;
 import com.parkease.app.models.ParkingSlot;
 import com.parkease.app.models.ScheduleBlock;
 import com.parkease.app.models.TimeWindow;
+import com.parkease.app.models.Vehicle;
 import com.parkease.app.ui.components.ParkingSlotView;
 import com.parkease.app.utils.Constants;
 import com.parkease.app.utils.FirebaseErrorMapper;
@@ -145,7 +146,8 @@ public class SlotRepository {
      *    server make the final decision, so conflicting bookings are impossible.
      */
     public void holdSlot(@NonNull ParkingLocation location, @NonNull ParkingSlot slot,
-                         @NonNull TimeWindow window, @NonNull DataCallback<Booking> callback) {
+                         @NonNull TimeWindow window, @NonNull Vehicle vehicle,
+                         @NonNull DataCallback<Booking> callback) {
         if (!FirebaseHelper.isConfigured(context)) {
             callback.onError(context.getString(R.string.err_firebase_not_configured));
             return;
@@ -168,6 +170,11 @@ public class SlotRepository {
             callback.onError(context.getString(R.string.slot_err_maintenance));
             return;
         }
+        // A bike can't take a car slot (and cars/SUVs can't take bike slots)
+        if (!vehicle.getSlotType().equals(slot.getVehicleType())) {
+            callback.onError(context.getString(R.string.err_generic));
+            return;
+        }
 
         String locationId = location.getId();
         // Step 1: read the very latest schedule from the server
@@ -182,14 +189,14 @@ public class SlotRepository {
                         }
                     }
                     // Step 2: atomic write, verified by the server rules
-                    writeHold(me, location, slot, window, callback);
+                    writeHold(me, location, slot, window, vehicle, callback);
                 })
                 .addOnFailureListener(e -> callback.onError(FirebaseErrorMapper.fromDatabase(context, e)));
     }
 
     private void writeHold(@NonNull FirebaseUser me, @NonNull ParkingLocation location,
                            @NonNull ParkingSlot slot, @NonNull TimeWindow window,
-                           @NonNull DataCallback<Booking> callback) {
+                           @NonNull Vehicle vehicle, @NonNull DataCallback<Booking> callback) {
         String bookingId = db().child(Constants.NODE_BOOKINGS).push().getKey();
         if (bookingId == null) {
             callback.onError(context.getString(R.string.err_generic));
@@ -213,8 +220,11 @@ public class SlotRepository {
             updates.put(base + key, block);
         }
 
-        // The pending booking (vehicle and payment are added in the next step)
+        // The pending booking (payment confirms it in the next step).
+        // The rules check that vehicleId really is one of MY vehicles with this number.
         Map<String, Object> booking = new HashMap<>();
+        booking.put("vehicleId", vehicle.getId());
+        booking.put("vehicleNumber", vehicle.getRegistrationNumber());
         booking.put("bookingCode", code);
         booking.put("userId", me.getUid());
         booking.put("userName", me.getDisplayName() == null ? "" : me.getDisplayName());
@@ -222,7 +232,7 @@ public class SlotRepository {
         booking.put("locationName", location.getName());
         booking.put("slotId", slot.getId());
         booking.put("slotNumber", slot.getSlotNumber());
-        booking.put("vehicleType", slot.getVehicleType());
+        booking.put("vehicleType", vehicle.getVehicleType());
         booking.put("startTime", window.startMillis());
         booking.put("endTime", window.endMillis());
         booking.put("status", Constants.BOOKING_PENDING_PAYMENT);
@@ -241,7 +251,8 @@ public class SlotRepository {
                     b.setLocationName(location.getName());
                     b.setSlotId(slot.getId());
                     b.setSlotNumber(slot.getSlotNumber());
-                    b.setVehicleType(slot.getVehicleType());
+                    b.setVehicleType(vehicle.getVehicleType());
+                    b.setVehicleNumber(vehicle.getRegistrationNumber());
                     b.setStartTime(window.startMillis());
                     b.setEndTime(window.endMillis());
                     b.setStatus(Constants.BOOKING_PENDING_PAYMENT);

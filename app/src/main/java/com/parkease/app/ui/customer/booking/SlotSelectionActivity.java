@@ -1,10 +1,13 @@
 package com.parkease.app.ui.customer.booking;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -25,7 +28,10 @@ import com.parkease.app.models.ParkingLocation;
 import com.parkease.app.models.ParkingSlot;
 import com.parkease.app.models.ScheduleBlock;
 import com.parkease.app.models.TimeWindow;
+import com.parkease.app.models.Vehicle;
 import com.parkease.app.repository.DataCallback;
+import com.parkease.app.repository.VehicleRepository;
+import com.parkease.app.ui.customer.vehicle.AddEditVehicleActivity;
 import com.parkease.app.repository.LocationRepository;
 import com.parkease.app.repository.SlotRepository;
 import com.parkease.app.repository.Subscription;
@@ -71,7 +77,21 @@ public class SlotSelectionActivity extends BaseActivity implements SlotGridAdapt
     private Subscription locationSub = Subscription.EMPTY;
     private Subscription slotsSub = Subscription.EMPTY;
     private Subscription scheduleSub = Subscription.EMPTY;
+    private Subscription vehiclesSub = Subscription.EMPTY;
     private final Handler handler = new Handler(Looper.getMainLooper());
+
+    // Step 10: the customer's vehicles
+    private VehicleRepository vehicleRepository;
+    private List<Vehicle> vehicles = new ArrayList<>();
+    @Nullable private Vehicle selectedVehicle;
+    @Nullable private String pendingVehicleId;     // just added → select it
+
+    private final ActivityResultLauncher<Intent> addVehicleLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    pendingVehicleId = result.getData().getStringExtra(Constants.EXTRA_VEHICLE_ID);
+                }
+            });
 
     private String locationId;
     @Nullable private ParkingLocation location;
@@ -105,6 +125,7 @@ public class SlotSelectionActivity extends BaseActivity implements SlotGridAdapt
         setContentView(binding.getRoot());
         locationRepository = new LocationRepository(this);
         slotRepository = new SlotRepository(this);
+        vehicleRepository = new VehicleRepository(this);
 
         applyStatusBarPadding(binding.header.getRoot());
         applyStatusBarScrim(binding.statusBarScrim.getRoot());
@@ -137,13 +158,6 @@ public class SlotSelectionActivity extends BaseActivity implements SlotGridAdapt
         binding.swipeRefresh.setOnRefreshListener(() -> refresh(true));
 
         // Pickers
-        binding.toggleVehicle.addOnButtonCheckedListener((group, id, checked) -> {
-            if (!checked) return;
-            vehicleType = id == R.id.btnVehicleBike ? Constants.VEHICLE_BIKE : Constants.VEHICLE_CAR;
-            selectedFloor = null;
-            clearSelection();
-            render();
-        });
         binding.btnDate.setOnClickListener(v -> pickDate());
         binding.btnTime.setOnClickListener(v -> pickTime());
         binding.btnDuration.setOnClickListener(v -> pickDuration());
@@ -179,10 +193,10 @@ public class SlotSelectionActivity extends BaseActivity implements SlotGridAdapt
                             null, getString(R.string.action_back), v -> finish());
                     return;
                 }
-                boolean first = location == null;
                 location = data;
                 binding.header.tvHeaderTitle.setText(data.getName());
-                if (first) setupVehicleToggle(data);
+                applyVehicleChoice();
+                buildVehicleChips();
                 validateWindow();
                 render();
             }
@@ -210,6 +224,35 @@ public class SlotSelectionActivity extends BaseActivity implements SlotGridAdapt
         });
 
         subscribeSchedule();
+
+        vehiclesSub = vehicleRepository.observeMyVehicles(new DataCallback<List<Vehicle>>() {
+            @Override
+            public void onSuccess(List<Vehicle> data) {
+                vehicles = data;
+                // Keep the current choice if it still exists; a newly added vehicle wins
+                String wanted = pendingVehicleId != null ? pendingVehicleId
+                        : selectedVehicle != null ? selectedVehicle.getId() : null;
+                selectedVehicle = null;
+                for (Vehicle v : data) {
+                    if (v.getId().equals(wanted) && accepts(v)) selectedVehicle = v;
+                }
+                if (selectedVehicle == null) {
+                    for (Vehicle v : data) {
+                        if (accepts(v)) { selectedVehicle = v; break; }
+                    }
+                }
+                pendingVehicleId = null;
+                applyVehicleChoice();
+                buildVehicleChips();
+                render();
+            }
+
+            @Override
+            public void onError(@NonNull String message) {
+                vehicles = new ArrayList<>();
+                buildVehicleChips();
+            }
+        });
     }
 
     /** The schedule is per day, so it is re-subscribed whenever the date changes. */
@@ -235,6 +278,7 @@ public class SlotSelectionActivity extends BaseActivity implements SlotGridAdapt
         locationSub.cancel();
         slotsSub.cancel();
         scheduleSub.cancel();
+        vehiclesSub.cancel();
     }
 
     /** Drops the listeners and asks Firebase again for fresh data. */
@@ -382,10 +426,18 @@ public class SlotSelectionActivity extends BaseActivity implements SlotGridAdapt
 
     private void reserve() {
         if (location == null || selectedSlot == null || timeError != 0) return;
+        if (selectedVehicle == null) {               // a booking needs a registered vehicle
+            new MaterialAlertDialogBuilder(this)
+                    .setMessage(R.string.booking_need_vehicle)
+                    .setNegativeButton(R.string.action_cancel, null)
+                    .setPositiveButton(R.string.booking_add_vehicle, (d, w) -> openAddVehicle())
+                    .show();
+            return;
+        }
         ParkingSlot slot = selectedSlot;
         TimeWindow chosen = window;
         binding.loading.show();
-        slotRepository.holdSlot(location, slot, chosen, new DataCallback<Booking>() {
+        slotRepository.holdSlot(location, slot, chosen, selectedVehicle, new DataCallback<Booking>() {
             @Override
             public void onSuccess(Booking booking) {
                 binding.loading.hide();
@@ -433,12 +485,79 @@ public class SlotSelectionActivity extends BaseActivity implements SlotGridAdapt
 
     // ================================================================== time & vehicle pickers
 
-    private void setupVehicleToggle(@NonNull ParkingLocation p) {
-        binding.btnVehicleCar.setEnabled(p.acceptsCars());
-        binding.btnVehicleBike.setEnabled(p.acceptsBikes());
-        binding.toggleVehicle.setVisibility(p.acceptsCars() && p.acceptsBikes() ? View.VISIBLE : View.GONE);
-        vehicleType = p.acceptsCars() ? Constants.VEHICLE_CAR : Constants.VEHICLE_BIKE;
-        binding.toggleVehicle.check(p.acceptsCars() ? R.id.btnVehicleCar : R.id.btnVehicleBike);
+    // ------------------------------------------------------------------ vehicle choice (Step 10)
+
+    /** Can this location park the vehicle? (bikes need bike slots, cars & SUVs need car slots) */
+    private boolean accepts(@NonNull Vehicle v) {
+        if (location == null) return true;
+        return Constants.VEHICLE_BIKE.equals(v.getSlotType()) ? location.acceptsBikes() : location.acceptsCars();
+    }
+
+    /** The grid shows slots for the chosen vehicle, or the location's main type if none is chosen. */
+    private void applyVehicleChoice() {
+        String newType;
+        if (selectedVehicle != null && accepts(selectedVehicle)) {
+            newType = selectedVehicle.getSlotType();
+        } else {
+            if (selectedVehicle != null) selectedVehicle = null;
+            newType = location == null || location.acceptsCars() ? Constants.VEHICLE_CAR : Constants.VEHICLE_BIKE;
+        }
+        if (!newType.equals(vehicleType)) {
+            vehicleType = newType;
+            selectedFloor = null;
+            clearSelection();
+        }
+    }
+
+    /** One chip per saved vehicle (incompatible ones disabled) + an "Add vehicle" chip. */
+    private void buildVehicleChips() {
+        binding.chipVehicles.setOnCheckedStateChangeListener(null);
+        binding.chipVehicles.removeAllViews();
+        for (Vehicle v : vehicles) {
+            Chip chip = new Chip(this);
+            chip.setId(View.generateViewId());
+            chip.setCheckable(true);
+            chip.setText(getString(R.string.booking_vehicle_chip, v.getDisplayNumber(), getString(v.getTypeLabel())));
+            chip.setChipIconResource(v.getIcon());
+            chip.setChipIconVisible(true);
+            chip.setTag(v.getId());
+            chip.setEnabled(accepts(v));
+            binding.chipVehicles.addView(chip);
+            if (selectedVehicle != null && v.getId().equals(selectedVehicle.getId())) chip.setChecked(true);
+        }
+        Chip add = new Chip(this);
+        add.setText(R.string.booking_add_vehicle);
+        add.setCheckable(false);
+        add.setChipIconResource(R.drawable.ic_add);
+        add.setChipIconVisible(true);
+        add.setOnClickListener(v -> openAddVehicle());
+        binding.chipVehicles.addView(add);
+
+        binding.chipVehicles.setOnCheckedStateChangeListener((group, ids) -> {
+            if (ids.isEmpty()) {
+                // keep one vehicle selected
+                if (selectedVehicle != null) buildVehicleChips();
+                return;
+            }
+            Chip chip = group.findViewById(ids.get(0));
+            for (Vehicle v : vehicles) {
+                if (chip != null && v.getId().equals(chip.getTag())) {
+                    if (!accepts(v)) {
+                        Snackbar.make(binding.getRoot(), getString(R.string.booking_vehicle_not_accepted,
+                                getString(v.getTypeLabel())), Snackbar.LENGTH_SHORT).show();
+                        return;
+                    }
+                    selectedVehicle = v;
+                    applyVehicleChoice();
+                    render();
+                    if (selectedSlot != null) showSelected(selectedSlot);
+                }
+            }
+        });
+    }
+
+    private void openAddVehicle() {
+        addVehicleLauncher.launch(AddEditVehicleActivity.addIntent(this));
     }
 
     private void pickDate() {
@@ -529,6 +648,7 @@ public class SlotSelectionActivity extends BaseActivity implements SlotGridAdapt
 
     @NonNull
     private String vehicleLabel() {
+        if (selectedVehicle != null) return getString(selectedVehicle.getTypeLabel());
         return getString(Constants.VEHICLE_BIKE.equals(vehicleType) ? R.string.vehicle_bike : R.string.vehicle_car);
     }
 }

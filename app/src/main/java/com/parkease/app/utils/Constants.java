@@ -58,6 +58,9 @@ public final class Constants {
     // ---------- Vehicle types ----------
     public static final String VEHICLE_CAR = "CAR";
     public static final String VEHICLE_BIKE = "BIKE";
+    public static final String VEHICLE_SUV = "SUV";              // parks in CAR slots
+    public static final String NODE_VEHICLE_REGISTRATIONS = "vehicleRegistrations";
+    public static final String EXTRA_VEHICLE_REG = "extra_vehicle_reg";
 
     // ---------- Business rules (defaults; can be overridden by appConfig) ----------
     public static final int GRACE_PERIOD_MINUTES = 15;

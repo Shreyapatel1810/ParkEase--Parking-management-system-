@@ -44,10 +44,53 @@
     <string name="slot_err_taken">Sorry, someone just reserved this slot for that time. Please choose another slot.</string>
     <string name="slot_err_maintenance">This slot is under maintenance and can\'t be booked.</string>
     <string name="hold_title">Slot %1$s is reserved for you</string>
-    <string name="hold_message">%1$s\n%2$s\nTotal: %3$s · Code %4$s\n\nThe server confirmed this slot is free and is holding it for you until %5$s. Choose your vehicle and pay in the next step to confirm it.</string>
+    <string name="hold_message">%1$s\n%2$s\nTotal: %3$s · Code %4$s\n\nThe server confirmed this slot is free and is holding it for you until %5$s. Pay in the next step to confirm it.</string>
     <string name="hold_release">Release slot</string>
     <string name="hold_keep">Keep</string>
     <string name="hold_released">Slot released</string>
     <string name="vehicle_car">Car</string>
     <string name="vehicle_bike">Bike</string>
+    <string name="vehicle_suv">SUV</string>
+
+    <!-- My vehicles (Step 10) -->
+    <string name="vehicles_title">My vehicles</string>
+    <string name="vehicles_subtitle">Saved vehicles for faster booking</string>
+    <string name="vehicles_menu_sub">Add, edit or remove your vehicles</string>
+    <string name="vehicles_add">Add vehicle</string>
+    <string name="vehicles_empty_title">No vehicles yet</string>
+    <string name="vehicles_empty_msg">Add your car, SUV or bike once and choose it in seconds when you book.</string>
+    <string name="vehicles_count">%1$d vehicles</string>
+    <string name="vehicle_edit">Edit</string>
+    <string name="vehicle_delete">Delete</string>
+    <string name="vehicle_delete_title">Delete %1$s?</string>
+    <string name="vehicle_delete_msg">Past bookings keep their vehicle details. You can add this vehicle again later.</string>
+    <string name="vehicle_deleted">Vehicle deleted</string>
+    <string name="vehicle_added">Vehicle added</string>
+    <string name="vehicle_updated">Vehicle updated</string>
+    <string name="cd_vehicle_options">Options for %1$s</string>
+
+    <string name="vehicle_add_title">Add vehicle</string>
+    <string name="vehicle_edit_title">Edit vehicle</string>
+    <string name="vehicle_form_subtitle">Enter the number exactly as on the number plate</string>
+    <string name="field_registration">Registration number</string>
+    <string name="field_registration_helper">e.g. GJ 01 AB 1234 or 22 BH 1234 AB</string>
+    <string name="plate_placeholder" translatable="false">GJ 01 AB 1234</string>
+    <string name="field_vehicle_type">Vehicle type</string>
+    <string name="field_nickname">Nickname (optional)</string>
+    <string name="field_nickname_helper">e.g. Dad\'s car, Office bike</string>
+    <string name="vehicle_save">Save vehicle</string>
+    <string name="vehicle_saving">Saving vehicle…</string>
+    <string name="vehicle_type_hint_suv">SUVs park in car slots.</string>
+
+    <string name="vehicle_err_format">Enter a valid Indian registration number, e.g. GJ 01 AB 1234 or 22 BH 1234 AB</string>
+    <string name="vehicle_err_state">The first two letters must be a valid state code, e.g. GJ, MH, DL</string>
+    <string name="vehicle_err_duplicate">You have already added a vehicle with this registration number.</string>
+    <string name="vehicle_err_nickname">Nickname can be up to 30 characters</string>
+
+    <!-- Choosing a vehicle while booking -->
+    <string name="booking_your_vehicle">Your vehicle</string>
+    <string name="booking_add_vehicle">Add vehicle</string>
+    <string name="booking_need_vehicle">Add your vehicle first, so the gate staff can match your booking.</string>
+    <string name="booking_vehicle_not_accepted">%1$s parking isn\'t available here.</string>
+    <string name="booking_vehicle_chip">%1$s · %2$s</string>
 </resources>

@@ -73,6 +73,15 @@
             android:name=".ui.customer.notification.NotificationsActivity"
             android:exported="false" />
 
+        <!-- Step 10: vehicle management -->
+        <activity
+            android:name=".ui.customer.vehicle.VehiclesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.customer.vehicle.AddEditVehicleActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
         <!-- Step 9: interactive slot layout + server-verified reservation -->
         <activity
             android:name=".ui.customer.booking.SlotSelectionActivity"
