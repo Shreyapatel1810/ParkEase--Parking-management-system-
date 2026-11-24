@@ -19,10 +19,13 @@ import com.parkease.app.databinding.ActivityBookingSummaryBinding;
 import com.parkease.app.databinding.ItemProfileRowBinding;
 import com.parkease.app.models.Booking;
 import com.parkease.app.models.CancellationPolicy;
+import com.parkease.app.models.Payment;
 import com.parkease.app.repository.BookingRepository;
 import com.parkease.app.repository.DataCallback;
 import com.parkease.app.repository.Subscription;
 import com.parkease.app.ui.common.BaseActivity;
+import com.parkease.app.ui.customer.payment.PaymentActivity;
+import com.parkease.app.ui.customer.payment.PaymentResultActivity;
 import com.parkease.app.utils.Constants;
 import com.parkease.app.utils.FormatUtils;
 
@@ -34,7 +37,7 @@ import java.util.Locale;
  *
  * Opened in two ways:
  *  1. Right after the server held a slot (status PENDING_PAYMENT): shows the summary,
- *     price and a 10-minute countdown, with "Confirm booking" and "Release slot".
+ *     price and a 10-minute countdown, with "Proceed to payment" (Step 12) and "Release slot".
  *  2. From My Bookings / Home: shows the booking's details and, while allowed by the
  *     cancellation policy, "Cancel booking".
  *
@@ -53,8 +56,6 @@ public class BookingSummaryActivity extends BaseActivity {
     private String bookingId;
     @Nullable private Booking booking;
     private boolean busy;
-    /** True after this screen confirmed the booking – shows the success dialog once. */
-    private boolean justConfirmed;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Runnable ticker = new Runnable() {
@@ -91,6 +92,7 @@ public class BookingSummaryActivity extends BaseActivity {
         setLabel(binding.rowDate, R.drawable.ic_bookings, R.string.summary_date);
         setLabel(binding.rowTime, R.drawable.ic_clock, R.string.summary_time);
         setLabel(binding.rowDuration, R.drawable.ic_trending_up, R.string.summary_duration);
+        setLabel(binding.rowPayment, R.drawable.ic_receipt, R.string.summary_payment);
 
         binding.stateView.showLoading();
         repository.loadCancellationPolicy(new DataCallback<CancellationPolicy>() {
@@ -123,10 +125,6 @@ public class BookingSummaryActivity extends BaseActivity {
                     repository.expireStaleBookings(Collections.singletonList(b));
                 }
                 render(b);
-                if (justConfirmed && b.isConfirmed()) {
-                    justConfirmed = false;
-                    showConfirmedDialog(b);
-                }
             }
 
             @Override
@@ -173,6 +171,18 @@ public class BookingSummaryActivity extends BaseActivity {
         binding.refundGroup.setVisibility(b.isCancelled() ? View.VISIBLE : View.GONE);
         binding.tvRefund.setText(FormatUtils.money(b.getRefundAmount()));
 
+        // Step 12: linked payment (tap for the receipt)
+        if (b.getPaymentId() != null) {
+            binding.rowPayment.getRoot().setVisibility(View.VISIBLE);
+            binding.rowPayment.imgIcon.setImageResource(Payment.methodIcon(b.getPaymentMethod()));
+            value(binding.rowPayment, getString(R.string.summary_payment_value,
+                    getString(Payment.methodLabel(b.getPaymentMethod())), b.getPaymentId()));
+            binding.rowPayment.getRoot().setOnClickListener(v -> startActivity(
+                    PaymentResultActivity.intent(this, b.getPaymentId())));
+        } else {
+            binding.rowPayment.getRoot().setVisibility(View.GONE);
+        }
+
         binding.tvCode.setText(safe(b.getBookingCode()));
         binding.tvBookingId.setText(getString(R.string.summary_booking_id) + ": " + b.getId());
         binding.tvPolicy.setText(getString(R.string.summary_policy,
@@ -202,8 +212,8 @@ public class BookingSummaryActivity extends BaseActivity {
         binding.btnSecondary.setVisibility(View.GONE);
 
         if (b.isPending() && holdActive) {
-            binding.btnPrimary.setText(getString(R.string.summary_confirm) + " · " + FormatUtils.money(b.getAmount()));
-            binding.btnPrimary.setOnClickListener(v -> confirm());
+            binding.btnPrimary.setText(getString(R.string.summary_pay, FormatUtils.money(b.getAmount())));
+            binding.btnPrimary.setOnClickListener(v -> startActivity(PaymentActivity.intent(this, b.getId())));
             binding.btnSecondary.setVisibility(View.VISIBLE);
             binding.btnSecondary.setText(R.string.summary_release);
             binding.btnSecondary.setOnClickListener(v -> release());
@@ -227,28 +237,6 @@ public class BookingSummaryActivity extends BaseActivity {
     }
 
     // ================================================================== actions
-
-    private void confirm() {
-        if (booking == null || busy) return;
-        setBusy(true, R.string.summary_confirming);
-        repository.confirmBooking(booking, new DataCallback<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                setBusy(false, 0);
-                justConfirmed = true;   // the live listener shows the success dialog
-                if (booking != null && booking.isConfirmed()) {
-                    justConfirmed = false;
-                    showConfirmedDialog(booking);
-                }
-            }
-
-            @Override
-            public void onError(@NonNull String message) {
-                setBusy(false, 0);
-                showMessage(message);
-            }
-        });
-    }
 
     private void release() {
         if (booking == null || busy) return;
@@ -274,7 +262,9 @@ public class BookingSummaryActivity extends BaseActivity {
         Booking b = booking;
         long now = System.currentTimeMillis();
         String refund = FormatUtils.money(policy.refundFor(b, now));
-        String msg = policy.isFullRefund(b, now)
+        String msg = b.isCashPayment()
+                ? getString(R.string.cancel_confirm_cash)
+                : policy.isFullRefund(b, now)
                 ? getString(R.string.cancel_confirm_full, refund)
                 : getString(R.string.cancel_confirm_partial, policy.getFullRefundBeforeMinutes(),
                         refund, FormatUtils.money(b.getAmount()));
@@ -309,19 +299,6 @@ public class BookingSummaryActivity extends BaseActivity {
                     .putExtra(Constants.EXTRA_LOCATION_ID, b.getLocationId()));
         }
         finish();
-    }
-
-    private void showConfirmedDialog(@NonNull Booking b) {
-        if (isFinishing()) return;
-        String when = FormatUtils.day(b.getStartTime()) + " · "
-                + FormatUtils.timeRange(b.getStartTime(), b.getEndTime());
-        new MaterialAlertDialogBuilder(this)
-                .setIcon(R.drawable.ic_check_circle)
-                .setTitle(R.string.confirmed_title)
-                .setMessage(getString(R.string.confirmed_message, safe(b.getSlotNumber()),
-                        safe(b.getLocationName()), when, safe(b.getBookingCode())))
-                .setPositiveButton(R.string.summary_done, null)
-                .show();
     }
 
     // ================================================================== helpers

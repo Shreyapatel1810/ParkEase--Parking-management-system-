@@ -47,6 +47,16 @@ public final class Constants {
     public static final String BOOKING_CANCELLED = "CANCELLED";
     public static final String BOOKING_EXPIRED = "EXPIRED";
 
+    // ---------- Payments (Step 12 – SIMULATED, no real money) ----------
+    public static final String PAYMENT_UPI = "UPI";
+    public static final String PAYMENT_CARD = "CARD";
+    public static final String PAYMENT_CASH = "CASH";
+    public static final String PAYMENT_PENDING = "PENDING";      // cash: pay at the parking gate
+    public static final String PAYMENT_SUCCESS = "SUCCESS";
+    public static final String PAYMENT_FAILED = "FAILED";
+    public static final String PAYMENT_REFUNDED = "REFUNDED";
+    public static final String EXTRA_TRANSACTION_ID = "extra_transaction_id";
+
     // ---------- Slot schedule (Step 9) ----------
     /** Each slot's day is split into 30-minute blocks: slotSchedule/{loc}/{yyyyMMdd}/{slot}/{HHmm}. */
     public static final int BLOCK_MINUTES = 30;

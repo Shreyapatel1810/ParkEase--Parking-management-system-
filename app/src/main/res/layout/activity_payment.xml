@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Step 12 – Payment screen (SIMULATED). Java: ui/customer/payment/PaymentActivity.java
+    Shows the booking, the three demo payment methods and the "Confirm payment" button.
+    No card / bank / UPI details are ever asked for.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_screen"
+    tools:context=".ui.customer.payment.PaymentActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/space_xl">
+
+                <include
+                    android:id="@+id/header"
+                    layout="@layout/layout_header_toolbar" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/screen_padding">
+
+                    <!-- ===== Simulated payment notice ===== -->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/Widget.ParkEase.Card.Elevated"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/header_overlap"
+                        app:cardBackgroundColor="@color/slot_reserved_bg">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/card_padding">
+
+                            <ImageView
+                                android:layout_width="@dimen/icon_md"
+                                android:layout_height="@dimen/icon_md"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_shield"
+                                app:tint="@color/slot_reserved" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/space_md"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/Widget.ParkEase.Text.CardTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/pay_demo_banner_title"
+                                    android:textColor="@color/text_primary" />
+
+                                <TextView
+                                    style="@style/Widget.ParkEase.Text.Caption"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/space_xs"
+                                    android:text="@string/pay_demo_banner"
+                                    android:textColor="@color/text_primary" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ===== Booking details ===== -->
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.Overline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        android:layout_marginBottom="@dimen/space_sm"
+                        android:text="@string/pay_booking_details" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/card_padding">
+
+                            <include
+                                android:id="@+id/rowBookingId"
+                                layout="@layout/item_profile_row" />
+
+                            <include
+                                android:id="@+id/rowLocation"
+                                layout="@layout/item_profile_row" />
+
+                            <include
+                                android:id="@+id/rowSlot"
+                                layout="@layout/item_profile_row" />
+
+                            <include
+                                android:id="@+id/rowDuration"
+                                layout="@layout/item_profile_row" />
+
+                            <com.google.android.material.divider.MaterialDivider
+                                style="@style/Widget.ParkEase.Divider"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="@dimen/space_sm" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/Widget.ParkEase.Text.CardTitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/pay_amount" />
+
+                                <TextView
+                                    android:id="@+id/tvAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="@style/TextAppearance.ParkEase.Headline"
+                                    android:textColor="@color/brand_secondary"
+                                    tools:text="₹100" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvHoldTimer"
+                                style="@style/Widget.ParkEase.Text.Caption"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_sm"
+                                android:drawablePadding="@dimen/space_sm"
+                                app:drawableStartCompat="@drawable/ic_clock"
+                                app:drawableTint="@color/slot_reserved"
+                                tools:text="Slot held for 8:41" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ===== Payment method ===== -->
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.Overline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        android:layout_marginBottom="@dimen/space_sm"
+                        android:text="@string/pay_method_title" />
+
+                    <include
+                        android:id="@+id/methodUpi"
+                        layout="@layout/item_payment_method" />
+
+                    <include
+                        android:id="@+id/methodCard"
+                        layout="@layout/item_payment_method" />
+
+                    <include
+                        android:id="@+id/methodCash"
+                        layout="@layout/item_payment_method" />
+
+                    <!-- ===== Demo result (UPI / card only) ===== -->
+                    <LinearLayout
+                        android:id="@+id/outcomeGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Widget.ParkEase.Text.Overline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_lg"
+                            android:text="@string/pay_outcome_title" />
+
+                        <TextView
+                            style="@style/Widget.ParkEase.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/space_sm"
+                            android:text="@string/pay_outcome_hint" />
+
+                        <com.google.android.material.button.MaterialButtonToggleGroup
+                            android:id="@+id/toggleOutcome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:checkedButton="@+id/btnApprove"
+                            app:selectionRequired="true"
+                            app:singleSelection="true">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnApprove"
+                                style="@style/Widget.Material3.Button.OutlinedButton"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/pay_outcome_success"
+                                app:icon="@drawable/ic_check_circle" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnDecline"
+                                style="@style/Widget.Material3.Button.OutlinedButton"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/pay_outcome_failure"
+                                app:icon="@drawable/ic_error" />
+                        </com.google.android.material.button.MaterialButtonToggleGroup>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- ===== Confirm ===== -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.ParkEase.Card.Elevated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="12dp">
+
+            <LinearLayout
+                android:id="@+id/actionBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/screen_padding"
+                android:paddingVertical="@dimen/space_md">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnConfirm"
+                    style="@style/Widget.ParkEase.Button.Primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Confirm payment · ₹100" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <com.parkease.app.ui.components.StateView
+        android:id="@+id/stateView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_screen" />
+
+    <com.parkease.app.ui.components.LoadingView
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:lvMessage="@string/pay_processing"
+        app:lvOverlay="true" />
+
+    <include
+        android:id="@+id/statusBarScrim"
+        layout="@layout/view_status_bar_scrim" />
+</FrameLayout>

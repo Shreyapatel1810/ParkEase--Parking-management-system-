@@ -117,6 +117,11 @@
                             <include
                                 android:id="@+id/rowDuration"
                                 layout="@layout/item_profile_row" />
+
+                            <include
+                                android:id="@+id/rowPayment"
+                                layout="@layout/item_profile_row"
+                                android:visibility="gone" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 

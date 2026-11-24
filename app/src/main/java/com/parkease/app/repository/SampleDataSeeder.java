@@ -187,6 +187,25 @@ public class SampleDataSeeder {
         booking.put("holdUntil", 0);
         booking.put("confirmedAt", ServerValue.TIMESTAMP);
         booking.put("createdAt", ServerValue.TIMESTAMP);
+
+        // Step 12: its (simulated) payment, linked both ways
+        String demoTxn = "TXNDEMO" + me.getUid();
+        booking.put("paymentId", demoTxn);
+        booking.put("paymentMethod", Constants.PAYMENT_UPI);
+        Map<String, Object> payment = new HashMap<>();
+        payment.put("transactionId", demoTxn);
+        payment.put("bookingId", demoBookingId);
+        payment.put("bookingCode", "PE-DEMO01");
+        payment.put("userId", me.getUid());
+        payment.put("locationName", "SG Highway Central Parking");
+        payment.put("slotNumber", "A-07");
+        payment.put("durationMinutes", 120);
+        payment.put("amount", 100);
+        payment.put("method", Constants.PAYMENT_UPI);
+        payment.put("status", Constants.PAYMENT_SUCCESS);
+        payment.put("simulated", true);
+        payment.put("createdAt", ServerValue.TIMESTAMP);
+        u.put(Constants.NODE_PAYMENTS + "/" + demoTxn, payment);
         u.put(Constants.NODE_BOOKINGS + "/" + demoBookingId, booking);
 
         // A notification for my account

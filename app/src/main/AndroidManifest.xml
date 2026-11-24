@@ -92,6 +92,17 @@
             android:name=".ui.customer.booking.BookingSummaryActivity"
             android:exported="false" />
 
+        <!-- Step 12: simulated payments -->
+        <activity
+            android:name=".ui.customer.payment.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.customer.payment.PaymentResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.customer.payment.PaymentHistoryActivity"
+            android:exported="false" />
+
         <!-- Step 5: admin dashboard (placeholder until the admin module) -->
         <activity
             android:name=".ui.admin.AdminMainActivity"

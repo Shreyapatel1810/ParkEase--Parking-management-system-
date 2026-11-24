@@ -90,4 +90,19 @@ public final class FormatUtils {
     private static ZonedDateTime toZoned(long millis) {
         return Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault());
     }
+
+    /** "30 min", "2 h", "2.5 h". */
+    @NonNull
+    public static String duration(@NonNull android.content.Context c, int minutes) {
+        if (minutes == 30) return c.getString(com.parkease.app.R.string.duration_minutes);
+        double h = minutes / 60.0;
+        String n = h == Math.floor(h) ? String.valueOf((long) h) : String.valueOf(h);
+        return c.getString(com.parkease.app.R.string.duration_hours, n);
+    }
+
+    /** "24 Nov 2026, 10:15 AM" */
+    @NonNull
+    public static String dateTime(long millis) {
+        return toZoned(millis).format(DateTimeFormatter.ofPattern("d MMM yyyy, h:mm a", Locale.ENGLISH));
+    }
 }

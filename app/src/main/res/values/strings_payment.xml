@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Step 12: SIMULATED payment module (college demo – no real money) -->
+<resources>
+    <string name="pay_title">Payment</string>
+    <string name="pay_subtitle">Simulated checkout</string>
+    <string name="pay_demo_banner_title">DEMO PAYMENT – NO REAL MONEY</string>
+    <string name="pay_demo_banner">This is a simulated payment for a college project. No card numbers, CVV, UPI PIN or bank details are asked for or stored, and nothing is charged.</string>
+    <string name="pay_simulated_tag">SIMULATED</string>
+
+    <string name="pay_booking_details">Booking details</string>
+    <string name="pay_booking_id">Booking ID</string>
+    <string name="pay_location">Parking location</string>
+    <string name="pay_slot">Slot number</string>
+    <string name="pay_duration">Duration</string>
+    <string name="pay_amount">Estimated amount</string>
+    <string name="pay_method_title">Payment method</string>
+
+    <string name="pay_method_upi">UPI (demo)</string>
+    <string name="pay_method_upi_sub">Simulated UPI app – no UPI ID or PIN needed</string>
+    <string name="pay_method_card">Debit / Credit card (demo)</string>
+    <string name="pay_method_card_sub">Uses a fake test card •••• 4242 – no card details asked</string>
+    <string name="pay_method_cash">Cash at parking</string>
+    <string name="pay_method_cash_sub">Booking is confirmed now, pay at the entry gate</string>
+
+    <string name="pay_outcome_title">Demo result</string>
+    <string name="pay_outcome_hint">Choose how the simulated bank should respond, to show both screens.</string>
+    <string name="pay_outcome_success">Approve</string>
+    <string name="pay_outcome_failure">Decline</string>
+
+    <string name="pay_confirm">Confirm payment · %1$s</string>
+    <string name="pay_confirm_cash">Confirm booking · pay %1$s at the gate</string>
+    <string name="pay_processing">Processing simulated payment…</string>
+    <string name="pay_hold_timer">Slot held for %1$s</string>
+    <string name="pay_choose_method">Choose a payment method</string>
+
+    <!-- Results -->
+    <string name="pay_success_title">Payment successful</string>
+    <string name="pay_success_msg">Your booking is confirmed.</string>
+    <string name="pay_cash_title">Booking confirmed</string>
+    <string name="pay_cash_msg">Please pay %1$s in cash at the parking entry gate.</string>
+    <string name="pay_failed_title">Payment failed</string>
+    <string name="pay_failed_msg">Nothing was charged. Your slot is still held – you can try again.</string>
+    <string name="pay_failed_msg_expired">Nothing was charged. The slot hold has ended, so please choose a slot again.</string>
+    <string name="pay_txn_id">Transaction ID</string>
+    <string name="pay_date">Date &amp; time</string>
+    <string name="pay_status">Status</string>
+    <string name="pay_reason">Reason</string>
+    <string name="pay_refund">Refunded</string>
+    <string name="pay_view_booking">View booking</string>
+    <string name="pay_try_again">Try again</string>
+    <string name="pay_done">Done</string>
+
+    <string name="pay_status_pending">Pending</string>
+    <string name="pay_status_success">Successful</string>
+    <string name="pay_status_failed">Failed</string>
+    <string name="pay_status_refunded">Refunded</string>
+
+    <string name="pay_fail_reason_demo">Simulated decline: the demo bank rejected the payment.</string>
+    <string name="pay_fail_reason_cancelled">Booking cancelled before paying at the gate – nothing was charged.</string>
+    <string name="pay_fail_reason_no_show">Booking not used – nothing was charged.</string>
+    <string name="pay_err_already_paid">This booking is already paid or no longer waiting for payment.</string>
+    <string name="pay_err_rejected">The server didn\'t accept this payment. The hold may have ended, or the booking was already paid.</string>
+
+    <!-- History -->
+    <string name="pay_history_title">Payment history</string>
+    <string name="pay_history_subtitle">Simulated payments and refunds</string>
+    <string name="pay_history_menu_sub">Transactions, receipts and refunds (demo)</string>
+    <string name="pay_history_empty_title">No payments yet</string>
+    <string name="pay_history_empty_msg">Payments you make for bookings will show here.</string>
+    <string name="pay_history_item_place">%1$s · Slot %2$s</string>
+    <string name="pay_history_refund">Refund %1$s</string>
+
+    <!-- Booking summary additions -->
+    <string name="summary_pay">Proceed to payment · %1$s</string>
+    <string name="summary_payment">Payment</string>
+    <string name="summary_payment_value">%1$s · %2$s</string>
+    <string name="cancel_confirm_cash">You chose Cash at parking, so nothing was charged and there is nothing to refund.</string>
+</resources>

@@ -196,6 +196,16 @@
                             android:layout_marginStart="76dp" />
 
                         <include
+                            android:id="@+id/menuPayments"
+                            layout="@layout/item_menu_row" />
+
+                        <com.google.android.material.divider.MaterialDivider
+                            style="@style/Widget.ParkEase.Divider"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="76dp" />
+
+                        <include
                             android:id="@+id/menuEdit"
                             layout="@layout/item_menu_row" />
 

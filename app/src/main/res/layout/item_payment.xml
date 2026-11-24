@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One payment in Payment history (Step 12). Used by PaymentAdapter. -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/card_padding">
+
+        <FrameLayout
+            android:layout_width="@dimen/icon_container"
+            android:layout_height="@dimen/icon_container"
+            android:background="@drawable/bg_icon_circle"
+            android:backgroundTint="@color/brand_secondary_container">
+
+            <ImageView
+                android:id="@+id/imgMethod"
+                android:layout_width="@dimen/icon_sm"
+                android:layout_height="@dimen/icon_sm"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                app:tint="@color/brand_on_secondary_container"
+                tools:src="@drawable/ic_upi" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvPlace"
+                style="@style/Widget.ParkEase.Text.CardTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="SG Highway Central Parking · Slot A-07" />
+
+            <TextView
+                android:id="@+id/tvMethodDate"
+                style="@style/Widget.ParkEase.Text.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2xs"
+                tools:text="UPI (demo) · 24 Nov, 10:15 AM" />
+
+            <TextView
+                android:id="@+id/tvTxn"
+                style="@style/Widget.ParkEase.Text.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2xs"
+                android:fontFamily="monospace"
+                tools:text="TXN20261124101530A7K2Q9" />
+
+            <TextView
+                android:id="@+id/tvExtra"
+                style="@style/Widget.ParkEase.Text.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2xs"
+                android:visibility="gone"
+                tools:text="Refund ₹100"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_sm"
+            android:gravity="end"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvAmount"
+                style="@style/Widget.ParkEase.Text.CardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="₹100" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                style="@style/Widget.ParkEase.Text.Badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xs"
+                tools:text="Successful" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -2,16 +2,16 @@
   "rules": {
     ".read": false,
     ".write": false,
-
     "users": {
       ".read": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
-      ".indexOn": ["email", "role"],
-
+      ".indexOn": [
+        "email",
+        "role"
+      ],
       "$uid": {
         ".read": "auth != null && auth.uid === $uid",
         ".write": "auth != null && (auth.uid === $uid || root.child('users').child(auth.uid).child('role').val() === 'admin')",
         ".validate": "newData.hasChildren(['uid', 'fullName', 'email', 'phone', 'role', 'blocked', 'createdAt'])",
-
         "uid": {
           ".validate": "newData.val() === $uid"
         },
@@ -44,7 +44,6 @@
         }
       }
     },
-
     "vehicles": {
       "$uid": {
         ".read": "auth != null && (auth.uid === $uid || root.child('users').child(auth.uid).child('role').val() === 'admin')",
@@ -54,7 +53,6 @@
         }
       }
     },
-
     "vehicleRegistrations": {
       "$uid": {
         ".read": "auth != null && auth.uid === $uid",
@@ -64,10 +62,12 @@
         }
       }
     },
-
     "locations": {
       ".read": "auth != null",
-      ".indexOn": ["city", "active"],
+      ".indexOn": [
+        "city",
+        "active"
+      ],
       "$locationId": {
         ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
         ".validate": "newData.hasChildren(['name', 'address', 'city', 'carRatePerHour', 'totalSlots', 'availableSlots', 'active'])",
@@ -76,7 +76,6 @@
         }
       }
     },
-
     "slots": {
       ".read": "auth != null",
       "$locationId": {
@@ -86,7 +85,6 @@
         }
       }
     },
-
     "slotSchedule": {
       ".read": "auth != null",
       "$locationId": {
@@ -100,17 +98,32 @@
         }
       }
     },
-
     "bookings": {
       ".read": "auth != null && ((query.orderByChild === 'userId' && query.equalTo === auth.uid) || root.child('users').child(auth.uid).child('role').val() === 'admin')",
-      ".indexOn": ["userId", "locationId", "status"],
+      ".indexOn": [
+        "userId",
+        "locationId",
+        "status"
+      ],
       "$bookingId": {
         ".read": "auth != null && data.child('userId').val() === auth.uid",
-        ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'admin' || (!data.exists() && newData.child('userId').val() === auth.uid && newData.child('status').val() === 'PENDING_PAYMENT') || (data.child('userId').val() === auth.uid && data.child('status').val() === 'PENDING_PAYMENT' && !newData.exists()) || (data.child('userId').val() === auth.uid && newData.child('userId').val() === auth.uid && ((data.child('status').val() === 'PENDING_PAYMENT' && newData.child('status').val() === 'CONFIRMED' && data.child('holdUntil').val() > now && newData.child('confirmedAt').val() === now) || (data.child('status').val() === 'PENDING_PAYMENT' && newData.child('status').val() === 'EXPIRED' && data.child('holdUntil').val() <= now) || (data.child('status').val() === 'CONFIRMED' && newData.child('status').val() === 'CANCELLED' && data.child('startTime').val() > now && newData.child('cancelledAt').val() === now && newData.child('refundAmount').isNumber() && newData.child('refundAmount').val() >= 0 && newData.child('refundAmount').val() <= data.child('amount').val()) || (data.child('status').val() === 'CONFIRMED' && newData.child('status').val() === 'EXPIRED' && data.child('startTime').val() + 900000 < now))))",
-        ".validate": "!newData.exists() || root.child('users').child(auth.uid).child('role').val() === 'admin' || (newData.hasChildren(['bookingCode', 'userId', 'locationId', 'slotId', 'vehicleId', 'vehicleNumber', 'vehicleType', 'startTime', 'endTime', 'status', 'amount', 'holdUntil', 'createdAt']) && ((!data.exists() && root.child('vehicles').child(auth.uid).child(newData.child('vehicleId').val()).child('registrationNumber').val() === newData.child('vehicleNumber').val() && newData.child('endTime').val() > newData.child('startTime').val() && newData.child('startTime').val() > now - 1800000 && newData.child('endTime').val() - newData.child('startTime').val() <= 43200000 && newData.child('amount').isNumber() && newData.child('holdUntil').val() <= now + 900000) || (data.exists() && newData.child('slotId').val() === data.child('slotId').val() && newData.child('locationId').val() === data.child('locationId').val() && newData.child('vehicleId').val() === data.child('vehicleId').val() && newData.child('startTime').val() === data.child('startTime').val() && newData.child('endTime').val() === data.child('endTime').val() && newData.child('amount').val() === data.child('amount').val() && newData.child('bookingCode').val() === data.child('bookingCode').val())))"
+        ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'admin' || (!data.exists() && newData.child('userId').val() === auth.uid && newData.child('status').val() === 'PENDING_PAYMENT') || (data.child('userId').val() === auth.uid && data.child('status').val() === 'PENDING_PAYMENT' && !newData.exists()) || (data.child('userId').val() === auth.uid && newData.child('userId').val() === auth.uid && ((data.child('status').val() === 'PENDING_PAYMENT' && newData.child('status').val() === 'CONFIRMED' && data.child('holdUntil').val() > now && newData.child('confirmedAt').val() === now && newData.child('paymentId').isString() && newData.parent().parent().child('payments').child(newData.child('paymentId').val()).child('bookingId').val() === $bookingId && newData.parent().parent().child('payments').child(newData.child('paymentId').val()).child('status').val().matches(/^(SUCCESS|PENDING)$/) && newData.parent().parent().child('payments').child(newData.child('paymentId').val()).child('method').val() === newData.child('paymentMethod').val()) || (data.child('status').val() === 'PENDING_PAYMENT' && newData.child('status').val() === 'EXPIRED' && data.child('holdUntil').val() <= now) || (data.child('status').val() === 'CONFIRMED' && newData.child('status').val() === 'CANCELLED' && data.child('startTime').val() > now && newData.child('cancelledAt').val() === now && newData.child('refundAmount').isNumber() && newData.child('refundAmount').val() >= 0 && newData.child('refundAmount').val() <= data.child('amount').val() && (data.child('paymentMethod').val() !== 'CASH' || newData.child('refundAmount').val() === 0)) || (data.child('status').val() === 'CONFIRMED' && newData.child('status').val() === 'EXPIRED' && data.child('startTime').val() + 900000 < now))))",
+        ".validate": "!newData.exists() || root.child('users').child(auth.uid).child('role').val() === 'admin' || (newData.hasChildren(['bookingCode', 'userId', 'locationId', 'slotId', 'vehicleId', 'vehicleNumber', 'vehicleType', 'startTime', 'endTime', 'status', 'amount', 'holdUntil', 'createdAt']) && ((!data.exists() && root.child('vehicles').child(auth.uid).child(newData.child('vehicleId').val()).child('registrationNumber').val() === newData.child('vehicleNumber').val() && newData.child('endTime').val() > newData.child('startTime').val() && newData.child('startTime').val() > now - 1800000 && newData.child('endTime').val() - newData.child('startTime').val() <= 43200000 && newData.child('amount').isNumber() && newData.child('holdUntil').val() <= now + 900000) || (data.exists() && newData.child('slotId').val() === data.child('slotId').val() && newData.child('locationId').val() === data.child('locationId').val() && newData.child('vehicleId').val() === data.child('vehicleId').val() && newData.child('startTime').val() === data.child('startTime').val() && newData.child('endTime').val() === data.child('endTime').val() && newData.child('amount').val() === data.child('amount').val() && newData.child('bookingCode').val() === data.child('bookingCode').val() && (!data.child('paymentId').exists() || (newData.child('paymentId').val() === data.child('paymentId').val() && newData.child('paymentMethod').val() === data.child('paymentMethod').val())))))"
       }
     },
-
+    "payments": {
+      ".read": "auth != null && ((query.orderByChild === 'userId' && query.equalTo === auth.uid) || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+      ".indexOn": [
+        "userId",
+        "bookingId",
+        "status"
+      ],
+      "$txnId": {
+        ".read": "auth != null && (data.child('userId').val() === auth.uid || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+        ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'admin' || (!data.exists() && newData.child('userId').val() === auth.uid) || (data.exists() && data.child('userId').val() === auth.uid && newData.child('userId').val() === auth.uid && ((data.child('status').val() === 'SUCCESS' && newData.child('status').val() === 'REFUNDED' && newData.parent().parent().child('bookings').child(data.child('bookingId').val()).child('status').val() === 'CANCELLED' && newData.child('refundAmount').val() === newData.parent().parent().child('bookings').child(data.child('bookingId').val()).child('refundAmount').val() && newData.child('refundedAt').val() === now) || (data.child('status').val() === 'PENDING' && newData.child('status').val() === 'FAILED' && newData.parent().parent().child('bookings').child(data.child('bookingId').val()).child('status').val().matches(/^(CANCELLED|EXPIRED)$/)))))",
+        ".validate": "!newData.exists() || root.child('users').child(auth.uid).child('role').val() === 'admin' || (newData.hasChildren(['transactionId', 'bookingId', 'userId', 'amount', 'method', 'status', 'simulated', 'createdAt']) && newData.child('transactionId').val() === $txnId && newData.child('simulated').val() === true && newData.child('method').val().matches(/^(UPI|CARD|CASH)$/) && ((!data.exists() && newData.child('createdAt').val() === now && root.child('bookings').child(newData.child('bookingId').val()).child('userId').val() === auth.uid && root.child('bookings').child(newData.child('bookingId').val()).child('status').val() === 'PENDING_PAYMENT' && root.child('bookings').child(newData.child('bookingId').val()).child('holdUntil').val() > now && newData.child('amount').val() === root.child('bookings').child(newData.child('bookingId').val()).child('amount').val() && ((newData.child('status').val() === 'FAILED' && newData.child('method').val() !== 'CASH') || (((newData.child('status').val() === 'SUCCESS' && newData.child('method').val() !== 'CASH') || (newData.child('status').val() === 'PENDING' && newData.child('method').val() === 'CASH')) && newData.parent().parent().child('bookings').child(newData.child('bookingId').val()).child('status').val() === 'CONFIRMED' && newData.parent().parent().child('bookings').child(newData.child('bookingId').val()).child('paymentId').val() === $txnId))) || (data.exists() && newData.child('bookingId').val() === data.child('bookingId').val() && newData.child('amount').val() === data.child('amount').val() && newData.child('method').val() === data.child('method').val() && newData.child('createdAt').val() === data.child('createdAt').val())))"
+      }
+    },
     "favourites": {
       "$uid": {
         ".read": "auth != null && auth.uid === $uid",
@@ -120,7 +133,6 @@
         }
       }
     },
-
     "notifications": {
       "$uid": {
         ".read": "auth != null && auth.uid === $uid",
@@ -133,11 +145,12 @@
         }
       }
     },
-
     "reviews": {
       ".read": "auth != null",
       "$locationId": {
-        ".indexOn": ["createdAt"],
+        ".indexOn": [
+          "createdAt"
+        ],
         ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
         "$reviewerId": {
           ".write": "auth != null && auth.uid === $reviewerId",
@@ -145,12 +158,10 @@
         }
       }
     },
-
     "appConfig": {
       ".read": "auth != null",
       ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'"
     },
-
     "promotions": {
       ".read": "auth != null",
       ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'"

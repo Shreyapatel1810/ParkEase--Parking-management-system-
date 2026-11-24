@@ -107,33 +107,13 @@ public class BookingRepository {
 
     // ================================================================== confirm / cancel / expire
 
-    /**
-     * CONFIRM: PENDING_PAYMENT → CONFIRMED and every 30-minute block HOLD → BOOKED,
-     * in ONE atomic update. The rules accept it only if the hold has not expired and
-     * belongs to this user – so an expired hold that someone else re-booked can never be
-     * confirmed (no double booking).
-     */
-    public void confirmBooking(@NonNull Booking booking, @NonNull DataCallback<Void> callback) {
-        if (!ready(callback)) return;
-        if (!booking.isHoldActive(System.currentTimeMillis())) {
-            callback.onError(context.getString(R.string.booking_err_hold_expired));
-            return;
-        }
-        Map<String, Object> u = new HashMap<>();
-        u.put(Constants.NODE_BOOKINGS + "/" + booking.getId() + "/status", Constants.BOOKING_CONFIRMED);
-        u.put(Constants.NODE_BOOKINGS + "/" + booking.getId() + "/confirmedAt", ServerValue.TIMESTAMP);
-        for (String path : blockPaths(booking)) u.put(path + "/status", Constants.SCHEDULE_BOOKED);
-
-        db().updateChildren(u)
-                .addOnSuccessListener(x -> callback.onSuccess(null))
-                .addOnFailureListener(e -> callback.onError(isPermission(e)
-                        ? context.getString(R.string.booking_err_hold_expired)
-                        : FirebaseErrorMapper.fromDatabase(context, e)));
-    }
+    // Confirming a booking happens through payment – see PaymentRepository.pay (Step 12).
 
     /**
      * CANCEL: CONFIRMED → CANCELLED with the refund from the cancellation policy, and the
      * slot's blocks are deleted so others can book that time. Only before the start time.
+     * The linked payment changes in the same update: a successful (demo) payment becomes
+     * REFUNDED; an unpaid cash payment becomes FAILED (nothing was charged, refund ₹0).
      */
     public void cancelBooking(@NonNull Booking booking, @NonNull CancellationPolicy policy,
                               @NonNull DataCallback<Double> callback) {
@@ -143,12 +123,23 @@ public class BookingRepository {
             callback.onError(context.getString(R.string.booking_err_cannot_cancel));
             return;
         }
-        double refund = policy.refundFor(booking, now);
+        double refund = booking.isCashPayment() ? 0 : policy.refundFor(booking, now);
         Map<String, Object> u = new HashMap<>();
         u.put(Constants.NODE_BOOKINGS + "/" + booking.getId() + "/status", Constants.BOOKING_CANCELLED);
         u.put(Constants.NODE_BOOKINGS + "/" + booking.getId() + "/cancelledAt", ServerValue.TIMESTAMP);
         u.put(Constants.NODE_BOOKINGS + "/" + booking.getId() + "/refundAmount", refund);
         for (String path : blockPaths(booking)) u.put(path, null);     // free the slot
+        if (booking.getPaymentId() != null) {
+            String p = Constants.NODE_PAYMENTS + "/" + booking.getPaymentId();
+            if (booking.isCashPayment()) {
+                u.put(p + "/status", Constants.PAYMENT_FAILED);
+                u.put(p + "/failureReason", context.getString(R.string.pay_fail_reason_cancelled));
+            } else {
+                u.put(p + "/status", Constants.PAYMENT_REFUNDED);
+                u.put(p + "/refundAmount", refund);
+                u.put(p + "/refundedAt", ServerValue.TIMESTAMP);
+            }
+        }
 
         db().updateChildren(u)
                 .addOnSuccessListener(x -> callback.onSuccess(refund))
@@ -184,6 +175,12 @@ public class BookingRepository {
             // free – and may since belong to someone else – so they are left alone.)
             if (b.isConfirmed()) {
                 for (String path : blockPaths(b)) u.put(path, null);
+                // Unpaid cash booking nobody used → its payment is closed as FAILED
+                if (b.isCashPayment() && b.getPaymentId() != null) {
+                    String p = Constants.NODE_PAYMENTS + "/" + b.getPaymentId();
+                    u.put(p + "/status", Constants.PAYMENT_FAILED);
+                    u.put(p + "/failureReason", context.getString(R.string.pay_fail_reason_no_show));
+                }
             }
             db().updateChildren(u);
         }
@@ -207,7 +204,7 @@ public class BookingRepository {
 
     /** Database paths of the booking's 30-minute blocks in slotSchedule. */
     @NonNull
-    private static List<String> blockPaths(@NonNull Booking b) {
+    static List<String> blockPaths(@NonNull Booking b) {
         TimeWindow w = TimeWindow.ofMillis(b.getStartTime(), b.getEndTime());
         List<String> paths = new ArrayList<>();
         for (String key : w.blockKeys()) {

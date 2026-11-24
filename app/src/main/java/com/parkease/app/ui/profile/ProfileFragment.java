@@ -91,6 +91,10 @@ public class ProfileFragment extends Fragment {
 
         setupMenuRow(binding.menuVehicles, R.drawable.ic_car, R.string.vehicles_title, R.string.vehicles_menu_sub,
                 v -> startActivity(new Intent(requireContext(), VehiclesActivity.class)));
+        setupMenuRow(binding.menuPayments, R.drawable.ic_receipt, R.string.pay_history_title,
+                R.string.pay_history_menu_sub,
+                v -> startActivity(new Intent(requireContext(),
+                        com.parkease.app.ui.customer.payment.PaymentHistoryActivity.class)));
         setupMenuRow(binding.menuEdit, R.drawable.ic_edit, R.string.profile_edit, R.string.profile_edit_sub,
                 v -> startActivity(new Intent(requireContext(), EditProfileActivity.class)));
         setupMenuRow(binding.menuPassword, R.drawable.ic_key, R.string.profile_change_password,

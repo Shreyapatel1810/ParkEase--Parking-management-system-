@@ -40,6 +40,8 @@ public class Booking {
     private long cancelledAt;
     private double refundAmount;
     private long createdAt;
+    private String paymentId;      // Step 12: transaction ID of the payment that confirmed it
+    private String paymentMethod;  // UPI / CARD / CASH
 
     /** Required by Firebase. */
     public Booking() { }
@@ -103,6 +105,18 @@ public class Booking {
 
     public long getCreatedAt() { return createdAt; }
     public void setCreatedAt(long createdAt) { this.createdAt = createdAt; }
+
+    public String getPaymentId() { return paymentId; }
+    public void setPaymentId(String paymentId) { this.paymentId = paymentId; }
+
+    public String getPaymentMethod() { return paymentMethod; }
+    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
+
+    /** Pay-at-the-gate booking (nothing was charged in the app). */
+    @Exclude
+    public boolean isCashPayment() {
+        return Constants.PAYMENT_CASH.equals(paymentMethod);
+    }
 
     // ------------------------------------------------------------------ helpers (not saved)
 
