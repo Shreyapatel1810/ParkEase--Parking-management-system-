@@ -20,6 +20,7 @@ import com.parkease.app.utils.Constants;
 import com.parkease.app.utils.FirebaseErrorMapper;
 import com.parkease.app.utils.FirebaseHelper;
 import com.parkease.app.utils.NetworkUtils;
+import com.parkease.app.utils.TicketCodec;
 
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
@@ -149,6 +150,7 @@ public class PaymentRepository {
             u.put(b + "/confirmedAt", ServerValue.TIMESTAMP);
             u.put(b + "/paymentId", txn);
             u.put(b + "/paymentMethod", method);
+            u.put(b + "/ticketToken", TicketCodec.newToken());   // Step 13: secret part of the QR ticket
             for (String path : BookingRepository.blockPaths(booking)) {
                 u.put(path + "/status", Constants.SCHEDULE_BOOKED);
             }

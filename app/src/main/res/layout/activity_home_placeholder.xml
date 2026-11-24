@@ -126,6 +126,18 @@
                         app:esTitle="@string/home_coming_title" />
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- Admin only (Step 13): gate scanner for QR parking tickets -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnScan"
+                    style="@style/Widget.ParkEase.Button.Primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/section_spacing"
+                    android:text="@string/gate_scan_button"
+                    android:visibility="gone"
+                    app:icon="@drawable/ic_qr_scan"
+                    tools:visibility="visible" />
+
                 <!-- Admin only: writes demo data to Firebase (see SampleDataSeeder) -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSeed"

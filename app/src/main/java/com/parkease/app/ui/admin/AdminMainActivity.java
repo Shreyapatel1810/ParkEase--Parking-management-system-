@@ -27,6 +27,9 @@ public class AdminMainActivity extends BaseHomeActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (binding == null) return;      // not logged in → already sent to Login
+        binding.btnScan.setVisibility(View.VISIBLE);
+        binding.btnScan.setOnClickListener(v -> startActivity(
+                new android.content.Intent(this, com.parkease.app.ui.admin.scan.ScanTicketActivity.class)));
         binding.btnSeed.setVisibility(View.VISIBLE);
         binding.btnSeed.setOnClickListener(v -> confirmSeed());
     }

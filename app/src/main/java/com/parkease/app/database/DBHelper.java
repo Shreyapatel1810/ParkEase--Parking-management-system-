@@ -45,6 +45,11 @@ public class DBHelper extends SQLiteOpenHelper {
                     + Tickets.AMOUNT + " REAL, "
                     + Tickets.STATUS + " TEXT, "
                     + Tickets.QR_CONTENT + " TEXT, "
+                    + Tickets.CUSTOMER_NAME + " TEXT, "
+                    + Tickets.SLOT_NUMBER + " TEXT, "
+                    + Tickets.VEHICLE_TYPE + " TEXT, "
+                    + Tickets.ENTRY_TIME + " INTEGER, "
+                    + Tickets.EXIT_TIME + " INTEGER, "
                     + Tickets.SYNCED_AT + " INTEGER)";
 
     private static final String CREATE_SEARCH_HISTORY =

@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Check whether the phone is online (show "No internet" banner) -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- Admin QR scanner (asked at runtime, used in Step 11) -->
+    <!-- Staff QR ticket scanner (asked at runtime in ScanTicketActivity, Step 13) -->
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- Booking notifications on Android 13+ (asked at runtime, used in Step 12) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -16,9 +16,14 @@
     <!-- Optional: approximate location to sort parking by distance (Step 7, asked at runtime) -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <!-- The camera is optional, so phones without one can still install the app -->
+    <!-- Step 13: CAMERA (declared above) is used only by the staff QR scanner and is asked
+         for at runtime in ScanTicketActivity. The camera is optional, so phones without
+         one can still install the app; autofocus helps reading QR codes. -->
     <uses-feature
         android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
         android:required="false" />
 
     <application
@@ -101,6 +106,19 @@
             android:exported="false" />
         <activity
             android:name=".ui.customer.payment.PaymentHistoryActivity"
+            android:exported="false" />
+
+        <!-- Step 13: QR ticket (customer) and gate scanner (staff) -->
+        <activity
+            android:name=".ui.customer.ticket.TicketActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.admin.scan.ScanTicketActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ui.admin.scan.VerifyTicketActivity"
             android:exported="false" />
 
         <!-- Step 5: admin dashboard (placeholder until the admin module) -->

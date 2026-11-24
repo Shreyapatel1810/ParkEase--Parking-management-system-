@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Step 13 – Staff QR scanner (ZXing). Java: ui/admin/scan/ScanTicketActivity.java
+    The camera fills the screen; the toolbar and buttons float on top.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context=".ui.admin.scan.ScanTicketActivity">
+
+    <!-- ZXing camera preview with the scanning frame -->
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+        android:id="@+id/barcodeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:zxing_scanner_layout="@layout/zxing_barcode_scanner" />
+
+    <!-- Shown when the camera permission isn't granted -->
+    <LinearLayout
+        android:id="@+id/permissionGroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_screen"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/space_2xl"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_camera"
+            app:tint="@color/brand_secondary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_lg"
+            android:gravity="center"
+            android:text="@string/gate_camera_needed_title"
+            android:textAppearance="@style/TextAppearance.ParkEase.TitleLarge"
+            android:textColor="@color/text_primary" />
+
+        <TextView
+            style="@style/Widget.ParkEase.Text.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_sm"
+            android:gravity="center"
+            android:text="@string/gate_camera_needed_msg" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAllow"
+            style="@style/Widget.ParkEase.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xl"
+            android:text="@string/gate_allow_camera" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnManualFromPermission"
+            style="@style/Widget.ParkEase.Button.Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gate_enter_code" />
+    </LinearLayout>
+
+    <!-- Top bar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/scrim"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@android:color/white"
+        app:title="@string/gate_scan_title"
+        app:titleTextColor="@android:color/white" />
+
+    <!-- Bottom buttons -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/scrim"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_md">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTorch"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_sm"
+            android:layout_weight="1"
+            android:text="@string/gate_torch_on"
+            app:icon="@drawable/ic_bolt" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnManual"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_sm"
+            android:layout_weight="1"
+            android:text="@string/gate_enter_code"
+            app:icon="@drawable/ic_edit" />
+    </LinearLayout>
+</FrameLayout>

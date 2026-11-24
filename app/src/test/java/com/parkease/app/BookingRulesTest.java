@@ -135,11 +135,11 @@ public class BookingRulesTest {
     }
 
     @Test
-    public void confirmedNoShowExpiresAfterGracePeriod() {
+    public void confirmedNoShowExpiresOnlyAfterTheEnd() {
         long now = System.currentTimeMillis();
-        Booking justStarted = booking(Constants.BOOKING_CONFIRMED, now - 10 * MIN, now + 60 * MIN, 0, 100);
-        Booking noShow = booking(Constants.BOOKING_CONFIRMED, now - 20 * MIN, now + 60 * MIN, 0, 100);
-        assertFalse(justStarted.shouldExpire(now));   // within 15-minute grace
+        Booking lateArrival = booking(Constants.BOOKING_CONFIRMED, now - 40 * MIN, now + 60 * MIN, 0, 100);
+        Booking noShow = booking(Constants.BOOKING_CONFIRMED, now - 120 * MIN, now - MIN, 0, 100);
+        assertFalse(lateArrival.shouldExpire(now));   // can still enter until the end time
         assertTrue(noShow.shouldExpire(now));
     }
 

@@ -221,8 +221,7 @@ public class BookingSummaryActivity extends BaseActivity {
             binding.btnPrimary.setText(R.string.summary_choose_again);
             binding.btnPrimary.setOnClickListener(v -> bookAgain(b));
         } else if (policy.canCancel(b, now)) {      // confirmed, not started
-            binding.btnPrimary.setText(R.string.summary_done);
-            binding.btnPrimary.setOnClickListener(v -> finish());
+            showTicketButton(b);
             binding.btnSecondary.setVisibility(View.VISIBLE);
             binding.btnSecondary.setText(R.string.summary_cancel);
             binding.btnSecondary.setOnClickListener(v -> askCancel());
@@ -230,6 +229,20 @@ public class BookingSummaryActivity extends BaseActivity {
                 || Constants.BOOKING_COMPLETED.equals(b.getStatus())) {
             binding.btnPrimary.setText(R.string.summary_book_again);
             binding.btnPrimary.setOnClickListener(v -> bookAgain(b));
+        } else if (b.hasUsableTicket()) {           // started / parked
+            showTicketButton(b);
+        } else {
+            binding.btnPrimary.setText(R.string.summary_done);
+            binding.btnPrimary.setOnClickListener(v -> finish());
+        }
+    }
+
+    /** Step 13: confirmed or parked bookings open their QR ticket. */
+    private void showTicketButton(@NonNull Booking b) {
+        if (b.hasUsableTicket()) {
+            binding.btnPrimary.setText(R.string.ticket_view);
+            binding.btnPrimary.setOnClickListener(v -> startActivity(
+                    com.parkease.app.ui.customer.ticket.TicketActivity.intent(this, b.getId())));
         } else {
             binding.btnPrimary.setText(R.string.summary_done);
             binding.btnPrimary.setOnClickListener(v -> finish());

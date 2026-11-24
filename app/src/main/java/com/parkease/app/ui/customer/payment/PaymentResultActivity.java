@@ -131,6 +131,15 @@ public class PaymentResultActivity extends BaseActivity {
             });
             binding.btnSecondary.setText(R.string.pay_view_booking);
             binding.btnSecondary.setOnClickListener(v -> openBooking(p));
+        } else if ((p.isSuccessful() || p.isPending()) && p.getBookingId() != null) {
+            // Step 13: booking confirmed → its QR ticket is ready
+            binding.btnPrimary.setText(R.string.ticket_view);
+            binding.btnPrimary.setOnClickListener(v -> {
+                startActivity(com.parkease.app.ui.customer.ticket.TicketActivity.intent(this, p.getBookingId()));
+                finish();
+            });
+            binding.btnSecondary.setText(R.string.pay_view_booking);
+            binding.btnSecondary.setOnClickListener(v -> openBooking(p));
         } else {
             binding.btnPrimary.setText(R.string.pay_view_booking);
             binding.btnPrimary.setOnClickListener(v -> openBooking(p));

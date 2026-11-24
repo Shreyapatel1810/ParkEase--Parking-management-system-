@@ -42,6 +42,11 @@ public class Booking {
     private long createdAt;
     private String paymentId;      // Step 12: transaction ID of the payment that confirmed it
     private String paymentMethod;  // UPI / CARD / CASH
+    private String ticketToken;    // Step 13: secret random part of the QR ticket (128-bit)
+    private long entryTime;        // set by staff when the vehicle enters (0 = not yet)
+    private long exitTime;         // set by staff when the vehicle leaves
+    private String entryBy;        // staff uid
+    private String exitBy;
 
     /** Required by Firebase. */
     public Booking() { }
@@ -112,6 +117,27 @@ public class Booking {
     public String getPaymentMethod() { return paymentMethod; }
     public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
 
+    public String getTicketToken() { return ticketToken; }
+    public void setTicketToken(String ticketToken) { this.ticketToken = ticketToken; }
+
+    public long getEntryTime() { return entryTime; }
+    public void setEntryTime(long entryTime) { this.entryTime = entryTime; }
+
+    public long getExitTime() { return exitTime; }
+    public void setExitTime(long exitTime) { this.exitTime = exitTime; }
+
+    public String getEntryBy() { return entryBy; }
+    public void setEntryBy(String entryBy) { this.entryBy = entryBy; }
+
+    public String getExitBy() { return exitBy; }
+    public void setExitBy(String exitBy) { this.exitBy = exitBy; }
+
+    /** Confirmed or parked – the QR ticket can be used at the gate. */
+    @Exclude
+    public boolean hasUsableTicket() {
+        return ticketToken != null && (isConfirmed() || isActive());
+    }
+
     /** Pay-at-the-gate booking (nothing was charged in the app). */
     @Exclude
     public boolean isCashPayment() {
@@ -148,12 +174,13 @@ public class Booking {
     /**
      * Should this booking now be marked EXPIRED?
      *  - an unconfirmed hold whose time ran out, or
-     *  - a confirmed booking whose car never arrived within the grace period (no-show).
+     *  - a confirmed booking whose vehicle never entered before the booking ended (no-show).
+     *    (Late arrivals can still enter until the end time – Step 13.)
      */
     @Exclude
     public boolean shouldExpire(long now) {
         if (isPending()) return holdUntil <= now;
-        return isConfirmed() && startTime + Constants.GRACE_PERIOD_MINUTES * 60_000L < now;
+        return isConfirmed() && endTime <= now;
     }
 
     /** Duration in minutes. */

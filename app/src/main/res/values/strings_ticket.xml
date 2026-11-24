@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Step 13: QR parking tickets (customer) and the gate scanner (staff) -->
+<resources>
+    <!-- ===== Customer ticket ===== -->
+    <string name="ticket_title">Parking ticket</string>
+    <string name="ticket_subtitle">Show this QR code at the entry gate</string>
+    <string name="ticket_view">View QR ticket</string>
+    <string name="ticket_booking_id">Booking ID</string>
+    <string name="ticket_customer">Customer</string>
+    <string name="ticket_vehicle">Vehicle</string>
+    <string name="ticket_location">Parking location</string>
+    <string name="ticket_slot">Slot</string>
+    <string name="ticket_date">Date</string>
+    <string name="ticket_time">Time</string>
+    <string name="ticket_status">Status</string>
+    <string name="ticket_entered">Entered at %1$s</string>
+    <string name="ticket_exited">Exited at %1$s</string>
+    <string name="ticket_hint">Turn up your screen brightness if the scanner can\'t read the code. The ticket also works offline.</string>
+    <string name="ticket_offline">You\'re offline – showing the saved ticket.</string>
+    <string name="ticket_not_valid">NOT VALID · %1$s</string>
+    <string name="ticket_used">USED</string>
+    <string name="ticket_unavailable">This booking has no QR ticket yet. Tickets are created when the booking is confirmed.</string>
+    <string name="cd_ticket_qr">QR code for booking %1$s</string>
+
+    <!-- ===== Staff scanner ===== -->
+    <string name="gate_scan_button">Scan parking ticket</string>
+    <string name="gate_scan_title">Scan ticket</string>
+    <string name="gate_scan_hint">Point the camera at the customer\'s QR ticket</string>
+    <string name="gate_not_parkease">This isn\'t a ParkEase ticket QR.</string>
+    <string name="gate_torch_on">Torch on</string>
+    <string name="gate_torch_off">Torch off</string>
+    <string name="gate_enter_code">Enter code</string>
+    <string name="gate_enter_code_title">Enter booking code</string>
+    <string name="gate_enter_code_hint">e.g. PE-7K3D9Q</string>
+    <string name="gate_find">Find</string>
+    <string name="gate_camera_needed_title">Camera permission needed</string>
+    <string name="gate_camera_needed_msg">ParkEase uses the camera only to scan parking ticket QR codes. Nothing is recorded or saved.</string>
+    <string name="gate_allow_camera">Allow camera</string>
+    <string name="gate_open_settings">Open settings</string>
+
+    <!-- ===== Verification ===== -->
+    <string name="gate_verify_title">Ticket check</string>
+    <string name="gate_verify_subtitle">Checked against the live database</string>
+    <string name="gate_manual_warning">Found by code, not by QR. Check that the vehicle\'s number plate matches before letting it in.</string>
+    <string name="gate_customer">Customer</string>
+    <string name="gate_vehicle">Vehicle</string>
+    <string name="gate_slot">Slot</string>
+    <string name="gate_slot_value">%1$s · %2$s\nID %3$s</string>
+    <string name="gate_booking_time">Booking time</string>
+    <string name="gate_booking_status">Booking status</string>
+    <string name="gate_payment">Payment</string>
+    <string name="gate_payment_value">%1$s · %2$s · %3$s</string>
+    <string name="gate_payment_none">No payment record</string>
+    <string name="gate_entry_exit">Entry / exit</string>
+    <string name="gate_not_entered">Not entered yet</string>
+    <string name="gate_entered_value">In: %1$s</string>
+    <string name="gate_entered_exited_value">In: %1$s\nOut: %2$s</string>
+
+    <string name="gate_record_entry">Record entry</string>
+    <string name="gate_record_exit">Record exit</string>
+    <string name="gate_record_exit_cash">Collect %1$s cash &amp; record exit</string>
+    <string name="gate_scan_next">Scan next ticket</string>
+    <string name="gate_confirm_entry">Let %1$s into slot %2$s?\n\nCheck the number plate matches.</string>
+    <string name="gate_confirm_exit">Record exit for %1$s from slot %2$s?</string>
+    <string name="gate_confirm_exit_cash">Collect %1$s in cash from the customer, then record the exit for %2$s.</string>
+    <string name="gate_saving">Saving…</string>
+    <string name="gate_entry_done">Entry recorded for %1$s</string>
+    <string name="gate_exit_done">Exit recorded for %1$s</string>
+
+    <!-- Verdicts -->
+    <string name="verdict_entry_title">Valid ticket – allow entry</string>
+    <string name="verdict_entry_msg">Paid booking for this time. Direct the vehicle to slot %1$s.</string>
+    <string name="verdict_entry_cash_msg">Booking valid. Cash at parking: %1$s to be collected at exit. Direct the vehicle to slot %2$s.</string>
+    <string name="verdict_exit_title">Vehicle is parked – allow exit</string>
+    <string name="verdict_exit_msg">Entry was recorded. Record the exit when the vehicle leaves.</string>
+    <string name="verdict_exit_overstay">Overstayed by %1$d min.</string>
+    <string name="verdict_invalid_title">Invalid ticket</string>
+    <string name="verdict_invalid_msg">This QR doesn\'t match any booking in the database. It may be fake, copied or changed. Do not allow entry.</string>
+    <string name="verdict_not_paid_title">Not paid</string>
+    <string name="verdict_not_paid_msg">This booking has no successful payment. Do not allow entry.</string>
+    <string name="verdict_payment_title">Payment problem</string>
+    <string name="verdict_payment_msg">The payment failed or was refunded. Do not allow entry.</string>
+    <string name="verdict_cancelled_title">Booking cancelled</string>
+    <string name="verdict_cancelled_msg">The customer cancelled this booking. Do not allow entry.</string>
+    <string name="verdict_expired_title">Booking expired</string>
+    <string name="verdict_expired_msg">This booking is no longer valid. Do not allow entry.</string>
+    <string name="verdict_completed_title">Already used</string>
+    <string name="verdict_completed_msg">Entry and exit were already recorded for this ticket. It can\'t be used again.</string>
+    <string name="verdict_early_title">Too early</string>
+    <string name="verdict_early_msg">Entry opens 30 minutes before the start – in %1$d min.</string>
+    <string name="verdict_ended_title">Booking time is over</string>
+    <string name="verdict_ended_msg">The booked time has ended and the vehicle never entered. Do not allow entry.</string>
+
+    <string name="gate_err_code_not_found">No booking with that code.</string>
+    <string name="gate_err_entry_duplicate">Entry could not be recorded – it was already recorded (maybe by another gate), or you are not authorised staff.</string>
+    <string name="gate_err_exit_duplicate">Exit could not be recorded – it was already recorded, or you are not authorised staff.</string>
+</resources>

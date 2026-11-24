@@ -57,6 +57,13 @@ public final class Constants {
     public static final String PAYMENT_REFUNDED = "REFUNDED";
     public static final String EXTRA_TRANSACTION_ID = "extra_transaction_id";
 
+    // ---------- QR tickets & gate (Step 13) ----------
+    public static final String EXTRA_TICKET_TOKEN = "extra_ticket_token";
+    public static final String EXTRA_BOOKING_CODE = "extra_booking_code";
+    public static final int ENTRY_EARLY_MINUTES = 30;        // can enter up to 30 min before the start
+    public static final String GATE_ENTRY = "ENTRY";
+    public static final String GATE_EXIT = "EXIT";
+
     // ---------- Slot schedule (Step 9) ----------
     /** Each slot's day is split into 30-minute blocks: slotSchedule/{loc}/{yyyyMMdd}/{slot}/{HHmm}. */
     public static final int BLOCK_MINUTES = 30;

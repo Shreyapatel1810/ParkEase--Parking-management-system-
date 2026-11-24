@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Step 13 – Staff ticket check (after scanning). Java: ui/admin/scan/VerifyTicketActivity.java
+    Big coloured verdict at the top, the booking details from Firebase, and the gate action.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_screen"
+    tools:context=".ui.admin.scan.VerifyTicketActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/space_xl">
+
+                <include
+                    android:id="@+id/header"
+                    layout="@layout/layout_header_toolbar" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/screen_padding">
+
+                    <!-- ===== Verdict ===== -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/verdictCard"
+                        style="@style/Widget.ParkEase.Card.Elevated"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/header_overlap"
+                        app:cardBackgroundColor="@color/slot_available_bg">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/card_padding">
+
+                            <ImageView
+                                android:id="@+id/imgVerdict"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_check_circle"
+                                app:tint="@color/slot_available" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/space_md"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvVerdictTitle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="@style/TextAppearance.ParkEase.TitleLarge"
+                                    android:textColor="@color/text_primary"
+                                    tools:text="Valid ticket – allow entry" />
+
+                                <TextView
+                                    android:id="@+id/tvVerdictMsg"
+                                    style="@style/Widget.ParkEase.Text.Secondary"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/space_xs"
+                                    android:textColor="@color/text_primary"
+                                    tools:text="Paid booking for this time. Direct the vehicle to slot A-07." />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/tvManualWarning"
+                        style="@style/Widget.ParkEase.Text.Caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_md"
+                        android:background="@drawable/bg_input_field"
+                        android:backgroundTint="@color/slot_reserved_bg"
+                        android:drawablePadding="@dimen/space_sm"
+                        android:padding="@dimen/space_md"
+                        android:text="@string/gate_manual_warning"
+                        android:textColor="@color/text_primary"
+                        android:visibility="gone"
+                        app:drawableStartCompat="@drawable/ic_error"
+                        app:drawableTint="@color/slot_reserved"
+                        tools:visibility="visible" />
+
+                    <!-- ===== Vehicle (big, for checking the number plate) ===== -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/detailsCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/card_gap">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/card_padding">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvPlate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_number_plate"
+                                    android:fontFamily="monospace"
+                                    android:paddingHorizontal="@dimen/space_md"
+                                    android:paddingVertical="@dimen/space_xs"
+                                    android:textColor="@color/grey_900"
+                                    android:textSize="22sp"
+                                    android:textStyle="bold"
+                                    tools:text="GJ 01 AB 1234" />
+
+                                <Space
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1" />
+
+                                <TextView
+                                    android:id="@+id/tvBookingStatus"
+                                    style="@style/Widget.ParkEase.Text.Badge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    tools:text="Confirmed" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvVehicleType"
+                                style="@style/Widget.ParkEase.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_xs"
+                                tools:text="Car · Booking PE-7K3D9Q" />
+
+                            <include
+                                android:id="@+id/rowCustomer"
+                                layout="@layout/item_profile_row" />
+
+                            <include
+                                android:id="@+id/rowSlot"
+                                layout="@layout/item_profile_row" />
+
+                            <include
+                                android:id="@+id/rowTime"
+                                layout="@layout/item_profile_row" />
+
+                            <include
+                                android:id="@+id/rowPayment"
+                                layout="@layout/item_profile_row" />
+
+                            <include
+                                android:id="@+id/rowGate"
+                                layout="@layout/item_profile_row" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- ===== Actions ===== -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.ParkEase.Card.Elevated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="12dp">
+
+            <LinearLayout
+                android:id="@+id/actionBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/screen_padding"
+                android:paddingVertical="@dimen/space_md">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAction"
+                    style="@style/Widget.ParkEase.Button.Primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Record entry" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnScanNext"
+                    style="@style/Widget.ParkEase.Button.Text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gate_scan_next" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <com.parkease.app.ui.components.StateView
+        android:id="@+id/stateView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_screen" />
+
+    <com.parkease.app.ui.components.LoadingView
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:lvMessage="@string/gate_saving"
+        app:lvOverlay="true" />
+
+    <include
+        android:id="@+id/statusBarScrim"
+        layout="@layout/view_status_bar_scrim" />
+</FrameLayout>

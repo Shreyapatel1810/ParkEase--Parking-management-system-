@@ -15,7 +15,7 @@ public final class DBContract {
      * DBHelper.onUpgrade() on phones that have the old version.
      * v1 – Step 2 (5 tables)   v2 – Step 6 (+ user_profile)   v3 – Step 7 (+ recent_locations)
      */
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;   // 4: ticket columns for Step 13
 
     /** How many ParkEase tables exist (used by the setup check screen). */
     public static final int TABLE_COUNT = 7;
@@ -64,6 +64,11 @@ public final class DBContract {
         public static final String AMOUNT = "amount";
         public static final String STATUS = "status";
         public static final String QR_CONTENT = "qr_content";
+        public static final String CUSTOMER_NAME = "customer_name";
+        public static final String SLOT_NUMBER = "slot_number";
+        public static final String VEHICLE_TYPE = "vehicle_type";
+        public static final String ENTRY_TIME = "entry_time";
+        public static final String EXIT_TIME = "exit_time";
         public static final String SYNCED_AT = "synced_at";
     }
 

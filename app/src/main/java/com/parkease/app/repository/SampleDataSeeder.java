@@ -192,6 +192,7 @@ public class SampleDataSeeder {
         String demoTxn = "TXNDEMO" + me.getUid();
         booking.put("paymentId", demoTxn);
         booking.put("paymentMethod", Constants.PAYMENT_UPI);
+        booking.put("ticketToken", com.parkease.app.utils.TicketCodec.newToken());   // Step 13 QR ticket
         Map<String, Object> payment = new HashMap<>();
         payment.put("transactionId", demoTxn);
         payment.put("bookingId", demoBookingId);
