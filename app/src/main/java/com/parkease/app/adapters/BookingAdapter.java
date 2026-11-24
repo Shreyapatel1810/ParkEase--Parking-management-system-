@@ -70,10 +70,20 @@ public class BookingAdapter extends ListAdapter<Booking, BookingAdapter.Holder> 
         b.imgVehicle.setImageResource(Constants.VEHICLE_BIKE.equals(booking.getVehicleType())
                 ? R.drawable.ic_bike : R.drawable.ic_car);
 
+        bindStatus(b.tvStatus, booking);
+    }
+
+    /** Coloured status badge: Confirmed / Payment pending / Parked / Completed / Cancelled / Expired. */
+    public static void bindStatus(@NonNull android.widget.TextView badge, @NonNull Booking booking) {
+        Context c = badge.getContext();
         @StringRes int label;
         @ColorRes int fg;
         @ColorRes int bg;
         String status = booking.getStatus() == null ? "" : booking.getStatus();
+        // A hold that ran out is shown as Expired straight away
+        if (Constants.BOOKING_PENDING_PAYMENT.equals(status) && !booking.isHoldActive(System.currentTimeMillis())) {
+            status = Constants.BOOKING_EXPIRED;
+        }
         switch (status) {
             case Constants.BOOKING_ACTIVE:
                 label = R.string.booking_status_active; fg = R.color.slot_available; bg = R.color.slot_available_bg;
@@ -94,9 +104,9 @@ public class BookingAdapter extends ListAdapter<Booking, BookingAdapter.Holder> 
                 label = R.string.booking_status_confirmed; fg = R.color.brand_on_secondary_container; bg = R.color.brand_secondary_container;
                 break;
         }
-        b.tvStatus.setText(label);
-        b.tvStatus.setTextColor(ContextCompat.getColor(c, fg));
-        b.tvStatus.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(c, bg)));
+        badge.setText(label);
+        badge.setTextColor(ContextCompat.getColor(c, fg));
+        badge.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(c, bg)));
     }
 
     private static final DiffUtil.ItemCallback<Booking> DIFF = new DiffUtil.ItemCallback<Booking>() {

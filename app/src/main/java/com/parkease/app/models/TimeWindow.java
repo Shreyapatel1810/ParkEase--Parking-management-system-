@@ -54,6 +54,14 @@ public class TimeWindow {
         return new TimeWindow(start.toLocalDate(), start.toLocalTime(), 120);
     }
 
+    /** Rebuilds the window of an existing booking (to find its 30-minute blocks). */
+    @NonNull
+    public static TimeWindow ofMillis(long startMillis, long endMillis) {
+        LocalDateTime start = LocalDateTime.ofInstant(java.time.Instant.ofEpochMilli(startMillis), ZoneId.systemDefault());
+        int minutes = (int) Math.max(0, (endMillis - startMillis) / 60_000L);
+        return new TimeWindow(start.toLocalDate(), start.toLocalTime(), minutes);
+    }
+
     @NonNull public LocalDate getDate() { return date; }
     @NonNull public LocalTime getStart() { return start; }
     public int getMinutes() { return minutes; }
@@ -115,8 +123,8 @@ public class TimeWindow {
         }
         if (start.getMinute() % Constants.BLOCK_MINUTES != 0) return R.string.time_err_step;
         if (startMillis() < System.currentTimeMillis() - 60_000L) return R.string.time_err_past;
-        // Same day only: the end must not pass midnight
-        if (start.plusMinutes(minutes).isBefore(start) || (start.toSecondOfDay() + minutes * 60L) > 24 * 3600L) {
+        // Same day only: the end may be midnight (24:00) but not later
+        if ((start.toSecondOfDay() + minutes * 60L) > 24 * 3600L) {
             return R.string.time_err_midnight;
         }
         try {

@@ -87,6 +87,11 @@
             android:name=".ui.customer.booking.SlotSelectionActivity"
             android:exported="false" />
 
+        <!-- Step 11: booking summary, confirm, cancel -->
+        <activity
+            android:name=".ui.customer.booking.BookingSummaryActivity"
+            android:exported="false" />
+
         <!-- Step 5: admin dashboard (placeholder until the admin module) -->
         <activity
             android:name=".ui.admin.AdminMainActivity"

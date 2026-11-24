@@ -52,6 +52,51 @@
     <string name="vehicle_bike">Bike</string>
     <string name="vehicle_suv">SUV</string>
 
+    <!-- Booking summary & confirmation (Step 11) -->
+    <string name="summary_title">Booking summary</string>
+    <string name="summary_code">Booking code %1$s</string>
+    <string name="summary_slot">Parking slot</string>
+    <string name="summary_slot_value">%1$s · ID %2$s</string>
+    <string name="summary_vehicle">Vehicle</string>
+    <string name="summary_date">Date</string>
+    <string name="summary_time">Time</string>
+    <string name="summary_time_value">%1$s – %2$s</string>
+    <string name="summary_duration">Duration</string>
+    <string name="summary_price">Price details</string>
+    <string name="summary_rate_line">%1$s × %2$s</string>
+    <string name="summary_total">Total</string>
+    <string name="summary_refund">Refund</string>
+    <string name="summary_booking_id">Booking ID</string>
+    <string name="summary_hold_timer">Slot held for %1$s – confirm before the timer ends</string>
+    <string name="summary_hold_expired">This hold has expired and the slot was released.</string>
+    <string name="summary_policy">Free cancellation up to %1$d minutes before the start. After that, %2$d%% is refunded. No cancellation after the start time.</string>
+    <string name="summary_confirm">Confirm booking</string>
+    <string name="summary_release">Release slot</string>
+    <string name="summary_cancel">Cancel booking</string>
+    <string name="summary_done">Done</string>
+    <string name="summary_book_again">Book again</string>
+    <string name="summary_choose_again">Choose a slot again</string>
+    <string name="summary_confirming">Confirming your booking…</string>
+    <string name="summary_cancelling">Cancelling…</string>
+    <string name="summary_released">Slot released</string>
+    <string name="summary_not_found">This booking no longer exists.</string>
+
+    <string name="confirmed_title">Booking confirmed!</string>
+    <string name="confirmed_message">Slot %1$s at %2$s is yours.\n%3$s\n\nBooking code: %4$s\nShow this code (or the QR ticket, coming next) at the entry gate.</string>
+    <string name="cancel_confirm_title">Cancel this booking?</string>
+    <string name="cancel_confirm_full">You\'ll get a full refund of %1$s.</string>
+    <string name="cancel_confirm_partial">It\'s less than %1$d minutes to the start, so %2$s of %3$s will be refunded.</string>
+    <string name="cancel_keep">Keep booking</string>
+    <string name="cancelled_message">Booking cancelled. Refund: %1$s</string>
+    <string name="booking_err_hold_expired">Your 10-minute hold has expired, so the slot was released. Please choose a slot again.</string>
+    <string name="booking_err_cannot_cancel">This booking can no longer be cancelled (it has already started or isn\'t confirmed).</string>
+
+    <!-- End time -->
+    <string name="time_pick_end">End time</string>
+    <string name="time_choose_end">Choose end time…</string>
+    <string name="duration_until">%1$s · until %2$s</string>
+    <string name="time_err_end_before_start">End time must be after the start time.</string>
+
     <!-- My vehicles (Step 10) -->
     <string name="vehicles_title">My vehicles</string>
     <string name="vehicles_subtitle">Saved vehicles for faster booking</string>

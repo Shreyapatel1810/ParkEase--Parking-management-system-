@@ -35,6 +35,10 @@ public class Booking {
     private String status;
     private double amount;
     private long holdUntil;        // PENDING_PAYMENT only: slot is held until this time
+    private String vehicleId;      // which of the customer's vehicles (Step 10)
+    private long confirmedAt;
+    private long cancelledAt;
+    private double refundAmount;
     private long createdAt;
 
     /** Required by Firebase. */
@@ -85,17 +89,63 @@ public class Booking {
     public long getHoldUntil() { return holdUntil; }
     public void setHoldUntil(long holdUntil) { this.holdUntil = holdUntil; }
 
+    public String getVehicleId() { return vehicleId; }
+    public void setVehicleId(String vehicleId) { this.vehicleId = vehicleId; }
+
+    public long getConfirmedAt() { return confirmedAt; }
+    public void setConfirmedAt(long confirmedAt) { this.confirmedAt = confirmedAt; }
+
+    public long getCancelledAt() { return cancelledAt; }
+    public void setCancelledAt(long cancelledAt) { this.cancelledAt = cancelledAt; }
+
+    public double getRefundAmount() { return refundAmount; }
+    public void setRefundAmount(double refundAmount) { this.refundAmount = refundAmount; }
+
     public long getCreatedAt() { return createdAt; }
     public void setCreatedAt(long createdAt) { this.createdAt = createdAt; }
 
     // ------------------------------------------------------------------ helpers (not saved)
 
-    /** Confirmed or currently parked, and not finished yet. */
+    /** Confirmed, parked, or a still-valid hold waiting for confirmation – and not finished yet. */
     @Exclude
     public boolean isUpcoming(long now) {
         boolean liveStatus = Constants.BOOKING_CONFIRMED.equals(status)
-                || Constants.BOOKING_ACTIVE.equals(status);
+                || Constants.BOOKING_ACTIVE.equals(status)
+                || isHoldActive(now);
         return liveStatus && endTime > now;
+    }
+
+    /** PENDING_PAYMENT and the 10-minute hold hasn't run out. */
+    @Exclude
+    public boolean isHoldActive(long now) {
+        return Constants.BOOKING_PENDING_PAYMENT.equals(status) && holdUntil > now;
+    }
+
+    @Exclude
+    public boolean isPending() {
+        return Constants.BOOKING_PENDING_PAYMENT.equals(status);
+    }
+
+    @Exclude
+    public boolean isConfirmed() {
+        return Constants.BOOKING_CONFIRMED.equals(status);
+    }
+
+    /**
+     * Should this booking now be marked EXPIRED?
+     *  - an unconfirmed hold whose time ran out, or
+     *  - a confirmed booking whose car never arrived within the grace period (no-show).
+     */
+    @Exclude
+    public boolean shouldExpire(long now) {
+        if (isPending()) return holdUntil <= now;
+        return isConfirmed() && startTime + Constants.GRACE_PERIOD_MINUTES * 60_000L < now;
+    }
+
+    /** Duration in minutes. */
+    @Exclude
+    public int getDurationMinutes() {
+        return (int) ((endTime - startTime) / 60_000L);
     }
 
     @Exclude

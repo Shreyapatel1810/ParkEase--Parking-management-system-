@@ -200,7 +200,15 @@ public class HomeFragment extends Fragment implements LocationAdapter.Listener {
         binding.searchBar.setOnSearchListener(query -> host().openExplore(query));
         binding.searchBar.setOnFilterClickListener(v -> host().openExplore(null));
         binding.btnFindParking.setOnClickListener(v -> host().openExplore(null));
-        binding.upcomingCard.card.setOnClickListener(v -> host().openTab(R.id.nav_bookings));
+        binding.upcomingCard.card.setOnClickListener(v -> {
+            Booking next = BookingRepository.findNextUpcoming(bookings);
+            if (next != null) {
+                startActivity(com.parkease.app.ui.customer.booking.BookingSummaryActivity
+                        .intent(requireContext(), next.getId()));
+            } else {
+                host().openTab(R.id.nav_bookings);
+            }
+        });
         binding.btnUseLocation.setOnClickListener(v ->
                 locationPermission.launch(Manifest.permission.ACCESS_COARSE_LOCATION));
     }

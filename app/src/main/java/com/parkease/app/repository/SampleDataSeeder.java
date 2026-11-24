@@ -145,6 +145,12 @@ public class SampleDataSeeder {
         promo.put("priority", 1);
         u.put(Constants.NODE_PROMOTIONS + "/PROMO_SAMPLE_01", promo);
 
+        // Step 11: cancellation rules (the admin can change these numbers in the console)
+        Map<String, Object> cancellation = new HashMap<>();
+        cancellation.put("fullRefundBeforeMinutes", 60);
+        cancellation.put("partialRefundPercent", 50);
+        u.put(Constants.NODE_APP_CONFIG + "/cancellation", cancellation);
+
         // An upcoming booking for MY account, starting about 3 hours from now (on a
         // 30-minute mark), for 2 hours – plus its schedule blocks so the slot shows as
         // RESERVED for that time in the slot grid.
@@ -177,6 +183,9 @@ public class SampleDataSeeder {
         booking.put("endTime", start + 2 * HOUR);
         booking.put("status", Constants.BOOKING_CONFIRMED);
         booking.put("amount", 100);
+        booking.put("vehicleId", "DEMO_VEHICLE");    // the rules need every booking field for later updates
+        booking.put("holdUntil", 0);
+        booking.put("confirmedAt", ServerValue.TIMESTAMP);
         booking.put("createdAt", ServerValue.TIMESTAMP);
         u.put(Constants.NODE_BOOKINGS + "/" + demoBookingId, booking);
 

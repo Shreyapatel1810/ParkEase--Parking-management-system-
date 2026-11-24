@@ -71,4 +71,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.16.0'
 
     // SQLite needs no dependency: android.database.sqlite is built into Android.
+
+    // ---------- Unit tests (app/src/test) – run with: gradlew testDebugUnitTest ----------
+    testImplementation 'junit:junit:4.13.2'
 }

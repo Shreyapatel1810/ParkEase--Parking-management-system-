@@ -442,7 +442,7 @@ public class SlotSelectionActivity extends BaseActivity implements SlotGridAdapt
             public void onSuccess(Booking booking) {
                 binding.loading.hide();
                 clearSelection();
-                showHoldConfirmation(booking, chosen);
+                openSummary(booking);
             }
 
             @Override
@@ -456,31 +456,9 @@ public class SlotSelectionActivity extends BaseActivity implements SlotGridAdapt
         });
     }
 
-    private void showHoldConfirmation(@NonNull Booking booking, @NonNull TimeWindow chosen) {
-        String message = getString(R.string.hold_message,
-                booking.getLocationName(),
-                FormatUtils.timeRange(booking.getStartTime(), booking.getEndTime()),
-                FormatUtils.money(booking.getAmount()),
-                booking.getBookingCode(),
-                FormatUtils.time(booking.getHoldUntil()));
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(getString(R.string.hold_title, booking.getSlotNumber()))
-                .setMessage(message)
-                .setCancelable(false)
-                .setNegativeButton(R.string.hold_release, (d, w) ->
-                        slotRepository.releaseHold(booking, chosen, new DataCallback<Void>() {
-                            @Override
-                            public void onSuccess(Void data) {
-                                Snackbar.make(binding.getRoot(), R.string.hold_released, Snackbar.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onError(@NonNull String error) {
-                                Snackbar.make(binding.getRoot(), error, Snackbar.LENGTH_LONG).show();
-                            }
-                        }))
-                .setPositiveButton(R.string.hold_keep, null)
-                .show();
+    /** Step 11: the server is holding the slot → show the booking summary to confirm it. */
+    private void openSummary(@NonNull Booking booking) {
+        startActivity(BookingSummaryActivity.intent(this, booking.getId()));
     }
 
     // ================================================================== time & vehicle pickers
@@ -598,22 +576,51 @@ public class SlotSelectionActivity extends BaseActivity implements SlotGridAdapt
         picker.show(getSupportFragmentManager(), "time");
     }
 
+    /** Duration list ("2 h · until 6:30 PM") plus "Choose end time…" as the first option. */
     private void pickDuration() {
-        int steps = TimeWindow.MAX_MINUTES / Constants.BLOCK_MINUTES;   // 30 min … 12 h
-        String[] labels = new String[steps];
-        int checked = 0;
+        int startMin = window.getStart().getHour() * 60 + window.getStart().getMinute();
+        int maxMinutes = Math.min(TimeWindow.MAX_MINUTES, 24 * 60 - startMin);  // same day only
+        int steps = Math.max(1, maxMinutes / Constants.BLOCK_MINUTES);
+        String[] labels = new String[steps + 1];
+        labels[0] = getString(R.string.time_choose_end);
+        int checked = -1;
         for (int i = 0; i < steps; i++) {
             int minutes = (i + 1) * Constants.BLOCK_MINUTES;
-            labels[i] = durationLabel(minutes);
-            if (minutes == window.getMinutes()) checked = i;
+            labels[i + 1] = getString(R.string.duration_until, durationLabel(minutes),
+                    FormatUtils.time(window.startMillis() + minutes * 60_000L));
+            if (minutes == window.getMinutes()) checked = i + 1;
         }
         new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.time_pick_duration)
                 .setSingleChoiceItems(labels, checked, (dialog, which) -> {
-                    setWindow(window.withMinutes((which + 1) * Constants.BLOCK_MINUTES));
                     dialog.dismiss();
+                    if (which == 0) pickEndTime();
+                    else setWindow(window.withMinutes(which * Constants.BLOCK_MINUTES));
                 })
                 .show();
+    }
+
+    /** Choose the END time instead of a duration (rounded up to a 30-minute mark). */
+    private void pickEndTime() {
+        LocalTime end = window.getEnd();
+        MaterialTimePicker picker = new MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .setHour(end.getHour())
+                .setMinute(end.getMinute())
+                .setTitleText(R.string.time_pick_end)
+                .build();
+        picker.addOnPositiveButtonClickListener(v -> {
+            int startMin = window.getStart().getHour() * 60 + window.getStart().getMinute();
+            int endMin = picker.getHour() * 60 + picker.getMinute();
+            if (endMin == 0) endMin = 24 * 60;                         // 12:00 AM = midnight
+            endMin = ((endMin + Constants.BLOCK_MINUTES - 1) / Constants.BLOCK_MINUTES) * Constants.BLOCK_MINUTES;
+            if (endMin <= startMin) {
+                Snackbar.make(binding.getRoot(), R.string.time_err_end_before_start, Snackbar.LENGTH_LONG).show();
+                return;
+            }
+            setWindow(window.withMinutes(endMin - startMin));
+        });
+        picker.show(getSupportFragmentManager(), "endTime");
     }
 
     private void setWindow(@NonNull TimeWindow newWindow) {

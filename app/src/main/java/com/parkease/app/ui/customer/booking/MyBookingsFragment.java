@@ -81,11 +81,9 @@ public class MyBookingsFragment extends Fragment {
             @Override public void onTabReselected(TabLayout.Tab tab) { }
         });
 
-        adapter = new BookingAdapter(booking -> {
-            if (booking.getLocationId() != null) {
-                ((CustomerNavHost) requireActivity()).openLocation(booking.getLocationId());
-            }
-        });
+        // Step 11: a booking opens its details (confirm / cancel / view)
+        adapter = new BookingAdapter(booking ->
+                startActivity(BookingSummaryActivity.intent(requireContext(), booking.getId())));
         binding.rvBookings.setAdapter(adapter);
         binding.rvBookings.addItemDecoration(new SpaceItemDecoration(
                 getResources().getDimensionPixelSize(R.dimen.card_gap), false));
@@ -120,6 +118,7 @@ public class MyBookingsFragment extends Fragment {
                 loaded = true;
                 handler.removeCallbacks(loadTimeout);
                 all = data;
+                bookingRepository.expireStaleBookings(data);   // ran-out holds & no-shows → EXPIRED
                 render();
             }
 
