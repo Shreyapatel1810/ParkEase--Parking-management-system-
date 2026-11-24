@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Parking location card (picture, free-slot badge, heart, name, address, rating, distance, price).
+    Used by LocationAdapter in the Home "Nearby" row, Explore list and Favourites list.
+-->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Picture area -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@drawable/bg_location_placeholder">
+
+            <ImageView
+                android:id="@+id/imgPlaceholder"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:alpha="0.9"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_parkease_logo" />
+
+            <ImageView
+                android:id="@+id/imgLocation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvAvailability"
+                style="@style/Widget.ParkEase.Text.Badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_margin="@dimen/space_md"
+                tools:backgroundTint="@color/slot_available_bg"
+                tools:text="23 free"
+                tools:textColor="@color/slot_available" />
+
+            <ImageButton
+                android:id="@+id/btnFavourite"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="@dimen/space_sm"
+                android:background="@drawable/bg_icon_circle"
+                android:backgroundTint="@color/bg_card"
+                android:padding="9dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_heart_outline"
+                app:tint="@color/slot_occupied"
+                tools:ignore="ContentDescription" />
+        </FrameLayout>
+
+        <!-- Text area -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/space_md">
+
+            <TextView
+                android:id="@+id/tvName"
+                style="@style/Widget.ParkEase.Text.CardTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="SG Highway Central Parking" />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                style="@style/Widget.ParkEase.Text.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="Bodakdev, SG Highway, Ahmedabad" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvRating"
+                    style="@style/Widget.ParkEase.Text.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/space_2xs"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/text_primary"
+                    app:drawableStartCompat="@drawable/ic_star"
+                    app:drawableTint="@color/slot_reserved"
+                    tools:text="4.3 (342)" />
+
+                <TextView
+                    android:id="@+id/tvDistance"
+                    style="@style/Widget.ParkEase.Text.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_md"
+                    android:drawablePadding="@dimen/space_2xs"
+                    android:gravity="center_vertical"
+                    app:drawableStartCompat="@drawable/ic_location"
+                    app:drawableTint="@color/text_secondary"
+                    tools:text="1.4 km" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.ParkEase.Label"
+                    android:textColor="@color/brand_secondary"
+                    tools:text="from ₹20/hr" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

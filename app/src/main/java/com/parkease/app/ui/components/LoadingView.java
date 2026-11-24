@@ -61,6 +61,15 @@ public class LoadingView extends FrameLayout {
         }
     }
 
+    /** Switches to inline mode in code: no dark background, no card, doesn't block taps. */
+    public void makeInline() {
+        setBackground(null);
+        setClickable(false);
+        setFocusable(false);
+        binding.loadingCard.setCardElevation(0f);
+        binding.loadingCard.setCardBackgroundColor(Color.TRANSPARENT);
+    }
+
     public void setMessage(@Nullable CharSequence message) {
         binding.tvLoadingMessage.setText(message);
         binding.tvLoadingMessage.setVisibility(TextUtils.isEmpty(message) ? View.GONE : View.VISIBLE);

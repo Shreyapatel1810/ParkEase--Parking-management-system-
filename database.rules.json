@@ -43,6 +43,55 @@
           ".validate": false
         }
       }
+    },
+
+    "locations": {
+      ".read": "auth != null",
+      ".indexOn": ["city", "active"],
+      "$locationId": {
+        ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        ".validate": "newData.hasChildren(['name', 'address', 'city', 'carRatePerHour', 'totalSlots', 'availableSlots', 'active'])",
+        "availableSlots": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= newData.parent().child('totalSlots').val()"
+        }
+      }
+    },
+
+    "bookings": {
+      ".read": "auth != null && ((query.orderByChild === 'userId' && query.equalTo === auth.uid) || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+      ".indexOn": ["userId", "locationId", "status"],
+      "$bookingId": {
+        ".read": "auth != null && data.child('userId').val() === auth.uid",
+        ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'"
+      }
+    },
+
+    "favourites": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
+        "$locationId": {
+          ".validate": "newData.isNumber() && root.child('locations').child($locationId).exists()"
+        }
+      }
+    },
+
+    "notifications": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        "$notifId": {
+          "isRead": {
+            ".write": "auth != null && auth.uid === $uid",
+            ".validate": "newData.isBoolean()"
+          }
+        }
+      }
+    },
+
+    "promotions": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'"
     }
   }
 }

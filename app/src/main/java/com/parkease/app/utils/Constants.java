@@ -22,6 +22,12 @@ public final class Constants {
     public static final String NODE_ENTRY_EXIT_LOGS = "entryExitLogs";
     public static final String NODE_DAILY_REVENUE = "dailyRevenue";
     public static final String NODE_APP_CONFIG = "appConfig";
+    public static final String NODE_PROMOTIONS = "promotions";
+
+    // ---------- Amenity names used in filters ----------
+    public static final String AMENITY_EV = "EV Charging";
+    public static final String AMENITY_COVERED = "Covered";
+    public static final String AMENITY_CCTV = "CCTV";
 
     // ---------- User roles ----------
     public static final String ROLE_CUSTOMER = "customer";
@@ -63,4 +69,5 @@ public final class Constants {
     public static final String EXTRA_USER_ID = "extra_user_id";
     public static final String EXTRA_MESSAGE = "extra_message";
     public static final String EXTRA_EMAIL = "extra_email";
+    public static final String EXTRA_SHOW_BACK = "extra_show_back";
 }

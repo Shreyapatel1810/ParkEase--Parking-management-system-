@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Parking location details. Java: ui/customer/location/LocationDetailsActivity.java -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_screen"
+    tools:context=".ui.customer.location.LocationDetailsActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/space_xl">
+
+            <include
+                android:id="@+id/header"
+                layout="@layout/layout_header_toolbar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/screen_padding">
+
+                <!-- Live numbers -->
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.ParkEase.Card.Elevated"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/header_overlap">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:paddingVertical="@dimen/card_padding">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvFree"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/TextAppearance.ParkEase.Stat"
+                                android:textColor="@color/slot_available"
+                                tools:text="47" />
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/details_free_slots" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="@dimen/stroke_thin"
+                            android:layout_height="match_parent"
+                            android:background="@color/stroke" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvCarRate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/TextAppearance.ParkEase.Stat"
+                                android:textColor="@color/text_primary"
+                                tools:text="₹50" />
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/details_car_rate" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="@dimen/stroke_thin"
+                            android:layout_height="match_parent"
+                            android:background="@color/stroke" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvBikeRate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/TextAppearance.ParkEase.Stat"
+                                android:textColor="@color/text_primary"
+                                tools:text="₹20" />
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/details_bike_rate" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Information -->
+                <TextView
+                    style="@style/Widget.ParkEase.Text.Overline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/section_spacing"
+                    android:layout_marginBottom="@dimen/space_sm"
+                    android:text="@string/details_info" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/card_padding"
+                        android:paddingVertical="@dimen/space_xs">
+
+                        <include
+                            android:id="@+id/rowAddress"
+                            layout="@layout/item_profile_row" />
+
+                        <include
+                            android:id="@+id/rowHours"
+                            layout="@layout/item_profile_row" />
+
+                        <include
+                            android:id="@+id/rowRating"
+                            layout="@layout/item_profile_row" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Amenities -->
+                <TextView
+                    android:id="@+id/tvAmenitiesLabel"
+                    style="@style/Widget.ParkEase.Text.Overline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/section_spacing"
+                    android:layout_marginBottom="@dimen/space_sm"
+                    android:text="@string/details_amenities" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipAmenities"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!-- Actions -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/section_spacing"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnDirections"
+                        style="@style/Widget.ParkEase.Button.Secondary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/space_sm"
+                        android:layout_weight="1"
+                        android:text="@string/details_directions"
+                        app:icon="@drawable/ic_directions" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnFavourite"
+                        style="@style/Widget.ParkEase.Button.Secondary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/nav_favourites"
+                        app:icon="@drawable/ic_heart_outline" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnBook"
+                    style="@style/Widget.ParkEase.Button.Primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_md"
+                    android:text="@string/details_book"
+                    app:icon="@drawable/ic_car" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Loading / not found / error (covers the content) -->
+    <com.parkease.app.ui.components.StateView
+        android:id="@+id/stateView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_screen" />
+
+    <include
+        android:id="@+id/statusBarScrim"
+        layout="@layout/view_status_bar_scrim" />
+</FrameLayout>

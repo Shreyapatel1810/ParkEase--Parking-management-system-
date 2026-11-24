@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Text for the customer module (Step 7 onwards) -->
+<resources>
+    <!-- Bottom navigation -->
+    <string name="nav_explore">Explore</string>
+    <string name="nav_my_bookings">My Bookings</string>
+
+    <!-- Generic states -->
+    <string name="state_error_title">Couldn\'t load this</string>
+    <string name="offline_banner">You\'re offline. Showing saved data.</string>
+    <string name="see_all">See all</string>
+    <string name="action_undo">Undo</string>
+
+    <!-- Home header -->
+    <string name="home_hello">%1$s, %2$s</string>
+    <string name="home_where_to">Where do you want to park today?</string>
+    <string name="cd_notifications">Notifications</string>
+    <string name="cd_unread_notifications">Notifications, %1$d unread</string>
+
+    <!-- Home stats -->
+    <string name="home_stat_available">Free slots now</string>
+    <string name="home_stat_locations">Parking places</string>
+    <string name="home_stat_open">%1$d open now</string>
+    <string name="home_stat_across">across %1$d places</string>
+
+    <!-- Home sections -->
+    <string name="home_upcoming">Upcoming booking</string>
+    <string name="home_nearby">Nearby parking</string>
+    <string name="home_popular">Popular parking</string>
+    <string name="home_use_location">Use my location</string>
+    <string name="home_favourites">Your favourites</string>
+    <string name="home_recent">Recently visited</string>
+    <string name="home_no_upcoming_title">No upcoming bookings</string>
+    <string name="home_no_upcoming_msg">Find a spot and reserve it before you leave.</string>
+    <string name="home_find_parking">Find parking</string>
+    <string name="home_no_favourites">Tap ♡ on any parking place to save it here.</string>
+    <string name="home_no_locations_title">No parking places yet</string>
+    <string name="home_no_locations_msg">Parking locations added by the ParkEase team will appear here.</string>
+    <string name="home_view_bookings">View in My Bookings</string>
+    <string name="home_starts_in">Starts %1$s</string>
+    <string name="home_parked_now">You\'re parked now</string>
+    <string name="location_permission_denied">Location is off, so places are sorted by free slots instead.</string>
+
+    <!-- Promotion -->
+    <string name="promo_fallback_title">Book ahead, park stress-free</string>
+    <string name="promo_fallback_message">Reserve a slot before you leave and show your QR ticket at the gate.</string>
+    <string name="promo_code">Use code %1$s</string>
+
+    <!-- Location cards -->
+    <string name="location_free">%1$d free</string>
+    <string name="location_full">Full</string>
+    <string name="location_from_rate">from %1$s/hr</string>
+    <string name="location_rating">%1$s (%2$d)</string>
+    <string name="location_closed">Closed now</string>
+    <string name="cd_add_favourite">Add %1$s to favourites</string>
+    <string name="cd_remove_favourite">Remove %1$s from favourites</string>
+    <string name="favourite_added">Added to favourites</string>
+    <string name="favourite_removed">Removed from favourites</string>
+
+    <!-- Explore -->
+    <string name="explore_title">Explore parking</string>
+    <string name="explore_subtitle">Search by area, mall or city</string>
+    <string name="explore_filter_available">Free now</string>
+    <string name="explore_filter_car">Car</string>
+    <string name="explore_filter_bike">Bike</string>
+    <string name="explore_filter_ev">EV charging</string>
+    <string name="explore_filter_covered">Covered</string>
+    <string name="explore_results">%1$d places</string>
+    <string name="explore_no_results_title">No parking matches</string>
+    <string name="explore_no_results_msg">Try a different search or remove some filters.</string>
+    <string name="explore_clear_filters">Clear filters</string>
+
+    <!-- My bookings -->
+    <string name="bookings_title">My bookings</string>
+    <string name="bookings_subtitle">Your reservations and parking history</string>
+    <string name="bookings_tab_upcoming">Upcoming</string>
+    <string name="bookings_tab_past">Past</string>
+    <string name="bookings_tab_cancelled">Cancelled</string>
+    <string name="bookings_empty_upcoming">No upcoming bookings</string>
+    <string name="bookings_empty_upcoming_msg">Book a slot and it will show up here with its QR ticket.</string>
+    <string name="bookings_empty_past">No past bookings</string>
+    <string name="bookings_empty_past_msg">Completed parking sessions will be listed here.</string>
+    <string name="bookings_empty_cancelled">No cancelled bookings</string>
+    <string name="bookings_empty_cancelled_msg">Bookings you cancel will be listed here.</string>
+    <string name="booking_slot">Slot %1$s</string>
+    <string name="booking_status_confirmed">Confirmed</string>
+    <string name="booking_status_active">Parked</string>
+    <string name="booking_status_completed">Completed</string>
+    <string name="booking_status_cancelled">Cancelled</string>
+    <string name="booking_status_expired">Expired</string>
+    <string name="booking_status_pending">Payment pending</string>
+
+    <!-- Favourites -->
+    <string name="favourites_title">Favourites</string>
+    <string name="favourites_subtitle">Places you park at often</string>
+    <string name="favourites_empty_title">No favourites yet</string>
+    <string name="favourites_empty_msg">Tap the heart on any parking place to save it here for quick booking.</string>
+    <string name="favourites_explore">Explore parking</string>
+
+    <!-- Location details -->
+    <string name="details_free_slots">Free slots</string>
+    <string name="details_car_rate">Car / hour</string>
+    <string name="details_bike_rate">Bike / hour</string>
+    <string name="details_info">Information</string>
+    <string name="details_address">Address</string>
+    <string name="details_hours">Opening hours</string>
+    <string name="details_hours_value">%1$s – %2$s</string>
+    <string name="details_open_24h">Open 24 hours</string>
+    <string name="details_rating">Rating</string>
+    <string name="details_amenities">Amenities</string>
+    <string name="details_directions">Directions</string>
+    <string name="details_book">Book a slot</string>
+    <string name="details_not_found">This parking place is no longer available.</string>
+    <string name="details_booking_next_title">Booking is coming next</string>
+    <string name="details_booking_next_msg">Slot selection, payment and QR tickets are built in the booking module. For now you can save this place to your favourites.</string>
+    <string name="details_no_maps">No maps app found on this phone.</string>
+    <string name="not_accepted">Not accepted</string>
+    <string name="action_ok">OK</string>
+
+    <!-- Notifications -->
+    <string name="notifications_title">Notifications</string>
+    <string name="notifications_subtitle">Booking updates and reminders</string>
+    <string name="notifications_empty_title">You\'re all caught up</string>
+    <string name="notifications_empty_msg">Booking confirmations and reminders will appear here.</string>
+
+    <!-- Admin sample data -->
+    <string name="admin_seed_button">Add sample parking data</string>
+    <string name="admin_seed_title">Add sample data?</string>
+    <string name="admin_seed_message">This writes 6 sample parking places, a promotion, and one upcoming booking + notification for YOUR account to Firebase. Running it again just updates the same records.</string>
+    <string name="admin_seed_confirm">Add data</string>
+    <string name="admin_seed_done">Sample data added. Switch this account back to customer to see it on the customer dashboard.</string>
+    <string name="loading_seed">Adding sample data…</string>
+</resources>

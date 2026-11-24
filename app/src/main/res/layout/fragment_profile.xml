@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Profile screen. Java: ui/profile/ProfileActivity.java
+    Profile screen (tab + standalone). Java: ui/profile/ProfileFragment.java
     Photo + name card, personal details, account actions, log out.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -9,7 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_screen"
-    tools:context=".ui.profile.ProfileActivity">
+    tools:context=".ui.customer.CustomerMainActivity">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll"

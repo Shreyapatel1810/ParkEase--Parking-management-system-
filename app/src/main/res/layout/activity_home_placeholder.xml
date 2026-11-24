@@ -126,6 +126,18 @@
                         app:esTitle="@string/home_coming_title" />
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- Admin only: writes demo data to Firebase (see SampleDataSeeder) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSeed"
+                    style="@style/Widget.ParkEase.Button.Accent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/section_spacing"
+                    android:text="@string/admin_seed_button"
+                    android:visibility="gone"
+                    app:icon="@drawable/ic_add"
+                    tools:visibility="visible" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnProfile"
                     style="@style/Widget.ParkEase.Button.Primary"

@@ -13,12 +13,23 @@ public final class DBContract {
     /**
      * Increase this number whenever a table changes. Android then calls
      * DBHelper.onUpgrade() on phones that have the old version.
-     * v1 – Step 2 (5 tables)   v2 – Step 6 (+ user_profile)
+     * v1 – Step 2 (5 tables)   v2 – Step 6 (+ user_profile)   v3 – Step 7 (+ recent_locations)
      */
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
 
     /** How many ParkEase tables exist (used by the setup check screen). */
-    public static final int TABLE_COUNT = 6;
+    public static final int TABLE_COUNT = 7;
+
+    /** Locations the customer opened recently (Step 7) – shown on the home screen, works offline. */
+    public static final class RecentLocations {
+        public static final String TABLE = "recent_locations";
+        public static final String LOCATION_ID = "location_id";
+        public static final String NAME = "name";
+        public static final String ADDRESS = "address";
+        public static final String CITY = "city";
+        public static final String IMAGE_URL = "image_url";
+        public static final String VIEWED_AT = "viewed_at";
+    }
 
     /**
      * Offline copy of the logged-in user's profile (Step 6).

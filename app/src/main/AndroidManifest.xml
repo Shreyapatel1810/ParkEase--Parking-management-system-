@@ -13,6 +13,8 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Re-schedule booking reminders after the phone restarts (Step 12) -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- Optional: approximate location to sort parking by distance (Step 7, asked at runtime) -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <!-- The camera is optional, so phones without one can still install the app -->
     <uses-feature
@@ -59,10 +61,19 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- Step 5: role dashboards (placeholders until the customer / admin modules) -->
+        <!-- Step 7: customer dashboard with bottom navigation (Home, Explore, Bookings, Favourites, Profile) -->
         <activity
             android:name=".ui.customer.CustomerMainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".ui.customer.location.LocationDetailsActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.customer.notification.NotificationsActivity"
+            android:exported="false" />
+
+        <!-- Step 5: admin dashboard (placeholder until the admin module) -->
         <activity
             android:name=".ui.admin.AdminMainActivity"
             android:exported="false" />

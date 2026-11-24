@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Reusable section title with an optional action on the right ("See all"). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/section_spacing"
+    android:layout_marginBottom="@dimen/space_xs"
+    android:gravity="center_vertical"
+    android:minHeight="40dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tvSectionTitle"
+        style="@style/Widget.ParkEase.Text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.ParkEase.TitleLarge"
+        tools:text="Nearby parking" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSectionAction"
+        style="@style/Widget.ParkEase.Button.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="40dp"
+        tools:text="See all" />
+</LinearLayout>

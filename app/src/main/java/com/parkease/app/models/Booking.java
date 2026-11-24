@@ -1,0 +1,107 @@
+package com.parkease.app.models;
+
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+import com.parkease.app.utils.Constants;
+
+/**
+ * A parking reservation, stored in Firebase at  bookings/{bookingId}.
+ *
+ * <pre>
+ * bookings/{id}: { bookingCode, userId, userName, locationId, locationName, slotId,
+ *                  slotNumber, vehicleNumber, vehicleType, startTime, endTime,
+ *                  status, amount, createdAt }
+ * </pre>
+ * status: PENDING_PAYMENT → CONFIRMED → ACTIVE (car parked) → COMPLETED
+ *         (or CANCELLED / EXPIRED). Times are milliseconds since 1970.
+ */
+@IgnoreExtraProperties
+public class Booking {
+
+    @Exclude
+    private String id;
+
+    private String bookingCode;    // short human-readable code, e.g. "PE-7K3D9Q"
+    private String userId;
+    private String userName;
+    private String locationId;
+    private String locationName;
+    private String slotId;         // e.g. "PMC01-G-A-012"
+    private String slotNumber;     // e.g. "A-12"
+    private String vehicleNumber;
+    private String vehicleType;    // CAR / BIKE
+    private long startTime;
+    private long endTime;
+    private String status;
+    private double amount;
+    private long createdAt;
+
+    /** Required by Firebase. */
+    public Booking() { }
+
+    @Exclude public String getId() { return id; }
+    @Exclude public void setId(String id) { this.id = id; }
+
+    public String getBookingCode() { return bookingCode; }
+    public void setBookingCode(String bookingCode) { this.bookingCode = bookingCode; }
+
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
+
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
+
+    public String getLocationId() { return locationId; }
+    public void setLocationId(String locationId) { this.locationId = locationId; }
+
+    public String getLocationName() { return locationName; }
+    public void setLocationName(String locationName) { this.locationName = locationName; }
+
+    public String getSlotId() { return slotId; }
+    public void setSlotId(String slotId) { this.slotId = slotId; }
+
+    public String getSlotNumber() { return slotNumber; }
+    public void setSlotNumber(String slotNumber) { this.slotNumber = slotNumber; }
+
+    public String getVehicleNumber() { return vehicleNumber; }
+    public void setVehicleNumber(String vehicleNumber) { this.vehicleNumber = vehicleNumber; }
+
+    public String getVehicleType() { return vehicleType; }
+    public void setVehicleType(String vehicleType) { this.vehicleType = vehicleType; }
+
+    public long getStartTime() { return startTime; }
+    public void setStartTime(long startTime) { this.startTime = startTime; }
+
+    public long getEndTime() { return endTime; }
+    public void setEndTime(long endTime) { this.endTime = endTime; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public double getAmount() { return amount; }
+    public void setAmount(double amount) { this.amount = amount; }
+
+    public long getCreatedAt() { return createdAt; }
+    public void setCreatedAt(long createdAt) { this.createdAt = createdAt; }
+
+    // ------------------------------------------------------------------ helpers (not saved)
+
+    /** Confirmed or currently parked, and not finished yet. */
+    @Exclude
+    public boolean isUpcoming(long now) {
+        boolean liveStatus = Constants.BOOKING_CONFIRMED.equals(status)
+                || Constants.BOOKING_ACTIVE.equals(status);
+        return liveStatus && endTime > now;
+    }
+
+    @Exclude
+    public boolean isCancelled() {
+        return Constants.BOOKING_CANCELLED.equals(status);
+    }
+
+    /** Car is in the slot right now. */
+    @Exclude
+    public boolean isActive() {
+        return Constants.BOOKING_ACTIVE.equals(status);
+    }
+}

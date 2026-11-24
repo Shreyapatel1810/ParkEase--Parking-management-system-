@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.parkease.app.database.DBContract.Favourites;
 import com.parkease.app.database.DBContract.Notifications;
+import com.parkease.app.database.DBContract.RecentLocations;
 import com.parkease.app.database.DBContract.Reminders;
 import com.parkease.app.database.DBContract.SearchHistory;
 import com.parkease.app.database.DBContract.Tickets;
@@ -84,6 +85,15 @@ public class DBHelper extends SQLiteOpenHelper {
                     + UserProfile.UPDATED_AT + " INTEGER, "
                     + UserProfile.SYNCED_AT + " INTEGER)";
 
+    private static final String CREATE_RECENT_LOCATIONS =
+            "CREATE TABLE " + RecentLocations.TABLE + " ("
+                    + RecentLocations.LOCATION_ID + " TEXT PRIMARY KEY, "
+                    + RecentLocations.NAME + " TEXT NOT NULL, "
+                    + RecentLocations.ADDRESS + " TEXT, "
+                    + RecentLocations.CITY + " TEXT, "
+                    + RecentLocations.IMAGE_URL + " TEXT, "
+                    + RecentLocations.VIEWED_AT + " INTEGER)";
+
     private static final String CREATE_REMINDERS =
             "CREATE TABLE " + Reminders.TABLE + " ("
                     + Reminders.BOOKING_ID + " TEXT PRIMARY KEY, "
@@ -98,6 +108,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_FAVOURITES);
         db.execSQL(CREATE_REMINDERS);
         db.execSQL(CREATE_USER_PROFILE);
+        db.execSQL(CREATE_RECENT_LOCATIONS);
     }
 
     @Override
@@ -109,6 +120,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Favourites.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Reminders.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + UserProfile.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + RecentLocations.TABLE);
         onCreate(db);   // the cache refills from Firebase automatically
     }
 
@@ -131,5 +143,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete(Favourites.TABLE, null, null);
         db.delete(Reminders.TABLE, null, null);
         db.delete(UserProfile.TABLE, null, null);
+        db.delete(RecentLocations.TABLE, null, null);
     }
 }

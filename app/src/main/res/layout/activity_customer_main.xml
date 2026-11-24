@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Customer shell: the five tabs (fragments) live in fragmentContainer,
+    with the offline banner and bottom navigation underneath.
+    Java: ui/customer/CustomerMainActivity.java
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_screen"
+    android:orientation="vertical"
+    tools:context=".ui.customer.CustomerMainActivity">
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Shown while there is no internet -->
+    <TextView
+        android:id="@+id/tvOffline"
+        style="@style/Widget.ParkEase.Text.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/slot_reserved_bg"
+        android:drawablePadding="@dimen/space_sm"
+        android:gravity="center"
+        android:paddingVertical="@dimen/space_sm"
+        android:text="@string/offline_banner"
+        android:textColor="@color/text_primary"
+        android:visibility="gone"
+        app:drawableStartCompat="@drawable/ic_wifi_off"
+        app:drawableTint="@color/slot_reserved"
+        tools:visibility="visible" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_customer" />
+</LinearLayout>

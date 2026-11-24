@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Customer Home tab. Java: ui/customer/home/HomeFragment.java
+    Header (greeting, bell, photo) → search → stats → upcoming booking → nearby →
+    promotion → favourites → recently visited.  Pull down to refresh.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_screen">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/space_2xl">
+
+                <!-- ================= Header ================= -->
+                <LinearLayout
+                    android:id="@+id/header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_header_gradient"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/screen_padding"
+                    android:paddingTop="@dimen/space_lg"
+                    android:paddingBottom="@dimen/header_padding_bottom">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvGreeting"
+                            style="@style/Widget.ParkEase.Text.OnHeader"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textAppearance="@style/TextAppearance.ParkEase.Headline"
+                            tools:text="Good morning, Rahul" />
+
+                        <TextView
+                            style="@style/Widget.ParkEase.Text.OnHeader.Secondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_where_to" />
+                    </LinearLayout>
+
+                    <!-- Bell with unread dot -->
+                    <FrameLayout
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="@dimen/space_sm">
+
+                        <ImageButton
+                            android:id="@+id/btnNotifications"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/cd_notifications"
+                            android:src="@drawable/ic_notifications"
+                            app:tint="@color/text_on_header" />
+
+                        <View
+                            android:id="@+id/notificationDot"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_gravity="top|end"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="11dp"
+                            android:background="@drawable/bg_badge_dot"
+                            android:visibility="gone"
+                            tools:visibility="visible" />
+                    </FrameLayout>
+
+                    <!-- Profile photo (or initials) -->
+                    <FrameLayout
+                        android:id="@+id/avatar"
+                        android:layout_width="@dimen/header_avatar"
+                        android:layout_height="@dimen/header_avatar"
+                        android:layout_marginStart="@dimen/space_xs"
+                        android:clickable="true"
+                        android:contentDescription="@string/nav_profile"
+                        android:focusable="true">
+
+                        <TextView
+                            android:id="@+id/tvInitials"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_icon_circle"
+                            android:backgroundTint="@color/teal_500"
+                            android:gravity="center"
+                            android:textAppearance="@style/TextAppearance.ParkEase.Title"
+                            android:textColor="@color/white"
+                            tools:text="RS" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/imgAvatar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:importantForAccessibility="no"
+                            android:scaleType="centerCrop"
+                            android:visibility="gone"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.ParkEase.Circle" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <!-- ================= Content ================= -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/screen_padding">
+
+                    <com.parkease.app.ui.components.SearchBarView
+                        android:id="@+id/searchBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/header_overlap"
+                        app:cardElevation="@dimen/card_elevation_raised"
+                        app:sbHint="@string/ds_search_hint"
+                        app:sbShowFilter="true"
+                        app:strokeWidth="0dp" />
+
+                    <!-- Stats -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/card_gap"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <com.parkease.app.ui.components.DashboardCardView
+                            android:id="@+id/statAvailable"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/card_gap"
+                            android:layout_weight="1"
+                            app:dcAccent="green"
+                            app:dcIcon="@drawable/ic_car"
+                            app:dcTitle="@string/home_stat_available"
+                            app:dcValue="—" />
+
+                        <com.parkease.app.ui.components.DashboardCardView
+                            android:id="@+id/statLocations"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:dcAccent="navy"
+                            app:dcIcon="@drawable/ic_location"
+                            app:dcTitle="@string/home_stat_locations"
+                            app:dcValue="—" />
+                    </LinearLayout>
+
+                    <!-- Upcoming booking -->
+                    <include
+                        android:id="@+id/sectionUpcoming"
+                        layout="@layout/layout_section_header" />
+
+                    <include
+                        android:id="@+id/upcomingCard"
+                        layout="@layout/item_booking"
+                        android:visibility="gone" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/noUpcomingCard"
+                        style="@style/Widget.ParkEase.Card.Filled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/card_padding">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    style="@style/Widget.ParkEase.Text.CardTitle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/home_no_upcoming_title" />
+
+                                <TextView
+                                    style="@style/Widget.ParkEase.Text.Caption"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/home_no_upcoming_msg" />
+                            </LinearLayout>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnFindParking"
+                                style="@style/Widget.ParkEase.Button.Accent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/space_md"
+                                android:minHeight="@dimen/button_height_small"
+                                android:text="@string/home_find_parking" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Nearby parking -->
+                    <include
+                        android:id="@+id/sectionNearby"
+                        layout="@layout/layout_section_header" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnUseLocation"
+                        style="@style/Widget.ParkEase.Button.Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-8dp"
+                        android:minHeight="36dp"
+                        android:paddingStart="0dp"
+                        android:text="@string/home_use_location"
+                        android:visibility="gone"
+                        app:icon="@drawable/ic_my_location"
+                        tools:visibility="visible" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvNearby"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clipToPadding="false"
+                            android:nestedScrollingEnabled="false"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_location_card" />
+
+                        <com.parkease.app.ui.components.StateView
+                            android:id="@+id/stateNearby"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="180dp" />
+                    </FrameLayout>
+
+                    <!-- Promotion -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/promoCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        app:cardBackgroundColor="@color/transparent"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_promo_gradient"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/card_padding">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvPromoTitle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/promo_fallback_title"
+                                    android:textAppearance="@style/TextAppearance.ParkEase.Title"
+                                    android:textColor="@color/white" />
+
+                                <TextView
+                                    android:id="@+id/tvPromoMessage"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/space_xs"
+                                    android:text="@string/promo_fallback_message"
+                                    android:textAppearance="@style/TextAppearance.ParkEase.Body"
+                                    android:textColor="@color/white" />
+
+                                <TextView
+                                    android:id="@+id/tvPromoCode"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/space_sm"
+                                    android:background="@drawable/bg_badge"
+                                    android:backgroundTint="@color/white"
+                                    android:paddingHorizontal="@dimen/space_md"
+                                    android:paddingVertical="@dimen/space_xs"
+                                    android:textAppearance="@style/TextAppearance.ParkEase.Overline"
+                                    android:textColor="@color/teal_700"
+                                    android:visibility="gone"
+                                    tools:text="Use code FIRST20"
+                                    tools:visibility="visible" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:layout_marginStart="@dimen/space_md"
+                                android:alpha="0.9"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_offer"
+                                app:tint="@color/white" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Favourites -->
+                    <include
+                        android:id="@+id/sectionFavourites"
+                        layout="@layout/layout_section_header" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvFavourites"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_location_compact" />
+
+                    <TextView
+                        android:id="@+id/tvNoFavourites"
+                        style="@style/Widget.ParkEase.Text.Secondary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_input_field"
+                        android:padding="@dimen/card_padding"
+                        android:text="@string/home_no_favourites"
+                        android:visibility="gone" />
+
+                    <!-- Recently visited (from SQLite) -->
+                    <LinearLayout
+                        android:id="@+id/recentGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <include
+                            android:id="@+id/sectionRecent"
+                            layout="@layout/layout_section_header" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvRecent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_location_compact" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <include
+        android:id="@+id/statusBarScrim"
+        layout="@layout/view_status_bar_scrim" />
+</FrameLayout>
