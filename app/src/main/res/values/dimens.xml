@@ -73,6 +73,7 @@
     <!-- ===== Customer home (Step 7) ===== -->
     <dimen name="location_card_width">264dp</dimen>
     <dimen name="header_avatar">44dp</dimen>
+    <dimen name="details_gallery_height">260dp</dimen>
 
     <!-- ===== Text sizes (Material 3 type scale) ===== -->
     <dimen name="text_display">32sp</dimen>

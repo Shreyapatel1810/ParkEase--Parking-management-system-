@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One photo in the location details gallery (ViewPager2 page). Used by ImagePagerAdapter. -->
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/imgPhoto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_location_placeholder"
+    android:scaleType="centerCrop" />

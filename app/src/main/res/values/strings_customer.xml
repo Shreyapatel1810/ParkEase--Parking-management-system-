@@ -70,6 +70,44 @@
     <string name="explore_no_results_msg">Try a different search or remove some filters.</string>
     <string name="explore_clear_filters">Clear filters</string>
 
+    <!-- Sort & filter (Step 8) -->
+    <string name="sort_filter_title">Sort &amp; filter</string>
+    <string name="sort_filter_button">Sort &amp; filter</string>
+    <string name="sort_filter_button_count">Sort &amp; filter (%1$d)</string>
+    <string name="sort_by">Sort by</string>
+    <string name="sort_recommended">Recommended</string>
+    <string name="sort_price_low">Price: low to high</string>
+    <string name="sort_price_high">Price: high to low</string>
+    <string name="sort_most_available">Most free slots</string>
+    <string name="sort_top_rated">Top rated</string>
+    <string name="filter_vehicle">Vehicle type</string>
+    <string name="filter_vehicle_any">Any</string>
+    <string name="filter_max_price">Maximum price per hour</string>
+    <string name="filter_price_any">Any price</string>
+    <string name="filter_price_upto">Up to %1$s/hr</string>
+    <string name="filter_availability">Availability &amp; facilities</string>
+    <string name="filter_reset">Reset</string>
+    <string name="filter_apply">Show results</string>
+    <string name="explore_results_sorted">%1$d places · %2$s</string>
+
+    <!-- Location details (Step 8) -->
+    <string name="details_free_of">of %1$d free</string>
+    <string name="details_vehicle_types">Vehicle types</string>
+    <string name="details_charges">Hourly charges</string>
+    <string name="details_facilities">Facilities</string>
+    <string name="details_reviews">Reviews</string>
+    <string name="details_reviews_count">%1$d reviews</string>
+    <string name="details_no_reviews">No reviews yet. Reviews appear after customers complete a booking here.</string>
+    <string name="details_book_now">Book now</string>
+    <string name="details_from_price">from %1$s/hr</string>
+    <string name="details_open_now">Open now</string>
+    <string name="details_image_counter">%1$d / %2$d</string>
+    <string name="details_car_charge">Car · %1$s per hour</string>
+    <string name="details_bike_charge">Bike · %1$s per hour</string>
+    <string name="details_reviews_loading">Loading reviews…</string>
+    <string name="cd_location_photo">Photo %1$d of %2$d</string>
+    <string name="cd_rating">%1$s out of 5 stars</string>
+
     <!-- My bookings -->
     <string name="bookings_title">My bookings</string>
     <string name="bookings_subtitle">Your reservations and parking history</string>

@@ -40,7 +40,8 @@ public class ParkingLocation {
     private int totalSlots;
     private int availableSlots;
     private List<String> amenities = new ArrayList<>();
-    private String imageUrl;
+    private String imageUrl;          // main photo (shown on cards)
+    private List<String> images = new ArrayList<>();   // extra photos for the details gallery
     private double avgRating;
     private int reviewCount;
     private boolean active = true;   // inactive locations are hidden from customers
@@ -98,6 +99,11 @@ public class ParkingLocation {
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
+    public List<String> getImages() { return images; }
+    public void setImages(List<String> images) {
+        this.images = images == null ? new ArrayList<>() : images;
+    }
+
     public double getAvgRating() { return avgRating; }
     public void setAvgRating(double avgRating) { this.avgRating = avgRating; }
 
@@ -128,6 +134,20 @@ public class ParkingLocation {
     public double getLowestRate() {
         if (acceptsCars() && acceptsBikes()) return Math.min(carRatePerHour, bikeRatePerHour);
         return acceptsCars() ? carRatePerHour : bikeRatePerHour;
+    }
+
+    /** Main photo first, then the gallery photos, without duplicates or empty values. */
+    @Exclude
+    @NonNull
+    public List<String> getAllImages() {
+        List<String> all = new ArrayList<>();
+        if (imageUrl != null && !imageUrl.trim().isEmpty()) all.add(imageUrl.trim());
+        if (images != null) {
+            for (String url : images) {
+                if (url != null && !url.trim().isEmpty() && !all.contains(url.trim())) all.add(url.trim());
+            }
+        }
+        return all;
     }
 
     @Exclude

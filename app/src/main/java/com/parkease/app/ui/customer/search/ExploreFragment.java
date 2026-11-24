@@ -23,7 +23,6 @@ import com.parkease.app.repository.FavouriteRepository;
 import com.parkease.app.repository.LocationRepository;
 import com.parkease.app.repository.Subscription;
 import com.parkease.app.ui.customer.CustomerNavHost;
-import com.parkease.app.utils.Constants;
 import com.parkease.app.utils.InsetsHelper;
 import com.parkease.app.utils.LocationUtils;
 import com.parkease.app.utils.NetworkUtils;
@@ -34,12 +33,19 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * STEP 7 – Explore tab: every active parking place, with live search and filter chips.
- * Filtering happens on the phone, so it is instant and also works offline.
+ * STEP 7/8 – Explore: search and filter every active parking place (live from Firebase).
+ *
+ * Search bar  → name, area, city or code
+ * Quick chips → Free now, Car, Bike, EV charging, Covered
+ * "Sort & filter" sheet → sort order, vehicle type, maximum price, availability, facilities
+ * All choices live in one {@link SearchFilters} object; filtering runs on the phone, so it
+ * is instant and also works offline.
  */
 public class ExploreFragment extends Fragment implements LocationAdapter.Listener {
 
     private static final long LOAD_TIMEOUT_MS = 8000;
+    private static final String KEY_FILTERS = "filters";
+    private static final String KEY_QUERY = "query";
 
     private FragmentExploreBinding binding;
     private LocationRepository locationRepository;
@@ -49,10 +55,11 @@ public class ExploreFragment extends Fragment implements LocationAdapter.Listene
     private final List<Subscription> subscriptions = new ArrayList<>();
     private final Handler handler = new Handler(Looper.getMainLooper());
 
+    private final SearchFilters filters = new SearchFilters();
     private List<ParkingLocation> all = new ArrayList<>();
     private boolean loaded = false;
-    private String query = "";
-    @Nullable private String pendingQuery;   // set by Home before this view exists
+    private boolean syncingChips = false;       // true while chips are updated from code
+    @Nullable private String pendingQuery;      // set by Home before this view exists
     @Nullable private Location userLocation;
 
     private final Runnable loadTimeout = () -> {
@@ -75,6 +82,12 @@ public class ExploreFragment extends Fragment implements LocationAdapter.Listene
         locationRepository = new LocationRepository(requireContext());
         favouriteRepository = new FavouriteRepository(requireContext());
 
+        if (savedInstanceState != null) {
+            Bundle saved = savedInstanceState.getBundle(KEY_FILTERS);
+            if (saved != null) filters.readFrom(saved);
+            filters.query = savedInstanceState.getString(KEY_QUERY, "");
+        }
+
         InsetsHelper.statusBarPadding(binding.header.getRoot());
         InsetsHelper.statusBarScrim(binding.statusBarScrim.getRoot());
         binding.header.toolbar.setTitle(R.string.app_name);
@@ -86,21 +99,57 @@ public class ExploreFragment extends Fragment implements LocationAdapter.Listene
         binding.rvLocations.addItemDecoration(new SpaceItemDecoration(
                 getResources().getDimensionPixelSize(R.dimen.card_gap), false));
 
+        // Search text
         binding.searchBar.setOnQueryChangeListener(q -> {
-            query = q;
+            filters.query = q;
             render();
         });
         binding.searchBar.setOnSearchListener(q -> {
-            query = q;
+            filters.query = q;
             render();
         });
-        binding.chipGroup.setOnCheckedStateChangeListener((group, ids) -> render());
+
+        // Quick chips
+        binding.chipCar.setOnCheckedChangeListener((c, checked) -> onVehicleChip(SearchFilters.Vehicle.CAR, checked));
+        binding.chipBike.setOnCheckedChangeListener((c, checked) -> onVehicleChip(SearchFilters.Vehicle.BIKE, checked));
+        binding.chipAvailable.setOnCheckedChangeListener((c, checked) -> {
+            if (syncingChips) return;
+            filters.onlyAvailable = checked;
+            render();
+        });
+        binding.chipEv.setOnCheckedChangeListener((c, checked) -> {
+            if (syncingChips) return;
+            filters.ev = checked;
+            render();
+        });
+        binding.chipCovered.setOnCheckedChangeListener((c, checked) -> {
+            if (syncingChips) return;
+            filters.covered = checked;
+            render();
+        });
+
+        // Sort & filter sheet
+        binding.chipSortFilter.setOnClickListener(v -> openSortFilter());
+        getChildFragmentManager().setFragmentResultListener(SortFilterBottomSheet.REQUEST_KEY,
+                getViewLifecycleOwner(), (key, result) -> {
+                    filters.readFrom(result);
+                    syncChips();
+                    render();
+                });
 
         if (pendingQuery != null) {
-            binding.searchBar.setQuery(pendingQuery);
-            query = pendingQuery;
+            filters.query = pendingQuery;
             pendingQuery = null;
         }
+        if (!filters.query.isEmpty()) binding.searchBar.setQuery(filters.query);
+        syncChips();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBundle(KEY_FILTERS, filters.toBundle());
+        outState.putString(KEY_QUERY, filters.query);
     }
 
     @Override
@@ -130,8 +179,8 @@ public class ExploreFragment extends Fragment implements LocationAdapter.Listene
             pendingQuery = q;
             return;
         }
+        filters.query = q;
         binding.searchBar.setQuery(q);
-        query = q;
         render();
     }
 
@@ -183,49 +232,65 @@ public class ExploreFragment extends Fragment implements LocationAdapter.Listene
         start();
     }
 
-    // ------------------------------------------------------------------ filtering
+    // ------------------------------------------------------------------ filters
+
+    /** Car and Bike exclude each other: choosing one un-ticks the other. */
+    private void onVehicleChip(@NonNull SearchFilters.Vehicle vehicle, boolean checked) {
+        if (syncingChips) return;
+        if (checked) {
+            filters.vehicle = vehicle;
+        } else if (filters.vehicle == vehicle) {
+            filters.vehicle = SearchFilters.Vehicle.ANY;
+        }
+        syncChips();
+        render();
+    }
+
+    /** Makes the chips match the filters (without triggering their listeners). */
+    private void syncChips() {
+        syncingChips = true;
+        binding.chipCar.setChecked(filters.vehicle == SearchFilters.Vehicle.CAR);
+        binding.chipBike.setChecked(filters.vehicle == SearchFilters.Vehicle.BIKE);
+        binding.chipAvailable.setChecked(filters.onlyAvailable);
+        binding.chipEv.setChecked(filters.ev);
+        binding.chipCovered.setChecked(filters.covered);
+        int count = filters.activeFilterCount() + (filters.sort != SearchFilters.Sort.RECOMMENDED ? 1 : 0);
+        binding.chipSortFilter.setText(count > 0
+                ? getString(R.string.sort_filter_button_count, count)
+                : getString(R.string.sort_filter_button));
+        syncingChips = false;
+    }
+
+    private void openSortFilter() {
+        if (getChildFragmentManager().findFragmentByTag(SortFilterBottomSheet.TAG) != null) return;
+        SortFilterBottomSheet.newInstance(filters).show(getChildFragmentManager(), SortFilterBottomSheet.TAG);
+    }
 
     private void render() {
         if (binding == null || !loaded) return;
-        boolean onlyFree = binding.chipAvailable.isChecked();
-        boolean car = binding.chipCar.isChecked();
-        boolean bike = binding.chipBike.isChecked();
-        boolean ev = binding.chipEv.isChecked();
-        boolean covered = binding.chipCovered.isChecked();
-
-        List<ParkingLocation> result = new ArrayList<>();
-        for (ParkingLocation p : all) {
-            if (!p.matches(query)) continue;
-            if (onlyFree && p.getAvailableSlots() <= 0) continue;
-            if (car && !p.acceptsCars()) continue;
-            if (bike && !p.acceptsBikes()) continue;
-            if (ev && !p.hasAmenity(Constants.AMENITY_EV)) continue;
-            if (covered && !p.hasAmenity(Constants.AMENITY_COVERED)) continue;
-            result.add(p);
-        }
-        LocationUtils.sortForUser(result, userLocation);
+        List<ParkingLocation> result = filters.apply(all, userLocation);
         adapter.submitList(result);
-        binding.tvResultCount.setText(getString(R.string.explore_results, result.size()));
 
-        if (result.isEmpty()) {
-            boolean filtered = !query.isEmpty() || !binding.chipGroup.getCheckedChipIds().isEmpty();
-            if (filtered) {
-                binding.stateView.showEmpty(R.drawable.ic_search, getString(R.string.explore_no_results_title),
-                        getString(R.string.explore_no_results_msg), getString(R.string.explore_clear_filters),
-                        v -> clearFilters());
-            } else {
-                binding.stateView.showEmpty(R.drawable.ic_location, getString(R.string.home_no_locations_title),
-                        getString(R.string.home_no_locations_msg), null, null);
-            }
-        } else {
+        binding.tvResultCount.setText(filters.sort == SearchFilters.Sort.RECOMMENDED
+                ? getString(R.string.explore_results, result.size())
+                : getString(R.string.explore_results_sorted, result.size(), getString(filters.sort.label)));
+
+        if (!result.isEmpty()) {
             binding.stateView.hide();
+        } else if (!filters.query.isEmpty() || filters.activeFilterCount() > 0) {
+            binding.stateView.showEmpty(R.drawable.ic_search, getString(R.string.explore_no_results_title),
+                    getString(R.string.explore_no_results_msg), getString(R.string.explore_clear_filters),
+                    v -> clearFilters());
+        } else {
+            binding.stateView.showEmpty(R.drawable.ic_location, getString(R.string.home_no_locations_title),
+                    getString(R.string.home_no_locations_msg), null, null);
         }
     }
 
     private void clearFilters() {
-        binding.chipGroup.clearCheck();
+        filters.reset();
         binding.searchBar.setQuery("");
-        query = "";
+        syncChips();
         render();
     }
 

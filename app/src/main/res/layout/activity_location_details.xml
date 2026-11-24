@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Parking location details. Java: ui/customer/location/LocationDetailsActivity.java -->
+<!--
+    Parking location details (Step 8). Java: ui/customer/location/LocationDetailsActivity.java
+    Photo gallery → name card → live numbers → information → facilities → reviews,
+    with floating back/favourite buttons on top and a fixed "Book now" bar at the bottom.
+-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,18 +16,57 @@
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false">
+        android:clipToPadding="false"
+        android:paddingBottom="120dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipChildren="false"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/space_xl">
+            android:orientation="vertical">
 
-            <include
-                android:id="@+id/header"
-                layout="@layout/layout_header_toolbar" />
+            <!-- ================= Photo gallery ================= -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/details_gallery_height">
+
+                <FrameLayout
+                    android:id="@+id/galleryPlaceholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_location_placeholder">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_parkease_logo" />
+                </FrameLayout>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/galleryPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvImageCounter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="@dimen/screen_padding"
+                    android:layout_marginBottom="44dp"
+                    android:background="@drawable/bg_badge"
+                    android:backgroundTint="@color/scrim"
+                    android:paddingHorizontal="@dimen/space_md"
+                    android:paddingVertical="@dimen/space_2xs"
+                    android:textAppearance="@style/TextAppearance.ParkEase.Caption"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    tools:text="1 / 3"
+                    tools:visibility="visible" />
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,12 +76,79 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/screen_padding">
 
-                <!-- Live numbers -->
+                <!-- ================= Name card ================= -->
                 <com.google.android.material.card.MaterialCardView
                     style="@style/Widget.ParkEase.Card.Elevated"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/header_overlap">
+                    android:layout_marginTop="-28dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/card_padding">
+
+                        <TextView
+                            android:id="@+id/tvName"
+                            style="@style/Widget.ParkEase.Text.ScreenTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:text="SG Highway Central Parking" />
+
+                        <TextView
+                            android:id="@+id/tvAddress"
+                            style="@style/Widget.ParkEase.Text.Secondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_2xs"
+                            android:drawablePadding="@dimen/space_xs"
+                            app:drawableStartCompat="@drawable/ic_location"
+                            app:drawableTint="@color/text_secondary"
+                            tools:text="Bodakdev, SG Highway, Ahmedabad" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_md"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvAvailability"
+                                style="@style/Widget.ParkEase.Text.Badge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/space_sm"
+                                tools:text="47 free" />
+
+                            <TextView
+                                android:id="@+id/tvOpenStatus"
+                                style="@style/Widget.ParkEase.Text.Badge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/space_sm"
+                                tools:text="Open now" />
+
+                            <TextView
+                                android:id="@+id/tvRatingBadge"
+                                style="@style/Widget.ParkEase.Text.Badge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/slot_reserved_bg"
+                                android:drawablePadding="@dimen/space_2xs"
+                                android:textColor="@color/text_primary"
+                                app:drawableStartCompat="@drawable/ic_star"
+                                app:drawableTint="@color/slot_reserved"
+                                tools:text="4.3 (4)" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- ================= Live numbers ================= -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/card_gap">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -63,10 +173,11 @@
                                 tools:text="47" />
 
                             <TextView
+                                android:id="@+id/tvTotal"
                                 style="@style/Widget.ParkEase.Text.Caption"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/details_free_slots" />
+                                tools:text="of 120 free" />
                         </LinearLayout>
 
                         <View
@@ -125,7 +236,7 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Information -->
+                <!-- ================= Information ================= -->
                 <TextView
                     style="@style/Widget.ParkEase.Text.Overline"
                     android:layout_width="wrap_content"
@@ -154,12 +265,16 @@
                             layout="@layout/item_profile_row" />
 
                         <include
-                            android:id="@+id/rowRating"
+                            android:id="@+id/rowVehicles"
+                            layout="@layout/item_profile_row" />
+
+                        <include
+                            android:id="@+id/rowCharges"
                             layout="@layout/item_profile_row" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Amenities -->
+                <!-- ================= Facilities ================= -->
                 <TextView
                     android:id="@+id/tvAmenitiesLabel"
                     style="@style/Widget.ParkEase.Text.Overline"
@@ -167,60 +282,226 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/section_spacing"
                     android:layout_marginBottom="@dimen/space_sm"
-                    android:text="@string/details_amenities" />
+                    android:text="@string/details_facilities" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipAmenities"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <!-- Actions -->
+                <!-- ================= Directions ================= -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDirections"
+                    style="@style/Widget.ParkEase.Button.Secondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/section_spacing"
+                    android:text="@string/details_directions"
+                    app:icon="@drawable/ic_directions" />
+
+                <!-- ================= Reviews ================= -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/section_spacing"
+                    android:layout_marginBottom="@dimen/space_sm"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnDirections"
-                        style="@style/Widget.ParkEase.Button.Secondary"
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.Overline"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/space_sm"
                         android:layout_weight="1"
-                        android:text="@string/details_directions"
-                        app:icon="@drawable/ic_directions" />
+                        android:text="@string/details_reviews" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnFavourite"
-                        style="@style/Widget.ParkEase.Button.Secondary"
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/tvReviewCount"
+                        style="@style/Widget.ParkEase.Text.Caption"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/nav_favourites"
-                        app:icon="@drawable/ic_heart_outline" />
+                        tools:text="4 reviews" />
                 </LinearLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnBook"
-                    style="@style/Widget.ParkEase.Button.Primary"
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_md"
-                    android:text="@string/details_book"
-                    app:icon="@drawable/ic_car" />
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/card_padding"
+                        android:paddingVertical="@dimen/space_md">
+
+                        <!-- Summary -->
+                        <LinearLayout
+                            android:id="@+id/ratingSummary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvAvgRating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/TextAppearance.ParkEase.Display"
+                                android:textColor="@color/text_primary"
+                                tools:text="4.3" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/space_lg"
+                                android:orientation="vertical">
+
+                                <RatingBar
+                                    android:id="@+id/ratingAvg"
+                                    style="?android:attr/ratingBarStyleSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:isIndicator="true"
+                                    android:numStars="5"
+                                    android:progressBackgroundTint="@color/stroke"
+                                    android:progressTint="@color/slot_reserved"
+                                    android:secondaryProgressTint="@color/slot_reserved"
+                                    android:stepSize="0.1"
+                                    tools:rating="4.3" />
+
+                                <TextView
+                                    android:id="@+id/tvRatingBased"
+                                    style="@style/Widget.ParkEase.Text.Caption"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/space_2xs"
+                                    tools:text="4 reviews" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <com.google.android.material.divider.MaterialDivider
+                            android:id="@+id/reviewDivider"
+                            style="@style/Widget.ParkEase.Divider"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_md" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvReviews"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:itemCount="2"
+                            tools:listitem="@layout/item_review" />
+
+                        <TextView
+                            android:id="@+id/tvNoReviews"
+                            style="@style/Widget.ParkEase.Text.Secondary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="@dimen/space_md"
+                            android:text="@string/details_reviews_loading" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Loading / not found / error (covers the content) -->
+    <!-- ================= Fixed "Book now" bar ================= -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bottomBar"
+        style="@style/Widget.ParkEase.Card.Elevated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="12dp">
+
+        <LinearLayout
+            android:id="@+id/bottomBarContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/screen_padding"
+            android:paddingVertical="@dimen/space_md">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvBottomPrice"
+                    style="@style/Widget.ParkEase.Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.ParkEase.TitleLarge"
+                    tools:text="from ₹20/hr" />
+
+                <TextView
+                    android:id="@+id/tvBottomFree"
+                    style="@style/Widget.ParkEase.Text.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="47 free slots" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBook"
+                style="@style/Widget.ParkEase.Button.Primary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/space_2xl"
+                android:text="@string/details_book_now" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Loading / not found / error -->
     <com.parkease.app.ui.components.StateView
         android:id="@+id/stateView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_screen" />
 
-    <include
-        android:id="@+id/statusBarScrim"
-        layout="@layout/view_status_bar_scrim" />
+    <!-- ================= Floating top buttons ================= -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_md">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_icon_circle"
+            android:backgroundTint="@color/bg_card"
+            android:contentDescription="@string/action_back"
+            android:elevation="4dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/text_primary" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/btnFavourite"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_icon_circle"
+            android:backgroundTint="@color/bg_card"
+            android:elevation="4dp"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_heart_outline"
+            app:tint="@color/slot_occupied"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
 </FrameLayout>

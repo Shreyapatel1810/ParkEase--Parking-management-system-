@@ -89,6 +89,18 @@
       }
     },
 
+    "reviews": {
+      ".read": "auth != null",
+      "$locationId": {
+        ".indexOn": ["createdAt"],
+        ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        "$reviewerId": {
+          ".write": "auth != null && auth.uid === $reviewerId",
+          ".validate": "newData.hasChildren(['userName', 'rating', 'createdAt']) && newData.child('rating').isNumber() && newData.child('rating').val() >= 1 && newData.child('rating').val() <= 5 && (!newData.child('comment').exists() || (newData.child('comment').isString() && newData.child('comment').val().length <= 500))"
+        }
+      }
+    },
+
     "promotions": {
       ".read": "auth != null",
       ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'"
