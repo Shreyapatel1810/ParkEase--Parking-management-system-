@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    ParkEase colours – DARK theme.
+    Only SEMANTIC colours are redefined here. Android picks this file automatically
+    when the phone (or the app) is in dark mode. Palette colours are not repeated.
+-->
+<resources>
+    <!-- Brand roles: navy is too dark on a dark screen, so teal leads in dark mode -->
+    <color name="brand_primary">@color/teal_500</color>
+    <color name="brand_on_primary">@color/navy_900</color>
+    <color name="brand_secondary">@color/teal_300</color>
+    <color name="brand_on_secondary">@color/navy_900</color>
+    <color name="brand_secondary_container">@color/teal_900</color>
+    <color name="brand_on_secondary_container">@color/teal_100</color>
+
+    <!-- Surfaces -->
+    <color name="bg_screen">@color/dark_bg</color>
+    <color name="bg_card">@color/dark_surface</color>
+    <color name="bg_subtle">@color/dark_surface_2</color>
+    <color name="stroke">@color/dark_outline</color>
+    <color name="scrim">#99000000</color>
+
+    <!-- Text -->
+    <color name="text_primary">@color/dark_text</color>
+    <color name="text_secondary">@color/grey_400</color>
+    <color name="text_hint">#6B7789</color>
+    <color name="text_link">@color/teal_300</color>
+
+    <!-- Navy accent: lightened so it stays visible on dark cards -->
+    <color name="accent_navy">#9DB8E0</color>
+    <color name="accent_navy_bg">#1A2C47</color>
+
+    <!-- Header: a deeper navy so it sits well on the dark background -->
+    <color name="header_start">#0F213B</color>
+    <color name="header_end">#1A3358</color>
+    <color name="text_on_header">@color/white</color>
+    <color name="text_on_header_secondary">#AFC0D8</color>
+
+    <!-- Feedback -->
+    <color name="error">#F87171</color>
+    <color name="error_container">#3B1717</color>
+    <color name="success">#4ADE80</color>
+
+    <!-- Parking slot statuses: brighter lines, deep tinted backgrounds -->
+    <color name="slot_available">#34D399</color>
+    <color name="slot_available_bg">#0F3326</color>
+    <color name="slot_reserved">#FBBF24</color>
+    <color name="slot_reserved_bg">#3A2B0C</color>
+    <color name="slot_occupied">#F87171</color>
+    <color name="slot_occupied_bg">#3B1717</color>
+    <color name="slot_maintenance">#94A3B8</color>
+    <color name="slot_maintenance_bg">#1E2736</color>
+</resources>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    ParkEase app theme – Material Design 3, DayNight.
+    "DayNight" means Android switches automatically between light and dark:
+    colours come from values/colors.xml (light) or values-night/colors.xml (dark).
+-->
+<resources>
+
+    <style name="Theme.ParkEase" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- ===== Colour roles (Material 3 names → ParkEase semantic colours) ===== -->
+        <item name="colorPrimary">@color/brand_primary</item>
+        <item name="colorOnPrimary">@color/brand_on_primary</item>
+        <item name="colorPrimaryContainer">@color/brand_secondary_container</item>
+        <item name="colorOnPrimaryContainer">@color/brand_on_secondary_container</item>
+        <item name="colorSecondary">@color/brand_secondary</item>
+        <item name="colorOnSecondary">@color/brand_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/brand_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/brand_on_secondary_container</item>
+        <item name="colorTertiary">@color/brand_secondary</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorErrorContainer">@color/error_container</item>
+
+        <item name="android:colorBackground">@color/bg_screen</item>
+        <item name="android:windowBackground">@color/bg_screen</item>
+        <item name="colorSurface">@color/bg_card</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorSurfaceVariant">@color/bg_subtle</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="colorSurfaceContainer">@color/bg_card</item>
+        <item name="colorSurfaceContainerLow">@color/bg_card</item>
+        <item name="colorSurfaceContainerHigh">@color/bg_card</item>
+        <item name="colorOutline">@color/stroke</item>
+        <item name="colorOutlineVariant">@color/stroke</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+        <item name="android:textColorLink">@color/text_link</item>
+        <item name="colorControlActivated">@color/brand_secondary</item>
+
+        <!-- Screens start with a navy header, so status bar icons are always white -->
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- ===== Typography: Poppins (falls back to the system font if missing) ===== -->
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="fontFamily">@font/poppins</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.ParkEase.Display</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.ParkEase.Display</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.ParkEase.Headline</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.ParkEase.Headline</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.ParkEase.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.ParkEase.Title</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.ParkEase.Title</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.ParkEase.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.ParkEase.Body</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.ParkEase.Caption</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.ParkEase.Label</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.ParkEase.Label</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.ParkEase.Overline</item>
+
+        <!-- ===== Default component styles: every widget gets the ParkEase look ===== -->
+        <item name="materialCardViewStyle">@style/Widget.ParkEase.Card</item>
+        <item name="materialButtonStyle">@style/Widget.ParkEase.Button.Primary</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.ParkEase.Button.Secondary</item>
+        <item name="borderlessButtonStyle">@style/Widget.ParkEase.Button.Text</item>
+        <item name="textInputStyle">@style/Widget.ParkEase.TextInput</item>
+        <item name="toolbarStyle">@style/Widget.ParkEase.Toolbar</item>
+        <item name="bottomNavigationStyle">@style/Widget.ParkEase.BottomNavigation</item>
+        <item name="chipStyle">@style/Widget.ParkEase.Chip</item>
+        <item name="circularProgressIndicatorStyle">@style/Widget.ParkEase.Progress.Circular</item>
+        <item name="linearProgressIndicatorStyle">@style/Widget.ParkEase.Progress.Linear</item>
+        <item name="materialSwitchStyle">@style/Widget.ParkEase.Switch</item>
+
+        <!-- Smooth slide transitions between screens -->
+        <item name="android:windowAnimationStyle">@style/ParkEase.WindowAnimation</item>
+    </style>
+
+    <style name="ParkEase.WindowAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+</resources>

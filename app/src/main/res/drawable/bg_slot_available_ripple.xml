@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Touch ripple on top of the available slot box -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/brand_secondary_container">
+    <item android:drawable="@drawable/bg_slot_available" />
+</ripple>

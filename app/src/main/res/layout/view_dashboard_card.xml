@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Inside of DashboardCardView (ui/components/DashboardCardView.java).
+    <merge> = these views are added directly into the card, with no extra wrapper.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="com.google.android.material.card.MaterialCardView">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/card_padding">
+
+        <FrameLayout
+            android:id="@+id/iconContainer"
+            android:layout_width="@dimen/icon_container"
+            android:layout_height="@dimen/icon_container"
+            android:background="@drawable/bg_icon_circle"
+            android:backgroundTint="@color/brand_secondary_container">
+
+            <ImageView
+                android:id="@+id/imgIcon"
+                android:layout_width="@dimen/icon_md"
+                android:layout_height="@dimen/icon_md"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                app:tint="@color/brand_secondary"
+                tools:src="@drawable/ic_rupee" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_md"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.ParkEase.Stat"
+            android:textColor="@color/text_primary"
+            tools:text="₹4,520" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/Widget.ParkEase.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="Today's revenue" />
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            style="@style/Widget.ParkEase.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xs"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_medium"
+            android:maxLines="1"
+            android:textColor="@color/brand_secondary"
+            android:visibility="gone"
+            tools:text="+12% vs yesterday"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+</merge>

@@ -1,0 +1,24 @@
+// ParkEase – settings.gradle (project root)
+// Tells Gradle where to download plugins and libraries from,
+// and which modules belong to this project.
+
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        // JitPack is needed for MPAndroidChart
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+rootProject.name = "ParkEase"
+include ':app'

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One colour sample on the Design System screen: rounded square + name -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/space_xs">
+
+    <View
+        android:id="@+id/swatch"
+        android:layout_width="@dimen/swatch_size"
+        android:layout_height="@dimen/swatch_size"
+        android:background="@drawable/bg_rounded_tintable"
+        tools:backgroundTint="@color/navy_800" />
+
+    <TextView
+        android:id="@+id/tvSwatchName"
+        style="@style/Widget.ParkEase.Text.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        android:gravity="center"
+        android:maxLines="2"
+        tools:text="Primary" />
+
+</LinearLayout>

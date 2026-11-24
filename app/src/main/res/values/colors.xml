@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    ParkEase colours – LIGHT theme (default).
+    Two layers:
+      1. PALETTE   – raw colours. Never change between themes. Use rarely in layouts.
+      2. SEMANTIC  – colours by meaning (background, card, text...). Overridden in
+                     values-night/colors.xml for dark mode. ALWAYS use these in layouts.
+-->
+<resources>
+
+    <!-- =============================== 1. PALETTE =============================== -->
+    <!-- Navy (primary brand) -->
+    <color name="navy_900">#0C1C33</color>
+    <color name="navy_800">#142B4A</color>
+    <color name="navy_700">#1E3A5F</color>
+    <color name="navy_600">#2B4C77</color>
+    <color name="navy_100">#E3E9F2</color>
+
+    <!-- Teal (secondary brand) -->
+    <color name="teal_700">#0E8F81</color>
+    <color name="teal_500">#13B8A6</color>
+    <color name="teal_300">#5ED3C6</color>
+    <color name="teal_100">#DDF6F3</color>
+    <color name="teal_900">#0F3D39</color>
+
+    <!-- Neutral greys (cool, slightly blue) -->
+    <color name="grey_50">#F6F8FC</color>
+    <color name="grey_100">#EEF1F6</color>
+    <color name="grey_200">#E2E7EF</color>
+    <color name="grey_400">#9AA5B5</color>
+    <color name="grey_600">#5D6878</color>
+    <color name="grey_900">#18202C</color>
+
+    <!-- Dark theme surfaces -->
+    <color name="dark_bg">#0B1220</color>
+    <color name="dark_surface">#131C2E</color>
+    <color name="dark_surface_2">#1B2639</color>
+    <color name="dark_outline">#2A3850</color>
+    <color name="dark_text">#E8EDF5</color>
+
+    <!-- Status palette -->
+    <color name="green_500">#22C55E</color>
+    <color name="green_100">#DCFCE7</color>
+    <color name="red_500">#EF4444</color>
+    <color name="red_100">#FEE2E2</color>
+    <color name="amber_500">#F59E0B</color>
+    <color name="amber_100">#FEF3C7</color>
+    <color name="slate_400">#9CA3AF</color>
+    <color name="slate_100">#F1F3F6</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- ============================ 2. SEMANTIC (light) ============================ -->
+    <!-- Brand roles -->
+    <color name="brand_primary">@color/navy_800</color>
+    <color name="brand_on_primary">@color/white</color>
+    <color name="brand_secondary">@color/teal_500</color>
+    <color name="brand_on_secondary">@color/white</color>
+    <color name="brand_secondary_container">@color/teal_100</color>
+    <color name="brand_on_secondary_container">@color/navy_800</color>
+
+    <!-- Surfaces -->
+    <color name="bg_screen">@color/grey_50</color>
+    <color name="bg_card">@color/white</color>
+    <color name="bg_subtle">@color/grey_100</color>
+    <color name="stroke">@color/grey_200</color>
+    <color name="scrim">#66000000</color>
+
+    <!-- Text -->
+    <color name="text_primary">@color/grey_900</color>
+    <color name="text_secondary">@color/grey_600</color>
+    <color name="text_hint">@color/grey_400</color>
+    <color name="text_link">@color/teal_700</color>
+
+    <!-- Navy accent for icons and dashboard cards -->
+    <color name="accent_navy">@color/navy_800</color>
+    <color name="accent_navy_bg">@color/navy_100</color>
+
+    <!-- Navy header (stays navy in both themes) -->
+    <color name="header_start">@color/navy_800</color>
+    <color name="header_end">@color/navy_600</color>
+    <color name="text_on_header">@color/white</color>
+    <color name="text_on_header_secondary">#C9D6E8</color>
+
+    <!-- Feedback -->
+    <color name="error">#DC2626</color>
+    <color name="error_container">@color/red_100</color>
+    <color name="success">#16A34A</color>
+
+    <!-- Parking slot statuses: main colour + soft background -->
+    <color name="slot_available">@color/green_500</color>
+    <color name="slot_available_bg">@color/green_100</color>
+    <color name="slot_reserved">@color/amber_500</color>
+    <color name="slot_reserved_bg">@color/amber_100</color>
+    <color name="slot_occupied">@color/red_500</color>
+    <color name="slot_occupied_bg">@color/red_100</color>
+    <color name="slot_maintenance">@color/slate_400</color>
+    <color name="slot_maintenance_bg">@color/slate_100</color>
+
+    <!-- Launcher icon background -->
+    <color name="ic_launcher_background">@color/navy_800</color>
+</resources>

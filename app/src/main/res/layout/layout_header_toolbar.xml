@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Reusable navy header with a toolbar, title and subtitle.
+    Use it at the top of a screen:
+        <include
+            android:id="@+id/header"
+            layout="@layout/layout_header_toolbar" />
+    Then in Java:  binding.header.toolbar.setTitle(...),
+                   binding.header.tvHeaderTitle.setText(...)
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/headerRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_header_gradient"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/header_padding_bottom">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        style="@style/Widget.ParkEase.Toolbar.Header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        app:contentInsetStartWithNavigation="0dp"
+        tools:navigationIcon="@drawable/ic_arrow_back"
+        tools:title="ParkEase" />
+
+    <TextView
+        android:id="@+id/tvHeaderTitle"
+        style="@style/Widget.ParkEase.Text.OnHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/screen_padding"
+        android:layout_marginTop="@dimen/space_sm"
+        android:textAppearance="@style/TextAppearance.ParkEase.Display"
+        tools:text="Design System" />
+
+    <TextView
+        android:id="@+id/tvHeaderSubtitle"
+        style="@style/Widget.ParkEase.Text.OnHeader.Secondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/screen_padding"
+        android:layout_marginTop="@dimen/space_xs"
+        tools:text="Every ParkEase component in one place" />
+
+</LinearLayout>

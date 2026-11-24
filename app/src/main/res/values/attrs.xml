@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Custom XML attributes for the ParkEase reusable components
+    (package com.parkease.app.ui.components).
+    Example:
+        <com.parkease.app.ui.components.DashboardCardView
+            app:dcTitle="Today's revenue"
+            app:dcValue="₹4,520"
+            app:dcIcon="@drawable/ic_rupee"
+            app:dcAccent="teal" />
+    Every name has a short prefix (dc, slot, es, lv, sb) so it never clashes
+    with attributes from Material or other libraries.
+-->
+<resources>
+
+    <!-- Dashboard statistic card -->
+    <declare-styleable name="DashboardCardView">
+        <attr name="dcIcon" format="reference" />
+        <attr name="dcTitle" format="string" />
+        <attr name="dcValue" format="string" />
+        <attr name="dcSubtitle" format="string" />
+        <attr name="dcAccent" format="enum">
+            <enum name="teal" value="0" />
+            <enum name="navy" value="1" />
+            <enum name="green" value="2" />
+            <enum name="amber" value="3" />
+            <enum name="red" value="4" />
+        </attr>
+    </declare-styleable>
+
+    <!-- One parking slot box in the slot grid -->
+    <declare-styleable name="ParkingSlotView">
+        <attr name="slotLabel" format="string" />
+        <attr name="slotStatus" format="enum">
+            <enum name="available" value="0" />
+            <enum name="reserved" value="1" />
+            <enum name="occupied" value="2" />
+            <enum name="maintenance" value="3" />
+        </attr>
+        <attr name="slotSelected" format="boolean" />
+    </declare-styleable>
+
+    <!-- "Nothing here yet" message -->
+    <declare-styleable name="EmptyStateView">
+        <attr name="esIcon" format="reference" />
+        <attr name="esTitle" format="string" />
+        <attr name="esMessage" format="string" />
+        <attr name="esActionText" format="string" />
+    </declare-styleable>
+
+    <!-- Loading spinner, inline or as a full-screen overlay -->
+    <declare-styleable name="LoadingView">
+        <attr name="lvMessage" format="string" />
+        <attr name="lvOverlay" format="boolean" />
+    </declare-styleable>
+
+    <!-- Rounded search field with optional filter button -->
+    <declare-styleable name="SearchBarView">
+        <attr name="sbHint" format="string" />
+        <attr name="sbShowFilter" format="boolean" />
+    </declare-styleable>
+
+</resources>

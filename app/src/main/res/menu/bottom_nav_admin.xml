@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Admin bottom navigation (used in Step 5) -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_admin_dashboard"
+        android:icon="@drawable/ic_dashboard"
+        android:title="@string/nav_dashboard" />
+    <item
+        android:id="@+id/nav_admin_bookings"
+        android:icon="@drawable/ic_bookings"
+        android:title="@string/nav_bookings" />
+    <item
+        android:id="@+id/nav_admin_scan"
+        android:icon="@drawable/ic_qr_scan"
+        android:title="@string/nav_scan" />
+    <item
+        android:id="@+id/nav_admin_locations"
+        android:icon="@drawable/ic_location"
+        android:title="@string/nav_locations" />
+    <item
+        android:id="@+id/nav_admin_more"
+        android:icon="@drawable/ic_more"
+        android:title="@string/nav_more" />
+</menu>

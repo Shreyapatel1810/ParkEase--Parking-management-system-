@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Inside of ParkingSlotView (ui/components/ParkingSlotView.java): icon, slot number, short status -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@drawable/bg_slot_occupied"
+    tools:gravity="center"
+    tools:orientation="vertical"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <ImageView
+        android:id="@+id/imgSlotIcon"
+        android:layout_width="@dimen/icon_md"
+        android:layout_height="@dimen/icon_md"
+        android:importantForAccessibility="no"
+        app:tint="@color/slot_occupied"
+        tools:src="@drawable/ic_car" />
+
+    <TextView
+        android:id="@+id/tvSlotLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_2xs"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.ParkEase.Title"
+        android:textColor="@color/text_primary"
+        tools:text="A-03" />
+
+    <TextView
+        android:id="@+id/tvSlotStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.ParkEase.Overline"
+        android:textColor="@color/slot_occupied"
+        tools:text="Taken" />
+
+</merge>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- STEP 2 – Setup check screen (replaced by the Splash screen in Step 3) -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface"
+    android:fillViewport="true"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/contentRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/space_lg">
+
+        <!-- ===== Navy header ===== -->
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_header_gradient"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/space_lg"
+            android:paddingTop="@dimen/space_lg"
+            android:paddingBottom="56dp">
+
+            <ImageView
+                android:layout_width="@dimen/logo_size"
+                android:layout_height="@dimen/logo_size"
+                android:contentDescription="@string/cd_app_logo"
+                android:src="@drawable/ic_parkease_logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:text="@string/app_name"
+                android:textAppearance="?attr/textAppearanceHeadlineLarge"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_tagline"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="@color/text_on_dark_secondary" />
+        </LinearLayout>
+
+        <!-- ===== Setup check card (overlaps the header) ===== -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/screen_padding"
+            android:layout_marginTop="-32dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/space_md">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setup_title"
+                    android:textAppearance="?attr/textAppearanceTitleLarge"
+                    android:textColor="@color/navy" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_sm"
+                    android:text="@string/setup_subtitle"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:textColor="@color/text_secondary" />
+
+                <include
+                    android:id="@+id/checkFirebase"
+                    layout="@layout/item_setup_check" />
+
+                <include
+                    android:id="@+id/checkSqlite"
+                    layout="@layout/item_setup_check" />
+
+                <include
+                    android:id="@+id/checkQr"
+                    layout="@layout/item_setup_check" />
+
+                <include
+                    android:id="@+id/checkChart"
+                    layout="@layout/item_setup_check" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ===== Sample QR ticket card ===== -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/screen_padding"
+            android:layout_marginTop="@dimen/space_md">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="@dimen/space_md">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qr_card_title"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="@color/navy" />
+
+                <ImageView
+                    android:id="@+id/imgQr"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="@dimen/space_sm"
+                    android:contentDescription="@string/cd_qr_code"
+                    android:scaleType="fitCenter" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_xs"
+                    android:background="@drawable/bg_chip_teal"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="4dp"
+                    android:text="@string/qr_card_caption"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:textColor="@color/navy" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ===== Sample chart card ===== -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/screen_padding"
+            android:layout_marginTop="@dimen/space_md">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/space_md">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chart_card_title"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="@color/navy" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:layout_marginTop="@dimen/space_sm" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ===== Footer ===== -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/screen_padding"
+            android:layout_marginTop="@dimen/space_lg"
+            android:gravity="center"
+            android:text="@string/setup_footer"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="@color/text_secondary" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

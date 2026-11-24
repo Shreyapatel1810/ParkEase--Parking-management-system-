@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ParkEase</string>
+    <string name="app_tagline">Smart Parking Management System</string>
+
+    <!-- ===== Common actions ===== -->
+    <string name="action_back">Back</string>
+    <string name="action_clear">Clear search</string>
+    <string name="action_filter">Filters</string>
+    <string name="action_retry">Try again</string>
+    <string name="loading">Loading…</string>
+
+    <!-- ===== Slot statuses ===== -->
+    <string name="status_available">Available</string>
+    <string name="status_reserved">Reserved</string>
+    <string name="status_occupied">Occupied</string>
+    <string name="status_maintenance">Maintenance</string>
+    <string name="status_selected">Selected</string>
+    <string name="slot_short_available">Free</string>
+    <string name="slot_short_reserved">Reserved</string>
+    <string name="slot_short_occupied">Taken</string>
+    <string name="slot_short_maintenance">Repair</string>
+    <string name="slot_short_selected">Yours</string>
+    <string name="cd_slot">Slot %1$s, %2$s</string>
+
+    <!-- ===== Customer bottom navigation ===== -->
+    <string name="nav_home">Home</string>
+    <string name="nav_bookings">Bookings</string>
+    <string name="nav_favourites">Favourites</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- ===== Admin bottom navigation ===== -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_scan">Scan</string>
+    <string name="nav_locations">Locations</string>
+    <string name="nav_more">More</string>
+
+    <!-- ===== Design system preview screen ===== -->
+    <string name="ds_title">Design System</string>
+    <string name="ds_subtitle">Every ParkEase component in one place. Switch the theme to check light and dark.</string>
+    <string name="ds_theme">Theme</string>
+    <string name="ds_theme_light">Light</string>
+    <string name="ds_theme_dark">Dark</string>
+    <string name="ds_theme_system">System</string>
+    <string name="ds_colors">Colours</string>
+    <string name="ds_typography">Typography</string>
+    <string name="ds_buttons">Buttons</string>
+    <string name="ds_inputs">Text inputs</string>
+    <string name="ds_chips">Filter chips</string>
+    <string name="ds_search">Search bar</string>
+    <string name="ds_dashboard">Dashboard cards</string>
+    <string name="ds_slots">Parking slots</string>
+    <string name="ds_slots_hint">Tap a green slot to select it</string>
+    <string name="ds_cards">Cards</string>
+    <string name="ds_empty">Empty state</string>
+    <string name="ds_loading">Loading indicator</string>
+    <string name="ds_open_setup">Open setup check</string>
+
+    <string name="ds_type_display">Find parking fast</string>
+    <string name="ds_type_headline">City Mall Parking</string>
+    <string name="ds_type_title_large">Booking summary</string>
+    <string name="ds_type_title">Slot A-12 · Ground floor</string>
+    <string name="ds_type_body">Your booking is confirmed. Show the QR ticket at the entry gate.</string>
+    <string name="ds_type_caption">Booked today at 10:30 AM</string>
+    <string name="ds_type_overline">Upcoming booking</string>
+    <string name="ds_type_link">View all locations</string>
+
+    <string name="ds_btn_primary">Book now</string>
+    <string name="ds_btn_accent">View QR ticket</string>
+    <string name="ds_btn_secondary">Add vehicle</string>
+    <string name="ds_btn_danger">Cancel booking</string>
+    <string name="ds_btn_text">Forgot password?</string>
+    <string name="ds_btn_disabled">Pay ₹80 (disabled)</string>
+    <string name="ds_btn_small_1">Directions</string>
+    <string name="ds_btn_small_2">Details</string>
+
+    <string name="ds_input_email">Email address</string>
+    <string name="ds_input_password">Password</string>
+    <string name="ds_input_vehicle">Vehicle number</string>
+    <string name="ds_input_vehicle_error">Enter a valid number, e.g. GJ01AB1234</string>
+    <string name="ds_input_type">Vehicle type</string>
+    <string name="ds_input_helper">We\'ll send booking updates here</string>
+
+    <string name="ds_chip_car">Car</string>
+    <string name="ds_chip_bike">Bike</string>
+    <string name="ds_chip_covered">Covered</string>
+    <string name="ds_chip_ev">EV charging</string>
+
+    <string name="ds_search_hint">Search area, mall or city</string>
+    <string name="ds_search_result">Searching for “%1$s”</string>
+    <string name="ds_filter_clicked">Filters open in the Search screen</string>
+
+    <string name="ds_card_revenue">Today\'s revenue</string>
+    <string name="ds_card_revenue_value">₹4,520</string>
+    <string name="ds_card_revenue_sub">+12% vs yesterday</string>
+    <string name="ds_card_bookings">Bookings today</string>
+    <string name="ds_card_bookings_value">63</string>
+    <string name="ds_card_bookings_sub">8 upcoming</string>
+    <string name="ds_card_occupancy">Occupancy</string>
+    <string name="ds_card_occupancy_value">72%</string>
+    <string name="ds_card_occupancy_sub">29 of 40 slots</string>
+    <string name="ds_card_maintenance">In maintenance</string>
+    <string name="ds_card_maintenance_value">2</string>
+    <string name="ds_card_maintenance_sub">Floor 1, zone B</string>
+
+    <string name="ds_slot_selected">Slot %1$s selected</string>
+    <string name="ds_slot_unavailable">Slot %1$s is %2$s</string>
+
+    <string name="ds_card_default">Default card</string>
+    <string name="ds_card_default_body">Flat with a thin border. Used for lists and forms.</string>
+    <string name="ds_card_elevated">Elevated card</string>
+    <string name="ds_card_elevated_body">Soft shadow. Used for the card that overlaps the header.</string>
+    <string name="ds_card_filled">Filled card</string>
+    <string name="ds_card_filled_body">Grey panel for secondary details like fare breakdowns.</string>
+
+    <string name="ds_empty_title">No bookings yet</string>
+    <string name="ds_empty_message">When you book a parking slot, it will show up here with its QR ticket.</string>
+    <string name="ds_empty_action">Find parking</string>
+    <string name="ds_empty_clicked">This opens the Search screen later</string>
+
+    <string name="ds_loading_inline">Checking slot availability…</string>
+    <string name="ds_loading_overlay">Confirming your booking…</string>
+    <string name="ds_loading_show">Show full-screen loading (2 s)</string>
+    <string name="ds_nav_clicked">%1$s tab</string>
+
+    <!-- ===== Setup check screen (Step 2) ===== -->
+    <string name="setup_title">Setup check</string>
+    <string name="setup_subtitle">Every library the app needs, tested on this device</string>
+    <string name="check_firebase">Firebase</string>
+    <string name="check_firebase_ok">Connected to project %1$s</string>
+    <string name="check_firebase_missing">Not connected yet. Add google-services.json to the app folder.</string>
+    <string name="check_sqlite">SQLite database</string>
+    <string name="check_sqlite_ok">parkease_local.db ready with %1$d tables</string>
+    <string name="check_qr">ZXing QR code</string>
+    <string name="check_qr_ok">Test ticket QR generated below</string>
+    <string name="check_chart">MPAndroidChart</string>
+    <string name="check_chart_ok">Sample slot chart drawn below</string>
+    <string name="qr_card_title">Sample QR ticket</string>
+    <string name="qr_card_caption">Content: PARKEASE|TEST-BOOKING</string>
+    <string name="chart_card_title">Sample slot status chart</string>
+    <string name="chart_center">40\nslots</string>
+    <string name="setup_footer">Setup check from Step 2.</string>
+
+    <!-- ===== Accessibility descriptions ===== -->
+    <string name="cd_app_logo">ParkEase logo</string>
+    <string name="cd_qr_code">Sample QR code</string>
+    <string name="cd_status_icon">Check result</string>
+    <string name="cd_icon">Icon</string>
+</resources>

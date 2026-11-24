@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Parking slot box – OCCUPIED -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+
+    <solid android:color="@color/slot_occupied_bg" />
+    <stroke android:width="@dimen/stroke_slot" android:color="@color/slot_occupied" />
+    <corners android:radius="@dimen/radius_slot" />
+</shape>
