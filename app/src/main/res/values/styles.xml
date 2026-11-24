@@ -197,6 +197,14 @@
         <item name="cornerRadius">@dimen/radius_md</item>
     </style>
 
+    <!-- Compact text button for card action rows (My Bookings) -->
+    <style name="Widget.ParkEase.Button.Text.Small">
+        <item name="android:minHeight">@dimen/button_height_small</item>
+        <item name="android:paddingStart">@dimen/space_md</item>
+        <item name="android:paddingEnd">@dimen/space_md</item>
+        <item name="iconSize">18dp</item>
+    </style>
+
     <!-- ======================================================================
          TEXT INPUT
          ====================================================================== -->

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- My Bookings tab: Upcoming / Past / Cancelled. Java: ui/customer/booking/MyBookingsFragment.java -->
+<!--
+    Step 14 – My Bookings: Upcoming / Active / History (with search + filters).
+    Java: ui/customer/booking/MyBookingsFragment.java
+-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -29,28 +32,101 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
+                app:tabGravity="fill"
                 app:tabIndicatorColor="@color/brand_secondary"
                 app:tabIndicatorFullWidth="false"
+                app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/brand_secondary"
                 app:tabTextAppearance="@style/TextAppearance.ParkEase.Label"
                 app:tabTextColor="@color/text_secondary" />
         </com.google.android.material.card.MaterialCardView>
+
+        <!-- History only: search + status filter -->
+        <LinearLayout
+            android:id="@+id/historyControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <com.parkease.app.ui.components.SearchBarView
+                android:id="@+id/searchBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/screen_padding"
+                android:layout_marginTop="@dimen/space_md"
+                app:sbHint="@string/mb_search_hint"
+                app:sbShowFilter="false" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingHorizontal="@dimen/screen_padding"
+                android:scrollbars="none">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipsStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:checkedChip="@+id/chipAll"
+                    app:selectionRequired="true"
+                    app:singleLine="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipAll"
+                        style="@style/Widget.ParkEase.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mb_filter_all" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipCompleted"
+                        style="@style/Widget.ParkEase.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mb_filter_completed" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipCancelled"
+                        style="@style/Widget.ParkEase.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mb_filter_cancelled" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipExpired"
+                        style="@style/Widget.ParkEase.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mb_filter_expired" />
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvBookings"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingHorizontal="@dimen/screen_padding"
-                android:paddingTop="@dimen/space_lg"
-                android:paddingBottom="@dimen/space_xl"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_booking" />
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvBookings"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingHorizontal="@dimen/screen_padding"
+                    android:paddingTop="@dimen/space_lg"
+                    android:paddingBottom="@dimen/space_xl"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_my_booking" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
             <com.parkease.app.ui.components.StateView
                 android:id="@+id/stateView"
@@ -58,6 +134,15 @@
                 android:layout_height="match_parent" />
         </FrameLayout>
     </LinearLayout>
+
+    <!-- Shown while a cancellation is saved -->
+    <com.parkease.app.ui.components.LoadingView
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:lvMessage="@string/summary_cancelling"
+        app:lvOverlay="true" />
 
     <include
         android:id="@+id/statusBarScrim"

@@ -24,7 +24,7 @@ import com.parkease.app.utils.Constants;
 @IgnoreExtraProperties
 public class Payment {
 
-    private String transactionId;   // e.g. "TXN20261124101530A7K2Q9" (also the database key)
+    private String transactionId;   // e.g. "TXN20261124101530A7K2Q9MX4T" (also the database key)
     private String bookingId;
     private String bookingCode;
     private String userId;

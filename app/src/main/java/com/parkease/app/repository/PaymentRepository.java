@@ -57,7 +57,10 @@ public class PaymentRepository {
         this.context = context.getApplicationContext();
     }
 
-    /** Unique transaction ID: "TXN" + date-time + 6 random characters, e.g. TXN20261124101530A7K2Q9. */
+    /**
+     * Unique transaction ID: "TXN" + date-time + 10 random characters,
+     * e.g. TXN20261124101530A7K2Q9MX4T (32^10 ≈ 10^15 combinations per second).
+     */
     @NonNull
     public static String newTransactionId() {
         return newTransactionId(System.currentTimeMillis());
@@ -68,7 +71,7 @@ public class PaymentRepository {
     static String newTransactionId(long now) {
         StringBuilder sb = new StringBuilder("TXN");
         sb.append(new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(new Date(now)));
-        for (int i = 0; i < 6; i++) sb.append(ID_CHARS.charAt(RANDOM.nextInt(ID_CHARS.length())));
+        for (int i = 0; i < 10; i++) sb.append(ID_CHARS.charAt(RANDOM.nextInt(ID_CHARS.length())));
         return sb.toString();
     }
 

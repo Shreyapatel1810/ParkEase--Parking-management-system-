@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Step 14 – One booking in My Bookings (Upcoming and History tabs).
+    Used by adapters/MyBookingAdapter.java
+-->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/card_padding"
+            android:paddingTop="@dimen/card_padding"
+            android:paddingBottom="@dimen/space_xs">
+
+            <!-- Parking name + booking status -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="@dimen/icon_container"
+                    android:layout_height="@dimen/icon_container"
+                    android:background="@drawable/bg_icon_circle"
+                    android:backgroundTint="@color/accent_navy_bg">
+
+                    <ImageView
+                        android:id="@+id/imgVehicle"
+                        android:layout_width="@dimen/icon_sm"
+                        android:layout_height="@dimen/icon_sm"
+                        android:layout_gravity="center"
+                        android:importantForAccessibility="no"
+                        app:tint="@color/accent_navy"
+                        tools:src="@drawable/ic_car" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_md"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvLocation"
+                        style="@style/Widget.ParkEase.Text.CardTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        tools:text="SG Highway Central Parking" />
+
+                    <TextView
+                        android:id="@+id/tvCode"
+                        style="@style/Widget.ParkEase.Text.Caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        tools:text="PE-7K3D9Q" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    style="@style/Widget.ParkEase.Text.Badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_sm"
+                    tools:text="Confirmed" />
+            </LinearLayout>
+
+            <!-- Details grid: Slot | Vehicle / Date | Time -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mb_slot" />
+
+                    <TextView
+                        android:id="@+id/tvSlot"
+                        style="@style/Widget.ParkEase.Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        tools:text="A-07" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mb_vehicle" />
+
+                    <TextView
+                        android:id="@+id/tvVehicle"
+                        style="@style/Widget.ParkEase.Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        tools:text="GJ 01 AB 1234" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_sm"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mb_date" />
+
+                    <TextView
+                        android:id="@+id/tvDate"
+                        style="@style/Widget.ParkEase.Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Tomorrow" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mb_time" />
+
+                    <TextView
+                        android:id="@+id/tvTime"
+                        style="@style/Widget.ParkEase.Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="10:00 AM – 12:00 PM" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Payment -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:background="@drawable/bg_rounded_tintable"
+                android:backgroundTint="@color/bg_subtle"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_sm">
+
+                <ImageView
+                    android:id="@+id/imgPayment"
+                    android:layout_width="@dimen/icon_sm"
+                    android:layout_height="@dimen/icon_sm"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_rupee"
+                    app:tint="@color/text_secondary" />
+
+                <TextView
+                    android:id="@+id/tvPaymentMethod"
+                    style="@style/Widget.ParkEase.Text.Caption"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_sm"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    tools:text="UPI (demo) · ₹100" />
+
+                <TextView
+                    android:id="@+id/tvPaymentStatus"
+                    style="@style/Widget.ParkEase.Text.Badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Successful" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Actions (shown depending on the booking) -->
+        <LinearLayout
+            android:id="@+id/actions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/space_sm"
+            android:paddingBottom="@dimen/space_xs">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancel"
+                style="@style/Widget.ParkEase.Button.Text.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mb_action_cancel"
+                android:textColor="@color/error" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnReceipt"
+                style="@style/Widget.ParkEase.Button.Text.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mb_action_receipt" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTicket"
+                style="@style/Widget.ParkEase.Button.Text.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mb_action_ticket"
+                app:icon="@drawable/ic_qr_scan" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

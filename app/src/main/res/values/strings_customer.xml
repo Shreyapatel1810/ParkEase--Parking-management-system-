@@ -112,14 +112,8 @@
     <string name="bookings_title">My bookings</string>
     <string name="bookings_subtitle">Your reservations and parking history</string>
     <string name="bookings_tab_upcoming">Upcoming</string>
-    <string name="bookings_tab_past">Past</string>
-    <string name="bookings_tab_cancelled">Cancelled</string>
     <string name="bookings_empty_upcoming">No upcoming bookings</string>
     <string name="bookings_empty_upcoming_msg">Book a slot and it will show up here with its QR ticket.</string>
-    <string name="bookings_empty_past">No past bookings</string>
-    <string name="bookings_empty_past_msg">Completed parking sessions will be listed here.</string>
-    <string name="bookings_empty_cancelled">No cancelled bookings</string>
-    <string name="bookings_empty_cancelled_msg">Bookings you cancel will be listed here.</string>
     <string name="booking_slot">Slot %1$s</string>
     <string name="booking_status_confirmed">Confirmed</string>
     <string name="booking_status_active">Parked</string>

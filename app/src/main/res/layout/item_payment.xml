@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_2xs"
                 android:fontFamily="monospace"
-                tools:text="TXN20261124101530A7K2Q9" />
+                tools:text="TXN20261124101530A7K2Q9MX4T" />
 
             <TextView
                 android:id="@+id/tvExtra"

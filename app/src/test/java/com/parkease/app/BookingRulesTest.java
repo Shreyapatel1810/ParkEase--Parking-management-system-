@@ -156,15 +156,49 @@ public class BookingRulesTest {
         Booking upcoming = booking(Constants.BOOKING_CONFIRMED, now + 60 * MIN, now + 120 * MIN, 0, 100);
         Booking holding = booking(Constants.BOOKING_PENDING_PAYMENT, now + 30 * MIN, now + 90 * MIN, now + 5 * MIN, 50);
         Booking deadHold = booking(Constants.BOOKING_PENDING_PAYMENT, now + 30 * MIN, now + 90 * MIN, now - MIN, 50);
+        Booking running = booking(Constants.BOOKING_CONFIRMED, now - 10 * MIN, now + 50 * MIN, 0, 100);
+        Booking parked = booking(Constants.BOOKING_ACTIVE, now - 30 * MIN, now + 30 * MIN, 0, 100);
         Booking finished = booking(Constants.BOOKING_COMPLETED, now - 300 * MIN, now - 200 * MIN, 0, 100);
         Booking cancelled = booking(Constants.BOOKING_CANCELLED, now + 60 * MIN, now + 120 * MIN, 0, 100);
-        List<Booking> all = new ArrayList<>(Arrays.asList(upcoming, holding, deadHold, finished, cancelled));
+        Booking noShow = booking(Constants.BOOKING_CONFIRMED, now - 200 * MIN, now - 100 * MIN, 0, 100);
+        Booking abandonedHold = booking(Constants.BOOKING_EXPIRED, now - 200 * MIN, now - 100 * MIN, now - 300 * MIN, 50);
+        List<Booking> all = new ArrayList<>(Arrays.asList(upcoming, holding, deadHold, running, parked,
+                finished, cancelled, noShow, abandonedHold));
 
         // Upcoming: soonest first, includes the live hold, not the dead one
         assertEquals(Arrays.asList(holding, upcoming), BookingRepository.filter(all, BookingRepository.TAB_UPCOMING));
-        assertEquals(Collections.singletonList(finished), BookingRepository.filter(all, BookingRepository.TAB_PAST));
-        assertEquals(Collections.singletonList(cancelled), BookingRepository.filter(all, BookingRepository.TAB_CANCELLED));
-        assertEquals(holding, BookingRepository.findNextUpcoming(all));
+        // Active: parked + time running now, ending soonest first
+        assertEquals(Arrays.asList(parked, running), BookingRepository.filter(all, BookingRepository.TAB_ACTIVE));
+        // History: newest first; an abandoned (never paid) hold is not listed
+        assertEquals(Arrays.asList(cancelled, noShow, finished), BookingRepository.filter(all, BookingRepository.TAB_HISTORY));
+        // Home card shows the booking happening now first (the parked one)
+        assertEquals(parked, BookingRepository.findNextUpcoming(all));
+    }
+
+    @Test
+    public void historySearchAndFilter() {
+        long now = System.currentTimeMillis();
+        Booking a = booking(Constants.BOOKING_COMPLETED, now - 300 * MIN, now - 200 * MIN, 0, 100);
+        a.setBookingCode("PE-7K3D9Q");
+        a.setLocationName("SG Highway Central Parking");
+        a.setSlotNumber("A-07");
+        a.setVehicleNumber("GJ01AB1234");
+        Booking b = booking(Constants.BOOKING_CANCELLED, now - 100 * MIN, now - 50 * MIN, 0, 100);
+        b.setBookingCode("PE-ZZZZ22");
+        b.setLocationName("Riverfront Parking");
+        b.setSlotNumber("M-01");
+        b.setVehicleNumber("MH12DE1433");
+        List<Booking> list = Arrays.asList(a, b);
+        String all = BookingRepository.HISTORY_ALL;
+
+        assertEquals(2, BookingRepository.search(list, "", all).size());
+        assertEquals(Collections.singletonList(a), BookingRepository.search(list, "7k3d", all));       // code, any case
+        assertEquals(Collections.singletonList(b), BookingRepository.search(list, "riverfront", all));  // place
+        assertEquals(Collections.singletonList(a), BookingRepository.search(list, "a-07", all));        // slot
+        assertEquals(Collections.singletonList(b), BookingRepository.search(list, "MH 12 DE", all));    // plate with spaces
+        assertEquals(Collections.singletonList(a), BookingRepository.search(list, "", Constants.BOOKING_COMPLETED));
+        assertEquals(Collections.singletonList(b), BookingRepository.search(list, "", Constants.BOOKING_CANCELLED));
+        assertTrue(BookingRepository.search(list, "riverfront", Constants.BOOKING_COMPLETED).isEmpty());
     }
 
     // ================================================================== cancellation policy

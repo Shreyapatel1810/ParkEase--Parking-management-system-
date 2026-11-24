@@ -247,33 +247,96 @@ public class BookingRepository {
         return next;
     }
 
-    /** Splits bookings for the three tabs of "My bookings". */
+    // ================================================================== My Bookings tabs (Step 14)
+
+    public static final String TAB_UPCOMING = "upcoming";
+    public static final String TAB_ACTIVE = "active";
+    public static final String TAB_HISTORY = "history";
+
+    /**
+     * Which tab a booking belongs in (or null = not listed).
+     * <ul>
+     *   <li>UPCOMING – confirmed and not started yet, or a hold still waiting for payment</li>
+     *   <li>ACTIVE   – vehicle is parked (ACTIVE), or a confirmed booking whose time is running now</li>
+     *   <li>HISTORY  – completed, cancelled, expired, or confirmed but already ended (no-show)</li>
+     * </ul>
+     * Abandoned holds (never paid, then expired) are left out – they were never real bookings.
+     */
+    @Nullable
+    public static String tabOf(@NonNull Booking b, long now) {
+        String status = b.getStatus() == null ? "" : b.getStatus();
+        switch (status) {
+            case Constants.BOOKING_PENDING_PAYMENT:
+                return b.isHoldActive(now) && b.getEndTime() > now ? TAB_UPCOMING : null;
+            case Constants.BOOKING_ACTIVE:
+                return TAB_ACTIVE;
+            case Constants.BOOKING_CONFIRMED:
+                if (b.getEndTime() <= now) return TAB_HISTORY;
+                return b.getStartTime() > now ? TAB_UPCOMING : TAB_ACTIVE;
+            case Constants.BOOKING_EXPIRED:
+                return b.getPaymentId() == null && b.getConfirmedAt() == 0 ? null : TAB_HISTORY;
+            case Constants.BOOKING_COMPLETED:
+            case Constants.BOOKING_CANCELLED:
+                return TAB_HISTORY;
+            default:
+                return null;
+        }
+    }
+
+    /** The bookings of one tab, in the order shown. */
     @NonNull
     public static List<Booking> filter(@NonNull List<Booking> all, @NonNull String tab) {
         long now = System.currentTimeMillis();
         List<Booking> result = new ArrayList<>();
         for (Booking b : all) {
-            boolean upcoming = b.isUpcoming(now);
-            switch (tab) {
-                case TAB_UPCOMING:
-                    if (upcoming) result.add(b);
-                    break;
-                case TAB_CANCELLED:
-                    if (b.isCancelled()) result.add(b);
-                    break;
-                default: // TAB_PAST: completed, expired, or confirmed but already ended
-                    if (!upcoming && !b.isCancelled()
-                            && !Constants.BOOKING_PENDING_PAYMENT.equals(b.getStatus())) result.add(b);
-                    break;
-            }
+            if (tab.equals(tabOf(b, now))) result.add(b);
         }
         if (TAB_UPCOMING.equals(tab)) {
-            Collections.sort(result, Comparator.comparingLong(Booking::getStartTime)); // soonest first
+            Collections.sort(result, Comparator.comparingLong(Booking::getStartTime));   // soonest first
+        } else if (TAB_ACTIVE.equals(tab)) {
+            Collections.sort(result, Comparator.comparingLong(Booking::getEndTime));     // ends soonest first
+        } else {
+            Collections.sort(result, (a, b) -> Long.compare(b.getStartTime(), a.getStartTime())); // newest first
         }
         return result;
     }
 
-    public static final String TAB_UPCOMING = "upcoming";
-    public static final String TAB_PAST = "past";
-    public static final String TAB_CANCELLED = "cancelled";
+    /** History filter chips. */
+    public static final String HISTORY_ALL = "all";
+
+    /**
+     * Search + status filter for the History tab.
+     * Matches the booking code / ID, parking name, slot and vehicle number (spaces ignored).
+     *
+     * @param status HISTORY_ALL or a booking status (COMPLETED / CANCELLED / EXPIRED)
+     */
+    @NonNull
+    public static List<Booking> search(@NonNull List<Booking> list, @Nullable String query, @NonNull String status) {
+        String q = query == null ? "" : query.trim().toLowerCase(java.util.Locale.ROOT);
+        String qCompact = q.replaceAll("[^a-z0-9]", "");
+        List<Booking> result = new ArrayList<>();
+        for (Booking b : list) {
+            if (!HISTORY_ALL.equals(status)) {
+                // "Expired" also covers confirmed bookings that ended without entry
+                String s = b.isConfirmed() ? Constants.BOOKING_EXPIRED : b.getStatus();
+                if (!status.equals(s)) continue;
+            }
+            if (q.isEmpty() || contains(b.getBookingCode(), q) || contains(b.getId(), q)
+                    || contains(b.getLocationName(), q) || contains(b.getSlotNumber(), q)
+                    || (!qCompact.isEmpty() && contains(compact(b.getVehicleNumber()), qCompact))
+                    || (!qCompact.isEmpty() && contains(compact(b.getBookingCode()), qCompact))) {
+                result.add(b);
+            }
+        }
+        return result;
+    }
+
+    private static boolean contains(@Nullable String text, @NonNull String q) {
+        return text != null && text.toLowerCase(java.util.Locale.ROOT).contains(q);
+    }
+
+    @Nullable
+    private static String compact(@Nullable String text) {
+        return text == null ? null : text.toLowerCase(java.util.Locale.ROOT).replaceAll("[^a-z0-9]", "");
+    }
 }

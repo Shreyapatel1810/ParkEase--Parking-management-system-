@@ -24,8 +24,8 @@ public class PaymentRulesTest {
     @Test
     public void transactionIdHasTheExpectedFormat() {
         String id = PaymentRepository.newTransactionId();
-        // TXN + yyyyMMddHHmmss + 6 random characters
-        assertTrue(id, id.matches("^TXN[0-9]{14}[A-Z2-9]{6}$"));
+        // TXN + yyyyMMddHHmmss + 10 random characters
+        assertTrue(id, id.matches("^TXN[0-9]{14}[A-Z2-9]{10}$"));
     }
 
     @Test

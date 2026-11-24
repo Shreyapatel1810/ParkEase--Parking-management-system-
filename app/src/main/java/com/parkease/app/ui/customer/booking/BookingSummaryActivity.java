@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.parkease.app.R;
 import com.parkease.app.adapters.BookingAdapter;
 import com.parkease.app.databinding.ActivityBookingSummaryBinding;
@@ -272,35 +271,14 @@ public class BookingSummaryActivity extends BaseActivity {
 
     private void askCancel() {
         if (booking == null) return;
-        Booking b = booking;
-        long now = System.currentTimeMillis();
-        String refund = FormatUtils.money(policy.refundFor(b, now));
-        String msg = b.isCashPayment()
-                ? getString(R.string.cancel_confirm_cash)
-                : policy.isFullRefund(b, now)
-                ? getString(R.string.cancel_confirm_full, refund)
-                : getString(R.string.cancel_confirm_partial, policy.getFullRefundBeforeMinutes(),
-                        refund, FormatUtils.money(b.getAmount()));
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.cancel_confirm_title)
-                .setMessage(msg)
-                .setNegativeButton(R.string.cancel_keep, null)
-                .setPositiveButton(R.string.summary_cancel, (d, w) -> cancel(b))
-                .show();
-    }
-
-    private void cancel(@NonNull Booking b) {
-        setBusy(true, R.string.summary_cancelling);
-        repository.cancelBooking(b, policy, new DataCallback<Double>() {
+        CancelBookingFlow.start(this, repository, policy, booking, new CancelBookingFlow.Listener() {
             @Override
-            public void onSuccess(Double refund) {
-                setBusy(false, 0);
-                showMessage(getString(R.string.cancelled_message, FormatUtils.money(refund)));
+            public void onBusy(boolean value) {
+                setBusy(value, R.string.summary_cancelling);
             }
 
             @Override
-            public void onError(@NonNull String message) {
-                setBusy(false, 0);
+            public void onMessage(@NonNull String message) {
                 showMessage(message);
             }
         });
