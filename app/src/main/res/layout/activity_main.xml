@@ -1,83 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- STEP 2 – Setup check screen (replaced by the Splash screen in Step 3) -->
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<!-- STEP 2 – Setup check screen, now built from the Step 3 design system -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_screen"
+    tools:context=".MainActivity">
+
+<androidx.core.widget.NestedScrollView
     android:id="@+id/scrollRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface"
-    android:fillViewport="true"
-    tools:context=".MainActivity">
+    android:background="@color/bg_screen"
+    android:fillViewport="true">
 
     <LinearLayout
         android:id="@+id/contentRoot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/space_lg">
+        android:paddingBottom="@dimen/space_xl">
 
-        <!-- ===== Navy header ===== -->
-        <LinearLayout
+        <!-- Reusable navy header -->
+        <include
             android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_header_gradient"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/space_lg"
-            android:paddingTop="@dimen/space_lg"
-            android:paddingBottom="56dp">
+            layout="@layout/layout_header_toolbar" />
 
-            <ImageView
-                android:layout_width="@dimen/logo_size"
-                android:layout_height="@dimen/logo_size"
-                android:contentDescription="@string/cd_app_logo"
-                android:src="@drawable/ic_parkease_logo" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_md"
-                android:text="@string/app_name"
-                android:textAppearance="?attr/textAppearanceHeadlineLarge"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_tagline"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="@color/text_on_dark_secondary" />
-        </LinearLayout>
-
-        <!-- ===== Setup check card (overlaps the header) ===== -->
+        <!-- Check results (overlaps the header) -->
         <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.ParkEase.Card.Elevated"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/screen_padding"
-            android:layout_marginTop="-32dp">
+            android:layout_marginTop="@dimen/header_overlap">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/space_md">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/setup_title"
-                    android:textAppearance="?attr/textAppearanceTitleLarge"
-                    android:textColor="@color/navy" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_sm"
-                    android:text="@string/setup_subtitle"
-                    android:textAppearance="?attr/textAppearanceBodySmall"
-                    android:textColor="@color/text_secondary" />
+                android:padding="@dimen/card_padding">
 
                 <include
                     android:id="@+id/checkFirebase"
@@ -97,67 +58,65 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- ===== Sample QR ticket card ===== -->
+        <!-- Sample QR ticket -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/screen_padding"
-            android:layout_marginTop="@dimen/space_md">
+            android:layout_marginTop="@dimen/card_gap">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="@dimen/space_md">
+                android:padding="@dimen/card_padding">
 
                 <TextView
+                    style="@style/Widget.ParkEase.Text.CardTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/qr_card_title"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    android:textColor="@color/navy" />
+                    android:text="@string/qr_card_title" />
 
+                <!-- QR codes always stay black on white so scanners can read them -->
                 <ImageView
                     android:id="@+id/imgQr"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:layout_marginTop="@dimen/space_sm"
+                    android:background="@color/white"
                     android:contentDescription="@string/cd_qr_code"
+                    android:padding="@dimen/space_sm"
                     android:scaleType="fitCenter" />
 
                 <TextView
+                    style="@style/Widget.ParkEase.Text.Badge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_xs"
-                    android:background="@drawable/bg_chip_teal"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="4dp"
+                    android:layout_marginTop="@dimen/space_sm"
                     android:text="@string/qr_card_caption"
-                    android:textAppearance="?attr/textAppearanceBodySmall"
-                    android:textColor="@color/navy" />
+                    android:textAllCaps="false" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- ===== Sample chart card ===== -->
+        <!-- Sample chart -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/screen_padding"
-            android:layout_marginTop="@dimen/space_md">
+            android:layout_marginTop="@dimen/card_gap">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/space_md">
+                android:padding="@dimen/card_padding">
 
                 <TextView
+                    style="@style/Widget.ParkEase.Text.CardTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/chart_card_title"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    android:textColor="@color/navy" />
+                    android:text="@string/chart_card_title" />
 
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/pieChart"
@@ -167,16 +126,21 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- ===== Footer ===== -->
         <TextView
+            style="@style/Widget.ParkEase.Text.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/screen_padding"
-            android:layout_marginTop="@dimen/space_lg"
+            android:layout_marginTop="@dimen/space_xl"
             android:gravity="center"
-            android:text="@string/setup_footer"
-            android:textAppearance="?attr/textAppearanceBodySmall"
-            android:textColor="@color/text_secondary" />
+            android:text="@string/setup_footer" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
+
+    <!-- Navy strip behind the status bar -->
+    <include
+        android:id="@+id/statusBarScrim"
+        layout="@layout/view_status_bar_scrim" />
+
+</FrameLayout>

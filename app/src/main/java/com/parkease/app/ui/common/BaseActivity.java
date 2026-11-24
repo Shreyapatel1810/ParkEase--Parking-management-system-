@@ -47,6 +47,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Gives a thin navy strip the height of the status bar. Place it as the last child of a
+     * FrameLayout root (gravity top) so scrolling content never shows behind the clock and
+     * battery icons.
+     */
+    protected void applyStatusBarScrim(@NonNull View scrim) {
+        ViewCompat.setOnApplyWindowInsetsListener(scrim, (v, insets) -> {
+            Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars()
+                    | WindowInsetsCompat.Type.displayCutout());
+            if (v.getLayoutParams().height != bars.top) {
+                v.getLayoutParams().height = bars.top;
+                v.requestLayout();
+            }
+            return insets;
+        });
+    }
+
     /** Adds the navigation bar height to the view's bottom padding (use on scrolling content). */
     protected void applyNavigationBarPadding(@NonNull View view) {
         final int initialBottom = view.getPaddingBottom();

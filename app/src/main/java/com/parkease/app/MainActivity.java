@@ -1,18 +1,11 @@
 package com.parkease.app;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
-import androidx.activity.SystemBarStyle;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -23,31 +16,35 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.parkease.app.database.DBHelper;
 import com.parkease.app.databinding.ActivityMainBinding;
 import com.parkease.app.databinding.ItemSetupCheckBinding;
+import com.parkease.app.ui.common.BaseActivity;
 import com.parkease.app.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * STEP 2 – Setup check screen.
- * Proves that the project builds and that every library works:
- * Material 3 theme, Firebase, SQLite, ZXing (QR) and MPAndroidChart.
- * This screen is replaced by SplashActivity in Step 3.
+ * STEP 2 – Setup check screen (opened from the Design System screen).
+ * Proves that every library works: Firebase, SQLite, ZXing (QR) and MPAndroidChart.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Draw behind the status bar (required on Android 15) with white status icons
-        EdgeToEdge.enable(this,
-                SystemBarStyle.dark(Color.TRANSPARENT),
-                SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT));
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        applySystemBarInsets();
+
+        applyStatusBarPadding(binding.header.getRoot());
+        applyNavigationBarPadding(binding.contentRoot);
+        applyStatusBarScrim(binding.statusBarScrim.getRoot());
+
+        binding.header.toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        binding.header.toolbar.setNavigationContentDescription(R.string.action_back);
+        binding.header.toolbar.setNavigationOnClickListener(v -> finish());
+        binding.header.tvHeaderTitle.setText(R.string.setup_title);
+        binding.header.tvHeaderSubtitle.setText(R.string.setup_subtitle);
 
         checkFirebase();
         checkSqlite();
@@ -107,21 +104,23 @@ public class MainActivity extends AppCompatActivity {
 
         PieDataSet dataSet = new PieDataSet(entries, "");
         dataSet.setColors(
-                color(R.color.status_available),
-                color(R.color.status_reserved),
-                color(R.color.status_occupied),
-                color(R.color.status_maintenance));
-        dataSet.setValueTextColor(Color.WHITE);
+                color(R.color.slot_available),
+                color(R.color.slot_reserved),
+                color(R.color.slot_occupied),
+                color(R.color.slot_maintenance));
+        dataSet.setValueTextColor(color(R.color.white));
         dataSet.setValueTextSize(12f);
         dataSet.setSliceSpace(2f);
 
         binding.pieChart.setData(new PieData(dataSet));
         binding.pieChart.getDescription().setEnabled(false);
+        binding.pieChart.setHoleColor(color(R.color.bg_card));
         binding.pieChart.setHoleRadius(55f);
         binding.pieChart.setTransparentCircleRadius(60f);
         binding.pieChart.setCenterText(getString(R.string.chart_center));
-        binding.pieChart.setCenterTextColor(color(R.color.navy));
+        binding.pieChart.setCenterTextColor(color(R.color.text_primary));
         binding.pieChart.setDrawEntryLabels(false);
+        binding.pieChart.getLegend().setTextColor(color(R.color.text_secondary));
         binding.pieChart.getLegend().setWordWrapEnabled(true);
         binding.pieChart.animateY(800);
         binding.pieChart.invalidate();
@@ -131,25 +130,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // ---------------------------------------------------------------- helpers
-
-    /** Pushes the header below the status bar and the content above the navigation bar. */
-    private void applySystemBarInsets() {
-        final int headerTop = binding.header.getPaddingTop();
-        final int contentBottom = binding.contentRoot.getPaddingBottom();
-        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (view, windowInsets) -> {
-            Insets bars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-            binding.header.setPadding(binding.header.getPaddingLeft(), headerTop + bars.top,
-                    binding.header.getPaddingRight(), binding.header.getPaddingBottom());
-            binding.contentRoot.setPadding(bars.left, 0, bars.right, contentBottom + bars.bottom);
-            return WindowInsetsCompat.CONSUMED;
-        });
-    }
-
     private void showResult(ItemSetupCheckBinding row, boolean ok, String title, String detail) {
         row.tvCheckTitle.setText(title);
         row.tvCheckDetail.setText(detail);
         @DrawableRes int icon = ok ? R.drawable.ic_check_circle : R.drawable.ic_error;
-        @ColorRes int tint = ok ? R.color.status_available : R.color.status_reserved;
+        @ColorRes int tint = ok ? R.color.slot_available : R.color.slot_reserved;
         row.imgCheckIcon.setImageResource(icon);
         row.imgCheckIcon.setColorFilter(color(tint));
     }

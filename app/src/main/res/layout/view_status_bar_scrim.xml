@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Navy strip behind the status bar. Include it as the LAST child of a screen's root
+    FrameLayout, then call applyStatusBarScrim(binding.statusBarScrim.getRoot()) in the activity
+    (BaseActivity sets its height to the status bar height).
+-->
+<View xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_gravity="top"
+    android:background="@color/header_start" />

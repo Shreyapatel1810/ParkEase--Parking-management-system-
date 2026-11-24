@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Vehicle types for drop-downs -->
+    <string-array name="vehicle_types">
+        <item>Car</item>
+        <item>Bike</item>
+    </string-array>
+
+    <!-- Names shown under the colour swatches on the Design System screen
+         (same order as SWATCH_COLORS in DesignSystemActivity) -->
+    <string-array name="ds_swatch_names">
+        <item>Primary</item>
+        <item>Secondary</item>
+        <item>Background</item>
+        <item>Card</item>
+        <item>Text</item>
+        <item>Text muted</item>
+        <item>Border</item>
+        <item>Error</item>
+        <item>Available</item>
+        <item>Reserved</item>
+        <item>Occupied</item>
+        <item>Maintenance</item>
+    </string-array>
+</resources>

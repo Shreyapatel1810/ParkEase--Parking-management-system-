@@ -29,18 +29,21 @@
         android:theme="@style/Theme.ParkEase"
         tools:targetApi="35">
 
-        <!-- Temporary start screen for Step 2: checks that every library works.
-             In Step 3 the launcher moves to SplashActivity. -->
+        <!-- Step 3: Design System preview is the start screen for now.
+             It will be replaced by SplashActivity when authentication is built. -->
         <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            tools:ignore="DiscouragedApi,LockedOrientationActivity">
+            android:name=".ui.preview.DesignSystemActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Step 2 setup check (opened from the Design System screen) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
 
     </application>
 

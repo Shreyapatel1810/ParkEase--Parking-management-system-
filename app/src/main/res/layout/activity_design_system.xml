@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Design System preview screen – shows every ParkEase style and component.
+    Java: ui/preview/DesignSystemActivity.java
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_screen"
+    tools:context=".ui.preview.DesignSystemActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/space_2xl">
+
+                <!-- ================= Header (reusable component) ================= -->
+                <include
+                    android:id="@+id/header"
+                    layout="@layout/layout_header_toolbar" />
+
+                <!-- clipChildren=false lets the first card overlap the header above -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/screen_padding">
+
+                    <!-- ================= Theme switcher (overlaps the header) ================= -->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/Widget.ParkEase.Card.Elevated"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/header_overlap">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/card_padding">
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.Overline"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ds_theme" />
+
+                            <com.google.android.material.button.MaterialButtonToggleGroup
+                                android:id="@+id/toggleTheme"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_sm"
+                                app:selectionRequired="true"
+                                app:singleSelection="true">
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btnThemeLight"
+                                    style="@style/Widget.ParkEase.Button.Secondary.Small"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/ds_theme_light" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btnThemeDark"
+                                    style="@style/Widget.ParkEase.Button.Secondary.Small"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/ds_theme_dark" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btnThemeSystem"
+                                    style="@style/Widget.ParkEase.Button.Secondary.Small"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/ds_theme_system" />
+                            </com.google.android.material.button.MaterialButtonToggleGroup>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ================= Colours ================= -->
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.SectionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        android:text="@string/ds_colors" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <GridLayout
+                            android:id="@+id/gridColors"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:columnCount="3"
+                            android:padding="@dimen/space_md" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ================= Typography ================= -->
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.SectionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        android:text="@string/ds_typography" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/card_padding">
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.Overline"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ds_type_overline" />
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ds_type_display"
+                                android:textAppearance="@style/TextAppearance.ParkEase.Display" />
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.ScreenTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ds_type_headline" />
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_sm"
+                                android:text="@string/ds_type_title_large"
+                                android:textAppearance="@style/TextAppearance.ParkEase.TitleLarge" />
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.CardTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ds_type_title" />
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_sm"
+                                android:text="@string/ds_type_body" />
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_xs"
+                                android:text="@string/ds_type_caption" />
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.Link"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_sm"
+                                android:text="@string/ds_type_link" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_md"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/Widget.ParkEase.Text.Badge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/status_available"
+                                    android:textColor="@color/slot_available"
+                                    android:backgroundTint="@color/slot_available_bg" />
+
+                                <TextView
+                                    style="@style/Widget.ParkEase.Text.Badge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/space_sm"
+                                    android:text="@string/status_reserved"
+                                    android:textColor="@color/slot_reserved"
+                                    android:backgroundTint="@color/slot_reserved_bg" />
+
+                                <TextView
+                                    style="@style/Widget.ParkEase.Text.Badge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/space_sm"
+                                    android:text="@string/status_occupied"
+                                    android:textColor="@color/slot_occupied"
+                                    android:backgroundTint="@color/slot_occupied_bg" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ================= Buttons ================= -->
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.SectionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        android:text="@string/ds_buttons" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/card_padding">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnPrimary"
+                                style="@style/Widget.ParkEase.Button.Primary"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ds_btn_primary"
+                                app:icon="@drawable/ic_car" />
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/Widget.ParkEase.Button.Accent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_md"
+                                android:text="@string/ds_btn_accent"
+                                app:icon="@drawable/ic_qr_scan" />
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/Widget.ParkEase.Button.Secondary"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_md"
+                                android:text="@string/ds_btn_secondary"
+                                app:icon="@drawable/ic_add" />
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/Widget.ParkEase.Button.Danger"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_md"
+                                android:text="@string/ds_btn_danger" />
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/Widget.ParkEase.Button.Primary"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_md"
+                                android:enabled="false"
+                                android:text="@string/ds_btn_disabled" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_md"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.button.MaterialButton
+                                    style="@style/Widget.ParkEase.Button.Secondary.Small"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/space_sm"
+                                    android:layout_weight="1"
+                                    android:text="@string/ds_btn_small_1"
+                                    app:icon="@drawable/ic_location" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    style="@style/Widget.ParkEase.Button.Primary.Small"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/ds_btn_small_2" />
+                            </LinearLayout>
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/Widget.ParkEase.Button.Text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/space_xs"
+                                android:text="@string/ds_btn_text" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ================= Text inputs ================= -->
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.SectionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        android:text="@string/ds_inputs" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/card_padding">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.ParkEase.TextInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/ds_input_email"
+                                app:helperText="@string/ds_input_helper"
+                                app:startIconDrawable="@drawable/ic_email">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textEmailAddress" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.ParkEase.TextInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_md"
+                                android:hint="@string/ds_input_password"
+                                app:endIconMode="password_toggle"
+                                app:startIconDrawable="@drawable/ic_lock">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPassword" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilVehicle"
+                                style="@style/Widget.ParkEase.TextInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_md"
+                                android:hint="@string/ds_input_vehicle"
+                                app:startIconDrawable="@drawable/ic_car">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etVehicle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textCapCharacters" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.ParkEase.TextInput.Dropdown"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_md"
+                                android:hint="@string/ds_input_type"
+                                app:startIconDrawable="@drawable/ic_bike">
+
+                                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                    android:id="@+id/dropdownVehicleType"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="none" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ================= Chips ================= -->
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.SectionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        android:text="@string/ds_chips" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="@string/ds_chip_car"
+                            app:chipIcon="@drawable/ic_car"
+                            app:chipIconVisible="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ds_chip_bike"
+                            app:chipIcon="@drawable/ic_bike"
+                            app:chipIconVisible="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ds_chip_covered" />
+
+                        <com.google.android.material.chip.Chip
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ds_chip_ev"
+                            app:chipIcon="@drawable/ic_bolt"
+                            app:chipIconVisible="true" />
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <!-- ================= Search bar ================= -->
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.SectionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        android:text="@string/ds_search" />
+
+                    <com.parkease.app.ui.components.SearchBarView
+                        android:id="@+id/searchBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:sbHint="@string/ds_search_hint"
+                        app:sbShowFilter="true" />
+
+                    <!-- ================= Dashboard cards ================= -->
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.SectionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        android:text="@string/ds_dashboard" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <com.parkease.app.ui.components.DashboardCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/card_gap"
+                            android:layout_weight="1"
+                            app:dcAccent="teal"
+                            app:dcIcon="@drawable/ic_rupee"
+                            app:dcSubtitle="@string/ds_card_revenue_sub"
+                            app:dcTitle="@string/ds_card_revenue"
+                            app:dcValue="@string/ds_card_revenue_value" />
+
+                        <com.parkease.app.ui.components.DashboardCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:dcAccent="navy"
+                            app:dcIcon="@drawable/ic_bookings"
+                            app:dcSubtitle="@string/ds_card_bookings_sub"
+                            app:dcTitle="@string/ds_card_bookings"
+                            app:dcValue="@string/ds_card_bookings_value" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/card_gap"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <com.parkease.app.ui.components.DashboardCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/card_gap"
+                            android:layout_weight="1"
+                            app:dcAccent="green"
+                            app:dcIcon="@drawable/ic_car"
+                            app:dcSubtitle="@string/ds_card_occupancy_sub"
+                            app:dcTitle="@string/ds_card_occupancy"
+                            app:dcValue="@string/ds_card_occupancy_value" />
+
+                        <com.parkease.app.ui.components.DashboardCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:dcAccent="amber"
+                            app:dcIcon="@drawable/ic_build"
+                            app:dcSubtitle="@string/ds_card_maintenance_sub"
+                            app:dcTitle="@string/ds_card_maintenance"
+                            app:dcValue="@string/ds_card_maintenance_value" />
+                    </LinearLayout>
+
+                    <!-- ================= Parking slots ================= -->
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.SectionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        android:layout_marginBottom="0dp"
+                        android:text="@string/ds_slots" />
+
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/space_md"
+                        android:text="@string/ds_slots_hint" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/space_md">
+
+                            <!-- Legend -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/space_md"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/Widget.ParkEase.Text.Caption"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawablePadding="@dimen/space_xs"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/status_available"
+                                    app:drawableStartCompat="@drawable/bg_status_dot"
+                                    app:drawableTint="@color/slot_available" />
+
+                                <TextView
+                                    style="@style/Widget.ParkEase.Text.Caption"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawablePadding="@dimen/space_xs"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/status_reserved"
+                                    app:drawableStartCompat="@drawable/bg_status_dot"
+                                    app:drawableTint="@color/slot_reserved" />
+
+                                <TextView
+                                    style="@style/Widget.ParkEase.Text.Caption"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawablePadding="@dimen/space_xs"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/status_occupied"
+                                    app:drawableStartCompat="@drawable/bg_status_dot"
+                                    app:drawableTint="@color/slot_occupied" />
+
+                                <TextView
+                                    style="@style/Widget.ParkEase.Text.Caption"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.3"
+                                    android:drawablePadding="@dimen/space_xs"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/status_maintenance"
+                                    app:drawableStartCompat="@drawable/bg_status_dot"
+                                    app:drawableTint="@color/slot_maintenance" />
+                            </LinearLayout>
+
+                            <GridLayout
+                                android:id="@+id/gridSlots"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:columnCount="4">
+
+                                <com.parkease.app.ui.components.ParkingSlotView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_columnWeight="1"
+                                    android:layout_margin="@dimen/space_xs"
+                                    app:slotLabel="A-01"
+                                    app:slotStatus="available" />
+
+                                <com.parkease.app.ui.components.ParkingSlotView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_columnWeight="1"
+                                    android:layout_margin="@dimen/space_xs"
+                                    app:slotLabel="A-02"
+                                    app:slotStatus="occupied" />
+
+                                <com.parkease.app.ui.components.ParkingSlotView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_columnWeight="1"
+                                    android:layout_margin="@dimen/space_xs"
+                                    app:slotLabel="A-03"
+                                    app:slotStatus="available"
+                                    app:slotSelected="true" />
+
+                                <com.parkease.app.ui.components.ParkingSlotView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_columnWeight="1"
+                                    android:layout_margin="@dimen/space_xs"
+                                    app:slotLabel="A-04"
+                                    app:slotStatus="reserved" />
+
+                                <com.parkease.app.ui.components.ParkingSlotView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_columnWeight="1"
+                                    android:layout_margin="@dimen/space_xs"
+                                    app:slotLabel="B-01"
+                                    app:slotStatus="maintenance" />
+
+                                <com.parkease.app.ui.components.ParkingSlotView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_columnWeight="1"
+                                    android:layout_margin="@dimen/space_xs"
+                                    app:slotLabel="B-02"
+                                    app:slotStatus="available" />
+
+                                <com.parkease.app.ui.components.ParkingSlotView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_columnWeight="1"
+                                    android:layout_margin="@dimen/space_xs"
+                                    app:slotLabel="B-03"
+                                    app:slotStatus="occupied" />
+
+                                <com.parkease.app.ui.components.ParkingSlotView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_columnWeight="1"
+                                    android:layout_margin="@dimen/space_xs"
+                                    app:slotLabel="B-04"
+                                    app:slotStatus="available" />
+                            </GridLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ================= Card variants ================= -->
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.SectionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        android:text="@string/ds_cards" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/card_padding">
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.CardTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ds_card_default" />
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ds_card_default_body" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/Widget.ParkEase.Card.Elevated"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/card_gap">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/card_padding">
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.CardTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ds_card_elevated" />
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ds_card_elevated_body" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/Widget.ParkEase.Card.Filled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/card_gap">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/card_padding">
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.CardTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ds_card_filled" />
+
+                            <TextView
+                                style="@style/Widget.ParkEase.Text.Caption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/ds_card_filled_body" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ================= Empty state ================= -->
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.SectionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        android:text="@string/ds_empty" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.parkease.app.ui.components.EmptyStateView
+                            android:id="@+id/emptyState"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:esActionText="@string/ds_empty_action"
+                            app:esIcon="@drawable/ic_bookings"
+                            app:esMessage="@string/ds_empty_message"
+                            app:esTitle="@string/ds_empty_title" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ================= Loading ================= -->
+                    <TextView
+                        style="@style/Widget.ParkEase.Text.SectionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        android:text="@string/ds_loading" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/card_padding">
+
+                            <com.parkease.app.ui.components.LoadingView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:lvMessage="@string/ds_loading_inline"
+                                app:lvOverlay="false" />
+
+                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_sm"
+                                android:indeterminate="true" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnShowLoading"
+                                style="@style/Widget.ParkEase.Button.Secondary"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_lg"
+                                android:text="@string/ds_loading_show" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ================= Link to the Step 2 setup check ================= -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnOpenSetup"
+                        style="@style/Widget.ParkEase.Button.Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/section_spacing"
+                        android:text="@string/ds_open_setup"
+                        app:icon="@drawable/ic_chevron_right"
+                        app:iconGravity="end" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- ================= Bottom navigation (customer menu) ================= -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/bottom_nav_customer" />
+    </LinearLayout>
+
+    <!-- ================= Full-screen loading overlay (last child = on top) ================= -->
+    <com.parkease.app.ui.components.LoadingView
+        android:id="@+id/loadingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:lvMessage="@string/ds_loading_overlay"
+        app:lvOverlay="true" />
+
+    <!-- ================= Navy strip behind the status bar ================= -->
+    <include
+        android:id="@+id/statusBarScrim"
+        layout="@layout/view_status_bar_scrim" />
+
+</FrameLayout>

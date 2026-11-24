@@ -13,6 +13,7 @@
         android:layout_width="@dimen/swatch_size"
         android:layout_height="@dimen/swatch_size"
         android:background="@drawable/bg_rounded_tintable"
+        android:foreground="@drawable/bg_swatch_border"
         tools:backgroundTint="@color/navy_800" />
 
     <TextView

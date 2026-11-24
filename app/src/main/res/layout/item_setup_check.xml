@@ -15,29 +15,27 @@
         android:layout_height="@dimen/icon_md"
         android:contentDescription="@string/cd_status_icon"
         android:src="@drawable/ic_check_circle"
-        app:tint="@color/status_available" />
+        app:tint="@color/slot_available" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_md"
+        android:layout_marginStart="@dimen/space_lg"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvCheckTitle"
+            style="@style/Widget.ParkEase.Text.CardTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
-            android:textColor="@color/text_primary"
             tools:text="Firebase" />
 
         <TextView
             android:id="@+id/tvCheckDetail"
+            style="@style/Widget.ParkEase.Text.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceBodySmall"
-            android:textColor="@color/text_secondary"
             tools:text="Connected to project parkease-demo" />
     </LinearLayout>
 

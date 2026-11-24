@@ -36,6 +36,8 @@
         <item name="android:textColorHint">@color/text_hint</item>
         <item name="android:textColorLink">@color/text_link</item>
         <item name="colorControlActivated">@color/brand_secondary</item>
+        <!-- Keep raised cards pure white/dark: no navy tint on elevated surfaces -->
+        <item name="elevationOverlayEnabled">false</item>
 
         <!-- Screens start with a navy header, so status bar icons are always white -->
         <item name="android:windowLightStatusBar">false</item>
