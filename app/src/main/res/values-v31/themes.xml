@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Android 12 (API 31) and newer always show a short system splash (app icon on a plain
+    colour) before the app's first screen. These lines make that system splash navy with
+    the ParkEase "P", so it blends straight into our own animated SplashActivity.
+    This file replaces Theme.ParkEase.Splash from values/themes.xml on Android 12+.
+-->
+<resources>
+
+    <style name="Theme.ParkEase.Splash">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="android:windowSplashScreenBackground">@color/header_start</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/header_start</item>
+    </style>
+
+</resources>

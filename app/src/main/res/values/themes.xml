@@ -76,6 +76,12 @@
         <item name="android:windowAnimationStyle">@style/ParkEase.WindowAnimation</item>
     </style>
 
+    <!-- Splash screen: navy from the very first frame, so there is no white flash.
+         Android 12+ settings for the system splash are in values-v31/themes.xml. -->
+    <style name="Theme.ParkEase.Splash">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+
     <style name="ParkEase.WindowAnimation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
         <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>

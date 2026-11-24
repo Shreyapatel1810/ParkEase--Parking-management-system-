@@ -70,7 +70,7 @@ public class MainActivity extends BaseActivity {
     private void checkSqlite() {
         try {
             int tables = DBHelper.getInstance(this).countTables();
-            showResult(binding.checkSqlite, tables == 5,
+            showResult(binding.checkSqlite, tables == com.parkease.app.database.DBContract.TABLE_COUNT,
                     getString(R.string.check_sqlite),
                     getString(R.string.check_sqlite_ok, tables));
         } catch (Exception e) {

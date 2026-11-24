@@ -10,6 +10,7 @@ import com.parkease.app.database.DBContract.Notifications;
 import com.parkease.app.database.DBContract.Reminders;
 import com.parkease.app.database.DBContract.SearchHistory;
 import com.parkease.app.database.DBContract.Tickets;
+import com.parkease.app.database.DBContract.UserProfile;
 
 /**
  * Creates and upgrades the local SQLite database (parkease_local.db).
@@ -70,6 +71,19 @@ public class DBHelper extends SQLiteOpenHelper {
                     + Favourites.AVG_RATING + " REAL, "
                     + Favourites.ADDED_AT + " INTEGER)";
 
+    private static final String CREATE_USER_PROFILE =
+            "CREATE TABLE " + UserProfile.TABLE + " ("
+                    + UserProfile.UID + " TEXT PRIMARY KEY, "
+                    + UserProfile.FULL_NAME + " TEXT NOT NULL, "
+                    + UserProfile.EMAIL + " TEXT NOT NULL, "
+                    + UserProfile.PHONE + " TEXT, "
+                    + UserProfile.ROLE + " TEXT NOT NULL, "
+                    + UserProfile.BLOCKED + " INTEGER DEFAULT 0, "
+                    + UserProfile.PHOTO + " TEXT, "
+                    + UserProfile.CREATED_AT + " INTEGER, "
+                    + UserProfile.UPDATED_AT + " INTEGER, "
+                    + UserProfile.SYNCED_AT + " INTEGER)";
+
     private static final String CREATE_REMINDERS =
             "CREATE TABLE " + Reminders.TABLE + " ("
                     + Reminders.BOOKING_ID + " TEXT PRIMARY KEY, "
@@ -83,6 +97,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_NOTIFICATIONS);
         db.execSQL(CREATE_FAVOURITES);
         db.execSQL(CREATE_REMINDERS);
+        db.execSQL(CREATE_USER_PROFILE);
     }
 
     @Override
@@ -93,7 +108,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Notifications.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Favourites.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Reminders.TABLE);
-        onCreate(db);
+        db.execSQL("DROP TABLE IF EXISTS " + UserProfile.TABLE);
+        onCreate(db);   // the cache refills from Firebase automatically
     }
 
     /** Number of ParkEase tables in the database (used by the setup check screen). */
@@ -114,5 +130,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete(Notifications.TABLE, null, null);
         db.delete(Favourites.TABLE, null, null);
         db.delete(Reminders.TABLE, null, null);
+        db.delete(UserProfile.TABLE, null, null);
     }
 }

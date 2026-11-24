@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Onboarding page 2 – "Book Your Slot": a parking lot with one slot selected.
+     Colours come from the theme, so it adapts to light and dark mode. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="240dp"
+    android:height="240dp"
+    android:viewportWidth="240"
+    android:viewportHeight="240">
+    <!-- soft background circle -->
+    <path
+        android:pathData="M12,120a108,108 0 1,0 216,0a108,108 0 1,0 -216,0z"
+        android:fillColor="@color/brand_secondary_container" />
+    <!-- decorative dots -->
+    <path
+        android:pathData="M21,96a5,5 0 1,0 10,0a5,5 0 1,0 -10,0z"
+        android:fillColor="@color/brand_secondary"
+        android:fillAlpha="0.6" />
+    <path
+        android:pathData="M212,60a4,4 0 1,0 8,0a4,4 0 1,0 -8,0z"
+        android:fillColor="@color/slot_reserved" />
+    <path
+        android:pathData="M204,200a6,6 0 1,0 12,0a6,6 0 1,0 -12,0z"
+        android:fillColor="@color/accent_navy"
+        android:fillAlpha="0.3" />
+    <!-- parking lot -->
+    <path
+        android:pathData="M44,52h152a16,16 0 0 1 16,16v104a16,16 0 0 1 -16,16h-152a16,16 0 0 1 -16,-16v-104a16,16 0 0 1 16,-16z"
+        android:fillColor="@color/bg_card"
+        android:strokeColor="@color/stroke"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- driving lane -->
+    <path
+        android:pathData="M30,112h180v16h-180z"
+        android:fillColor="@color/bg_subtle" />
+    <path
+        android:pathData="M40,119h12v2h-12zM62,119h12v2h-12zM84,119h12v2h-12zM106,119h12v2h-12zM128,119h12v2h-12zM150,119h12v2h-12zM172,119h12v2h-12zM194,119h12v2h-12z"
+        android:fillColor="@color/stroke" />
+    <!-- available slot -->
+    <path
+        android:pathData="M51,62h18a7,7 0 0 1 7,7v30a7,7 0 0 1 -7,7h-18a7,7 0 0 1 -7,-7v-30a7,7 0 0 1 7,-7z"
+        android:fillColor="@color/slot_available_bg"
+        android:strokeColor="@color/slot_available"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- occupied slot -->
+    <path
+        android:pathData="M93,62h18a7,7 0 0 1 7,7v30a7,7 0 0 1 -7,7h-18a7,7 0 0 1 -7,-7v-30a7,7 0 0 1 7,-7z"
+        android:fillColor="@color/slot_occupied_bg"
+        android:strokeColor="@color/slot_occupied"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M98,68h8a6,6 0 0 1 6,6v20a6,6 0 0 1 -6,6h-8a6,6 0 0 1 -6,-6v-20a6,6 0 0 1 6,-6z"
+        android:fillColor="@color/slot_occupied" />
+    <path
+        android:pathData="M97,74h10a2,2 0 0 1 2,2v3a2,2 0 0 1 -2,2h-10a2,2 0 0 1 -2,-2v-3a2,2 0 0 1 2,-2z"
+        android:fillColor="@color/white"
+        android:fillAlpha="0.7" />
+    <path
+        android:pathData="M97,90h10a2,2 0 0 1 2,2v1a2,2 0 0 1 -2,2h-10a2,2 0 0 1 -2,-2v-1a2,2 0 0 1 2,-2z"
+        android:fillColor="@color/white"
+        android:fillAlpha="0.45" />
+    <!-- the slot the customer picked -->
+    <path
+        android:pathData="M135,62h18a7,7 0 0 1 7,7v30a7,7 0 0 1 -7,7h-18a7,7 0 0 1 -7,-7v-30a7,7 0 0 1 7,-7z"
+        android:fillColor="@color/brand_secondary"
+        android:strokeColor="@color/brand_primary"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M137,84l5,6l10,-12"
+        android:strokeColor="@color/white"
+        android:strokeWidth="3.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- reserved slot -->
+    <path
+        android:pathData="M177,62h18a7,7 0 0 1 7,7v30a7,7 0 0 1 -7,7h-18a7,7 0 0 1 -7,-7v-30a7,7 0 0 1 7,-7z"
+        android:fillColor="@color/slot_reserved_bg"
+        android:strokeColor="@color/slot_reserved"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M178,84a8,8 0 1,0 16,0a8,8 0 1,0 -16,0z"
+        android:strokeColor="@color/slot_reserved"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M186,79v5l3,3"
+        android:strokeColor="@color/slot_reserved"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- occupied slot -->
+    <path
+        android:pathData="M51,134h18a7,7 0 0 1 7,7v30a7,7 0 0 1 -7,7h-18a7,7 0 0 1 -7,-7v-30a7,7 0 0 1 7,-7z"
+        android:fillColor="@color/slot_occupied_bg"
+        android:strokeColor="@color/slot_occupied"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M56,140h8a6,6 0 0 1 6,6v20a6,6 0 0 1 -6,6h-8a6,6 0 0 1 -6,-6v-20a6,6 0 0 1 6,-6z"
+        android:fillColor="@color/slot_occupied" />
+    <path
+        android:pathData="M55,146h10a2,2 0 0 1 2,2v3a2,2 0 0 1 -2,2h-10a2,2 0 0 1 -2,-2v-3a2,2 0 0 1 2,-2z"
+        android:fillColor="@color/white"
+        android:fillAlpha="0.7" />
+    <path
+        android:pathData="M55,162h10a2,2 0 0 1 2,2v1a2,2 0 0 1 -2,2h-10a2,2 0 0 1 -2,-2v-1a2,2 0 0 1 2,-2z"
+        android:fillColor="@color/white"
+        android:fillAlpha="0.45" />
+    <!-- available slot -->
+    <path
+        android:pathData="M93,134h18a7,7 0 0 1 7,7v30a7,7 0 0 1 -7,7h-18a7,7 0 0 1 -7,-7v-30a7,7 0 0 1 7,-7z"
+        android:fillColor="@color/slot_available_bg"
+        android:strokeColor="@color/slot_available"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- maintenance slot -->
+    <path
+        android:pathData="M135,134h18a7,7 0 0 1 7,7v30a7,7 0 0 1 -7,7h-18a7,7 0 0 1 -7,-7v-30a7,7 0 0 1 7,-7z"
+        android:fillColor="@color/slot_maintenance_bg"
+        android:strokeColor="@color/slot_maintenance"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M138,150l12,12M150,150l-12,12"
+        android:strokeColor="@color/slot_maintenance"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- available slot -->
+    <path
+        android:pathData="M177,134h18a7,7 0 0 1 7,7v30a7,7 0 0 1 -7,7h-18a7,7 0 0 1 -7,-7v-30a7,7 0 0 1 7,-7z"
+        android:fillColor="@color/slot_available_bg"
+        android:strokeColor="@color/slot_available"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- tap ripple -->
+    <path
+        android:pathData="M114,84a30,30 0 1,0 60,0a30,30 0 1,0 -60,0z"
+        android:strokeColor="@color/brand_secondary"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeAlpha="0.45" />
+    <path
+        android:pathData="M104,84a40,40 0 1,0 80,0a40,40 0 1,0 -80,0z"
+        android:strokeColor="@color/brand_secondary"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeAlpha="0.2" />
+</vector>

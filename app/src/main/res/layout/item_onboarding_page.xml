@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    One onboarding page: illustration on top, title and description below.
+    The illustration grows to fill free space (square, up to onboarding_illustration_max),
+    so the page fits small phones, tall phones, landscape and tablets.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="@dimen/screen_padding">
+
+    <ImageView
+        android:id="@+id/imgIllustration"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_lg"
+        android:layout_marginBottom="@dimen/space_xl"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@id/tvTitle"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_max="@dimen/onboarding_illustration_max"
+        tools:src="@drawable/ill_onboarding_find" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/Widget.ParkEase.Text.ScreenTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.ParkEase.Display"
+        app:layout_constraintBottom_toTopOf="@id/tvDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgIllustration"
+        tools:text="Find Parking" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        style="@style/Widget.ParkEase.Text.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_md"
+        android:layout_marginBottom="@dimen/space_lg"
+        android:gravity="center"
+        android:lineSpacingExtra="2dp"
+        android:textAppearance="@style/TextAppearance.ParkEase.BodyLarge"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintWidth_max="420dp"
+        tools:text="Search nearby parking locations, compare prices and see live availability." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

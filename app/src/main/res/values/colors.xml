@@ -52,6 +52,10 @@
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
 
+    <!-- Splash screen decoration (always on navy) -->
+    <color name="splash_ring">#1FFFFFFF</color>
+    <color name="splash_glow">#5913B8A6</color>
+
     <!-- ============================ 2. SEMANTIC (light) ============================ -->
     <!-- Brand roles -->
     <color name="brand_primary">@color/navy_800</color>

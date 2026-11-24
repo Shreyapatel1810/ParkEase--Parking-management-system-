@@ -29,16 +29,61 @@
         android:theme="@style/Theme.ParkEase"
         tools:targetApi="35">
 
-        <!-- Step 3: Design System preview is the start screen for now.
-             It will be replaced by SplashActivity when authentication is built. -->
+        <!-- Step 4: Splash is the launcher (first screen when the app icon is tapped) -->
         <activity
-            android:name=".ui.preview.DesignSystemActivity"
-            android:exported="true">
+            android:name=".ui.common.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.ParkEase.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Step 4: three intro pages, shown only until completed once -->
+        <activity
+            android:name=".ui.common.OnboardingActivity"
+            android:exported="false" />
+
+        <!-- Step 5: authentication (adjustResize keeps fields above the keyboard) -->
+        <activity
+            android:name=".ui.auth.LoginActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.auth.RegisterActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.auth.ForgotPasswordActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Step 5: role dashboards (placeholders until the customer / admin modules) -->
+        <activity
+            android:name=".ui.customer.CustomerMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.admin.AdminMainActivity"
+            android:exported="false" />
+
+        <!-- Step 6: profile management (customers and admins) -->
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.EditProfileActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.profile.ChangePasswordActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Step 3: Design System preview (developer screen) -->
+        <activity
+            android:name=".ui.preview.DesignSystemActivity"
+            android:exported="false" />
 
         <!-- Step 2 setup check (opened from the Design System screen) -->
         <activity

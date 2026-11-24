@@ -3,6 +3,7 @@ package com.parkease.app.ui.common;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.SystemBarStyle;
@@ -30,10 +31,36 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        EdgeToEdge.enable(this,
-                SystemBarStyle.dark(Color.TRANSPARENT),                       // white status icons
-                SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT));   // nav icons follow theme
+        EdgeToEdge.enable(this, statusBarStyle(), navigationBarStyle());
         super.onCreate(savedInstanceState);
+    }
+
+    /**
+     * Status bar icon colour. Default: white icons, because most screens start with the
+     * navy header. Screens with a light top (e.g. onboarding) override this with
+     * {@code SystemBarStyle.auto(...)} so the icons turn dark in light mode.
+     */
+    @NonNull
+    protected SystemBarStyle statusBarStyle() {
+        return SystemBarStyle.dark(Color.TRANSPARENT);
+    }
+
+    /** Navigation bar icon colour. Default: follows light/dark theme. */
+    @NonNull
+    protected SystemBarStyle navigationBarStyle() {
+        return SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT);
+    }
+
+    /** Pads the view by the status bar (top) AND navigation bar (bottom) – for full-screen layouts. */
+    protected void applySystemBarsPadding(@NonNull View view) {
+        final int top = view.getPaddingTop();
+        final int bottom = view.getPaddingBottom();
+        ViewCompat.setOnApplyWindowInsetsListener(view, (v, insets) -> {
+            Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars()
+                    | WindowInsetsCompat.Type.displayCutout());
+            v.setPadding(bars.left, top + bars.top, bars.right, bottom + bars.bottom);
+            return insets;
+        });
     }
 
     /** Adds the status bar height to the view's top padding (use on the header). */
@@ -72,6 +99,32 @@ public abstract class BaseActivity extends AppCompatActivity {
             v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), initialBottom + bars.bottom);
             return insets;
         });
+    }
+
+    /**
+     * For scrolling forms: adds bottom padding equal to the navigation bar OR the on-screen
+     * keyboard (whichever is taller), so the user can always scroll to the last field and
+     * the button while typing.
+     */
+    protected void applyKeyboardAwarePadding(@NonNull View scrollingView) {
+        final int initialBottom = scrollingView.getPaddingBottom();
+        ViewCompat.setOnApplyWindowInsetsListener(scrollingView, (v, insets) -> {
+            int nav = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom;
+            int ime = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
+            v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(),
+                    initialBottom + Math.max(nav, ime));
+            return insets;
+        });
+    }
+
+    /** Closes the on-screen keyboard. */
+    protected void hideKeyboard() {
+        View focus = getCurrentFocus();
+        if (focus != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            if (imm != null) imm.hideSoftInputFromWindow(focus.getWindowToken(), 0);
+            focus.clearFocus();
+        }
     }
 
     /** Short message at the bottom of the screen. */

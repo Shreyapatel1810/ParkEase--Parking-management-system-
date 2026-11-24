@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Onboarding page 1 – "Find Parking": a city map with parking pins and a search lens.
+     Colours come from the theme, so it adapts to light and dark mode. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="240dp"
+    android:height="240dp"
+    android:viewportWidth="240"
+    android:viewportHeight="240">
+    <!-- soft background circle -->
+    <path
+        android:pathData="M12,120a108,108 0 1,0 216,0a108,108 0 1,0 -216,0z"
+        android:fillColor="@color/brand_secondary_container" />
+    <!-- decorative dots -->
+    <path
+        android:pathData="M25,70a5,5 0 1,0 10,0a5,5 0 1,0 -10,0z"
+        android:fillColor="@color/brand_secondary"
+        android:fillAlpha="0.6" />
+    <path
+        android:pathData="M210,96a4,4 0 1,0 8,0a4,4 0 1,0 -8,0z"
+        android:fillColor="@color/slot_reserved" />
+    <path
+        android:pathData="M200,40a6,6 0 1,0 12,0a6,6 0 1,0 -12,0z"
+        android:fillColor="@color/accent_navy"
+        android:fillAlpha="0.3" />
+    <path
+        android:pathData="M30,192a4,4 0 1,0 8,0a4,4 0 1,0 -8,0z"
+        android:fillColor="@color/brand_secondary" />
+    <!-- map card -->
+    <path
+        android:pathData="M56,50h128a16,16 0 0 1 16,16v108a16,16 0 0 1 -16,16h-128a16,16 0 0 1 -16,-16v-108a16,16 0 0 1 16,-16z"
+        android:fillColor="@color/bg_card" />
+    <!-- park area -->
+    <path
+        android:pathData="M58,60h30a8,8 0 0 1 8,8v26a8,8 0 0 1 -8,8h-30a8,8 0 0 1 -8,-8v-26a8,8 0 0 1 8,-8z"
+        android:fillColor="@color/slot_available_bg" />
+    <!-- roads -->
+    <path
+        android:pathData="M120,52V188"
+        android:strokeColor="@color/bg_subtle"
+        android:strokeWidth="14"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M42,128H198"
+        android:strokeColor="@color/bg_subtle"
+        android:strokeWidth="14"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M42,74L96,128"
+        android:strokeColor="@color/bg_subtle"
+        android:strokeWidth="8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- map border -->
+    <path
+        android:pathData="M56,50h128a16,16 0 0 1 16,16v108a16,16 0 0 1 -16,16h-128a16,16 0 0 1 -16,-16v-108a16,16 0 0 1 16,-16z"
+        android:strokeColor="@color/stroke"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- "P" parking badge -->
+    <path
+        android:pathData="M157,62h12a7,7 0 0 1 7,7v12a7,7 0 0 1 -7,7h-12a7,7 0 0 1 -7,-7v-12a7,7 0 0 1 7,-7z"
+        android:fillColor="@color/accent_navy" />
+    <group
+        android:translateX="149.25"
+        android:translateY="61.8"
+        android:scaleX="1.1"
+        android:scaleY="1.1">
+        <path
+            android:pathData="M8,6h5a4,4 0,0 1,0 8h-3v4h-2z M10,8v4h3a2,2 0,0 0,0 -4z"
+            android:fillColor="@color/bg_card"
+            android:fillType="evenOdd" />
+    </group>
+    <group
+        android:translateX="52.6"
+        android:translateY="136.6"
+        android:scaleX="1.4"
+        android:scaleY="1.4">
+        <path
+            android:pathData="M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87 -3.13,-7 -7,-7zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z"
+            android:fillColor="@color/accent_navy" />
+    </group>
+    <group
+        android:translateX="164.6"
+        android:translateY="104.6"
+        android:scaleX="1.4"
+        android:scaleY="1.4">
+        <path
+            android:pathData="M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87 -3.13,-7 -7,-7zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z"
+            android:fillColor="@color/accent_navy" />
+    </group>
+    <!-- main pin shadow -->
+    <path
+        android:pathData="M108,124a12,4 0 1,0 24,0a12,4 0 1,0 -24,0z"
+        android:fillColor="@color/text_primary"
+        android:fillAlpha="0.12" />
+    <group
+        android:translateX="84"
+        android:translateY="56"
+        android:scaleX="3"
+        android:scaleY="3">
+        <path
+            android:pathData="M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87 -3.13,-7 -7,-7zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z"
+            android:fillColor="@color/brand_secondary" />
+    </group>
+    <!-- search lens -->
+    <path
+        android:pathData="M150,168a20,20 0 1,0 40,0a20,20 0 1,0 -40,0z"
+        android:fillColor="@color/bg_card"
+        android:strokeColor="@color/brand_primary"
+        android:strokeWidth="6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:pathData="M184,182L200,198"
+        android:strokeColor="@color/brand_primary"
+        android:strokeWidth="8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

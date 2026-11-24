@@ -61,6 +61,15 @@
     <dimen name="logo_size">64dp</dimen>
     <dimen name="progress_size">48dp</dimen>
 
+    <!-- ===== Splash & onboarding ===== -->
+    <dimen name="splash_logo">104dp</dimen>
+    <dimen name="splash_glow">240dp</dimen>
+    <dimen name="splash_ring_small">320dp</dimen>
+    <dimen name="splash_ring_large">460dp</dimen>
+    <dimen name="onboarding_illustration_max">300dp</dimen>
+    <dimen name="indicator_dot">8dp</dimen>
+    <dimen name="indicator_active">28dp</dimen>
+
     <!-- ===== Text sizes (Material 3 type scale) ===== -->
     <dimen name="text_display">32sp</dimen>
     <dimen name="text_headline">24sp</dimen>

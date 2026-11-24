@@ -19,6 +19,8 @@ import com.parkease.app.R;
 import com.parkease.app.databinding.ActivityDesignSystemBinding;
 import com.parkease.app.databinding.ItemColorSwatchBinding;
 import com.parkease.app.ui.common.BaseActivity;
+import com.parkease.app.ui.common.SplashActivity;
+import com.parkease.app.utils.SessionManager;
 import com.parkease.app.ui.components.ParkingSlotView;
 import com.parkease.app.utils.ThemeManager;
 
@@ -62,6 +64,14 @@ public class DesignSystemActivity extends BaseActivity {
 
         binding.btnOpenSetup.setOnClickListener(v ->
                 startActivity(new Intent(this, MainActivity.class)));
+
+        // Testing helper: forget that onboarding was completed and start again from the splash
+        binding.btnResetOnboarding.setOnClickListener(v -> {
+            SessionManager.setOnboardingCompleted(this, false);
+            Intent restart = new Intent(this, SplashActivity.class);
+            restart.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(restart);
+        });
     }
 
     @Override

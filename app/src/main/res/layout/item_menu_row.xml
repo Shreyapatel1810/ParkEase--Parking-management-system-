@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One tappable menu row: icon + title + subtitle + chevron (e.g. "Edit profile") -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menuRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="64dp"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/card_padding"
+    android:paddingVertical="@dimen/space_md">
+
+    <FrameLayout
+        android:layout_width="@dimen/icon_container"
+        android:layout_height="@dimen/icon_container"
+        android:background="@drawable/bg_icon_circle"
+        android:backgroundTint="@color/brand_secondary_container">
+
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="@dimen/icon_sm"
+            android:layout_height="@dimen/icon_sm"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            app:tint="@color/brand_secondary"
+            tools:src="@drawable/ic_edit" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_lg"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/Widget.ParkEase.Text.CardTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Edit profile" />
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            style="@style/Widget.ParkEase.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Change your name or mobile number" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/icon_md"
+        android:layout_height="@dimen/icon_md"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_chevron_right"
+        app:tint="@color/text_hint" />
+</LinearLayout>

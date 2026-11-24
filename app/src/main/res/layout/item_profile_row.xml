@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One read-only detail row: icon + label + value (e.g. "Mobile number / +91 98765 43210") -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="@dimen/space_md">
+
+    <FrameLayout
+        android:layout_width="@dimen/icon_container"
+        android:layout_height="@dimen/icon_container"
+        android:background="@drawable/bg_icon_circle"
+        android:backgroundTint="@color/bg_subtle">
+
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="@dimen/icon_sm"
+            android:layout_height="@dimen/icon_sm"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            app:tint="@color/text_secondary"
+            tools:src="@drawable/ic_phone" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_lg"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvLabel"
+            style="@style/Widget.ParkEase.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Mobile number" />
+
+        <TextView
+            android:id="@+id/tvValue"
+            style="@style/Widget.ParkEase.Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.ParkEase.BodyLarge"
+            android:textIsSelectable="true"
+            tools:text="+91 98765 43210" />
+    </LinearLayout>
+</LinearLayout>

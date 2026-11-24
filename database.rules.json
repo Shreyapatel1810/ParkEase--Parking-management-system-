@@ -1,0 +1,48 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "users": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
+      ".indexOn": ["email", "role"],
+
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && (auth.uid === $uid || root.child('users').child(auth.uid).child('role').val() === 'admin')",
+        ".validate": "newData.hasChildren(['uid', 'fullName', 'email', 'phone', 'role', 'blocked', 'createdAt'])",
+
+        "uid": {
+          ".validate": "newData.val() === $uid"
+        },
+        "fullName": {
+          ".validate": "newData.isString() && newData.val().length >= 2 && newData.val().length <= 60"
+        },
+        "email": {
+          ".validate": "newData.isString() && (newData.val() === auth.token.email.toLowerCase() || (data.exists() && newData.val() === data.val()))"
+        },
+        "phone": {
+          ".validate": "newData.isString() && newData.val().matches(/^[6-9][0-9]{9}$/)"
+        },
+        "role": {
+          ".validate": "(!data.exists() && newData.val() === 'customer') || (data.exists() && newData.val() === data.val())"
+        },
+        "blocked": {
+          ".validate": "newData.isBoolean() && ((!data.exists() && newData.val() === false) || newData.val() === data.val() || root.child('users').child(auth.uid).child('role').val() === 'admin')"
+        },
+        "createdAt": {
+          ".validate": "(!data.exists() && newData.val() === now) || newData.val() === data.val()"
+        },
+        "updatedAt": {
+          ".validate": "newData.val() === now"
+        },
+        "photo": {
+          ".validate": "newData.isString() && newData.val().beginsWith('/9j/') && newData.val().length < 200000"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    }
+  }
+}

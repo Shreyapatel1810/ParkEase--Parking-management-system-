@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Onboarding: Skip (top-right), swipeable pages (ViewPager2),
+    page dots and the Next / Get Started button at the bottom.
+    Java: ui/common/OnboardingActivity.java
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_screen"
+    tools:context=".ui.common.OnboardingActivity">
+
+    <!-- Top bar: small logo + Skip -->
+    <ImageView
+        android:id="@+id/imgSmallLogo"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="@dimen/screen_padding"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_parkease_logo"
+        app:layout_constraintBottom_toBottomOf="@id/btnSkip"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnSkip" />
+
+    <TextView
+        style="@style/Widget.ParkEase.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_sm"
+        android:text="@string/app_name"
+        android:textAppearance="@style/TextAppearance.ParkEase.Title"
+        app:layout_constraintBottom_toBottomOf="@id/imgSmallLogo"
+        app:layout_constraintStart_toEndOf="@id/imgSmallLogo"
+        app:layout_constraintTop_toTopOf="@id/imgSmallLogo" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSkip"
+        style="@style/Widget.ParkEase.Button.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_sm"
+        android:layout_marginEnd="@dimen/space_sm"
+        android:text="@string/onboarding_skip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Swipeable pages -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/indicatorContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSkip" />
+
+    <!-- Page dots (created in code, one per page) -->
+    <LinearLayout
+        android:id="@+id/indicatorContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/indicator_dot"
+        android:layout_marginBottom="@dimen/space_xl"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/btnNext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Next / Get Started -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnNext"
+        style="@style/Widget.ParkEase.Button.Primary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/screen_padding"
+        android:layout_marginBottom="@dimen/space_xl"
+        android:text="@string/onboarding_next"
+        app:icon="@drawable/ic_chevron_right"
+        app:iconGravity="textEnd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_max="480dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

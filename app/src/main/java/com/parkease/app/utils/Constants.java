@@ -61,4 +61,6 @@ public final class Constants {
     public static final String EXTRA_BOOKING_ID = "extra_booking_id";
     public static final String EXTRA_VEHICLE_ID = "extra_vehicle_id";
     public static final String EXTRA_USER_ID = "extra_user_id";
+    public static final String EXTRA_MESSAGE = "extra_message";
+    public static final String EXTRA_EMAIL = "extra_email";
 }

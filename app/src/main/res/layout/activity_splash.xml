@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Splash screen: navy gradient, two slowly pulsing rings, glowing logo,
+    app name and tagline. Animations are started in SplashActivity.java.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_splash"
+    tools:context=".ui.common.SplashActivity">
+
+    <!-- Decorative rings (partly off-screen) -->
+    <View
+        android:id="@+id/ringLarge"
+        android:layout_width="@dimen/splash_ring_large"
+        android:layout_height="@dimen/splash_ring_large"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="-140dp"
+        android:layout_marginEnd="-180dp"
+        android:background="@drawable/bg_splash_ring" />
+
+    <View
+        android:id="@+id/ringSmall"
+        android:layout_width="@dimen/splash_ring_small"
+        android:layout_height="@dimen/splash_ring_small"
+        android:layout_gravity="bottom|start"
+        android:layout_marginStart="-150dp"
+        android:layout_marginBottom="-90dp"
+        android:background="@drawable/bg_splash_ring" />
+
+    <!-- Centre content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/screen_padding">
+
+        <FrameLayout
+            android:layout_width="@dimen/splash_glow"
+            android:layout_height="@dimen/splash_glow">
+
+            <View
+                android:id="@+id/logoGlow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_logo_glow" />
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="@dimen/splash_logo"
+                android:layout_height="@dimen/splash_logo"
+                android:layout_gravity="center"
+                android:contentDescription="@string/cd_app_logo"
+                android:src="@drawable/ic_parkease_logo" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvAppName"
+            style="@style/Widget.ParkEase.Text.OnHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-24dp"
+            android:text="@string/app_name"
+            android:textAppearance="@style/TextAppearance.ParkEase.Display" />
+
+        <TextView
+            android:id="@+id/tvTagline"
+            style="@style/Widget.ParkEase.Text.OnHeader.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xs"
+            android:gravity="center"
+            android:text="@string/splash_tagline"
+            android:textAppearance="@style/TextAppearance.ParkEase.BodyLarge" />
+    </LinearLayout>
+
+    <!-- Bottom: small loading bar + version -->
+    <LinearLayout
+        android:id="@+id/bottomGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/space_2xl">
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progress"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:indicatorColor="@color/teal_500"
+            app:trackColor="@color/splash_ring" />
+
+        <TextView
+            android:id="@+id/tvVersion"
+            style="@style/Widget.ParkEase.Text.OnHeader.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_md"
+            android:textAppearance="@style/TextAppearance.ParkEase.Caption"
+            tools:text="Version 1.0" />
+    </LinearLayout>
+
+</FrameLayout>

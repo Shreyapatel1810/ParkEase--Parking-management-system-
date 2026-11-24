@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Profile screen. Java: ui/profile/ProfileActivity.java
+    Photo + name card, personal details, account actions, log out.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_screen"
+    tools:context=".ui.profile.ProfileActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/space_xl">
+
+            <include
+                android:id="@+id/header"
+                layout="@layout/layout_header_toolbar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/screen_padding">
+
+                <!-- ===== Photo + name ===== -->
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.ParkEase.Card.Elevated"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/header_overlap">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="@dimen/space_xl">
+
+                        <!-- Avatar: photo, or initials when there is no photo; camera badge -->
+                        <FrameLayout
+                            android:id="@+id/avatarContainer"
+                            android:layout_width="104dp"
+                            android:layout_height="104dp"
+                            android:clickable="true"
+                            android:contentDescription="@string/cd_change_photo"
+                            android:focusable="true">
+
+                            <TextView
+                                android:id="@+id/tvInitials"
+                                android:layout_width="96dp"
+                                android:layout_height="96dp"
+                                android:background="@drawable/bg_icon_circle"
+                                android:backgroundTint="@color/brand_secondary_container"
+                                android:gravity="center"
+                                android:textAppearance="@style/TextAppearance.ParkEase.Headline"
+                                android:textColor="@color/brand_on_secondary_container"
+                                tools:text="RS" />
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:id="@+id/imgPhoto"
+                                android:layout_width="96dp"
+                                android:layout_height="96dp"
+                                android:contentDescription="@string/cd_profile_photo"
+                                android:scaleType="centerCrop"
+                                android:visibility="gone"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.ParkEase.Circle" />
+
+                            <ImageView
+                                android:layout_width="34dp"
+                                android:layout_height="34dp"
+                                android:layout_gravity="bottom|end"
+                                android:background="@drawable/bg_icon_circle"
+                                android:backgroundTint="@color/brand_secondary"
+                                android:importantForAccessibility="no"
+                                android:padding="7dp"
+                                android:src="@drawable/ic_camera"
+                                app:tint="@color/brand_on_secondary" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvName"
+                            style="@style/Widget.ParkEase.Text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_md"
+                            android:gravity="center"
+                            android:textAppearance="@style/TextAppearance.ParkEase.TitleLarge"
+                            tools:text="Rahul Shah" />
+
+                        <TextView
+                            android:id="@+id/tvRole"
+                            style="@style/Widget.ParkEase.Text.Badge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_xs"
+                            tools:text="Customer" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Offline / sync notice -->
+                <TextView
+                    android:id="@+id/tvSyncNotice"
+                    style="@style/Widget.ParkEase.Text.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/card_gap"
+                    android:background="@drawable/bg_input_field"
+                    android:backgroundTint="@color/slot_reserved_bg"
+                    android:drawablePadding="@dimen/space_sm"
+                    android:padding="@dimen/space_md"
+                    android:textColor="@color/text_primary"
+                    android:visibility="gone"
+                    app:drawableStartCompat="@drawable/ic_error"
+                    app:drawableTint="@color/slot_reserved"
+                    tools:text="@string/profile_offline"
+                    tools:visibility="visible" />
+
+                <!-- ===== Personal details ===== -->
+                <TextView
+                    style="@style/Widget.ParkEase.Text.Overline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/section_spacing"
+                    android:layout_marginBottom="@dimen/space_sm"
+                    android:text="@string/profile_details" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/card_padding"
+                        android:paddingVertical="@dimen/space_xs">
+
+                        <include
+                            android:id="@+id/rowName"
+                            layout="@layout/item_profile_row" />
+
+                        <include
+                            android:id="@+id/rowEmail"
+                            layout="@layout/item_profile_row" />
+
+                        <include
+                            android:id="@+id/rowPhone"
+                            layout="@layout/item_profile_row" />
+
+                        <include
+                            android:id="@+id/rowMemberSince"
+                            layout="@layout/item_profile_row" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- ===== Account actions ===== -->
+                <TextView
+                    style="@style/Widget.ParkEase.Text.Overline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/section_spacing"
+                    android:layout_marginBottom="@dimen/space_sm"
+                    android:text="@string/profile_account" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/menuEdit"
+                            layout="@layout/item_menu_row" />
+
+                        <com.google.android.material.divider.MaterialDivider
+                            style="@style/Widget.ParkEase.Divider"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="76dp" />
+
+                        <include
+                            android:id="@+id/menuPassword"
+                            layout="@layout/item_menu_row" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLogout"
+                    style="@style/Widget.ParkEase.Button.Secondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/section_spacing"
+                    android:text="@string/action_logout"
+                    android:textColor="@color/error"
+                    app:icon="@drawable/ic_logout"
+                    app:iconTint="@color/error"
+                    app:strokeColor="@color/error" />
+
+                <TextView
+                    android:id="@+id/tvLastSynced"
+                    style="@style/Widget.ParkEase.Text.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_md"
+                    android:gravity="center"
+                    tools:text="Last synced 24 Nov 2026, 12:40 pm" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.parkease.app.ui.components.LoadingView
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:lvMessage="@string/loading_photo"
+        app:lvOverlay="true" />
+
+    <include
+        android:id="@+id/statusBarScrim"
+        layout="@layout/view_status_bar_scrim" />
+
+</FrameLayout>
