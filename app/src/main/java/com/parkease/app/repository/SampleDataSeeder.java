@@ -14,9 +14,18 @@ import com.parkease.app.utils.FirebaseErrorMapper;
 import com.parkease.app.utils.FirebaseHelper;
 import com.parkease.app.utils.NetworkUtils;
 
+import com.parkease.app.models.TimeWindow;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * DEMO / TESTING TOOL (admin only).
@@ -136,8 +145,24 @@ public class SampleDataSeeder {
         promo.put("priority", 1);
         u.put(Constants.NODE_PROMOTIONS + "/PROMO_SAMPLE_01", promo);
 
-        // An upcoming booking for MY account, starting in 3 hours, for 2 hours
-        long start = System.currentTimeMillis() + 3 * HOUR;
+        // An upcoming booking for MY account, starting about 3 hours from now (on a
+        // 30-minute mark), for 2 hours – plus its schedule blocks so the slot shows as
+        // RESERVED for that time in the slot grid.
+        TimeWindow demo = TimeWindow.nextAvailable();
+        demo = demo.withStart(demo.getStart().plusHours(3)).withMinutes(120);
+        if (demo.getStart().isAfter(LocalTime.of(21, 30)) || demo.getStart().isBefore(LocalTime.of(3, 0))) {
+            demo = new TimeWindow(LocalDate.now().plusDays(1), LocalTime.of(10, 0), 120);  // keep it same-day
+        }
+        long start = demo.startMillis();
+        String demoBookingId = "BK_SAMPLE_" + me.getUid();
+        for (String key : demo.blockKeys()) {
+            Map<String, Object> block = new HashMap<>();
+            block.put("bookingId", demoBookingId);
+            block.put("userId", me.getUid());
+            block.put("status", Constants.SCHEDULE_BOOKED);
+            block.put("holdUntil", 0);
+            u.put(Constants.NODE_SLOT_SCHEDULE + "/LOC_SAMPLE_02/" + demo.dateKey() + "/SGH01-G-A-007/" + key, block);
+        }
         Map<String, Object> booking = new HashMap<>();
         booking.put("bookingCode", "PE-DEMO01");
         booking.put("userId", me.getUid());
@@ -153,7 +178,7 @@ public class SampleDataSeeder {
         booking.put("status", Constants.BOOKING_CONFIRMED);
         booking.put("amount", 100);
         booking.put("createdAt", ServerValue.TIMESTAMP);
-        u.put(Constants.NODE_BOOKINGS + "/BK_SAMPLE_" + me.getUid(), booking);
+        u.put(Constants.NODE_BOOKINGS + "/" + demoBookingId, booking);
 
         // A notification for my account
         Map<String, Object> note = new HashMap<>();
@@ -213,5 +238,63 @@ public class SampleDataSeeder {
         m.put("active", true);
         m.put("createdAt", ServerValue.TIMESTAMP);
         u.put(Constants.NODE_LOCATIONS + "/" + id, m);
+
+        addSlots(u, id, code, carRate, bikeRate, total, available);
+    }
+
+    /**
+     * Creates every slot of a location, with unique IDs CODE-FLOOR-ZONE-NNN.
+     * Cars: 100 per floor (G, 1, 2…), zones A–E of 20. Bikes: ground floor, zones M, N… of 40.
+     * Exactly {@code available} slots are AVAILABLE, so the location's free count matches
+     * the green slots; the others are OCCUPIED, RESERVED or (up to 2) MAINTENANCE.
+     */
+    private static void addSlots(Map<String, Object> u, String locationId, String code,
+                                 double carRate, double bikeRate, int total, int available) {
+        int bikeCount = carRate <= 0 ? total : (bikeRate > 0 ? total / 4 : 0);
+        int carCount = total - bikeCount;
+
+        List<String[]> slots = new ArrayList<>();    // {slotId, slotNumber, floor, zone, vehicleType}
+        for (int c = 0; c < carCount; c++) {
+            String floor = c < 100 ? "G" : String.valueOf(c / 100);
+            String zone = String.valueOf((char) ('A' + (c % 100) / 20));
+            int number = c % 20 + 1;
+            slots.add(new String[]{String.format(Locale.US, "%s-%s-%s-%03d", code, floor, zone, number),
+                    String.format(Locale.US, "%s-%02d", zone, number), floor, zone, Constants.VEHICLE_CAR});
+        }
+        for (int b = 0; b < bikeCount; b++) {
+            String zone = String.valueOf((char) ('M' + b / 40));
+            int number = b % 40 + 1;
+            slots.add(new String[]{String.format(Locale.US, "%s-G-%s-%03d", code, zone, number),
+                    String.format(Locale.US, "%s-%02d", zone, number), "G", zone, Constants.VEHICLE_BIKE});
+        }
+
+        // Pick which slots are NOT available (same result every run for the same location)
+        List<Integer> order = new ArrayList<>();
+        for (int i = 0; i < slots.size(); i++) order.add(i);
+        Collections.shuffle(order, new Random(code.hashCode()));
+        String demoSlot = "SGH01-G-A-007";          // keep the demo booking's slot free now
+        order.removeIf(i -> slots.get(i)[0].equals(demoSlot));
+        int unavailable = Math.max(0, total - available);
+        int maintenance = Math.min(2, unavailable);
+        int occupied = (unavailable - maintenance) * 2 / 3;
+
+        Map<Integer, String> status = new HashMap<>();
+        for (int k = 0; k < unavailable && k < order.size(); k++) {
+            status.put(order.get(k), k < maintenance ? Constants.SLOT_MAINTENANCE
+                    : k < maintenance + occupied ? Constants.SLOT_OCCUPIED : Constants.SLOT_RESERVED);
+        }
+
+        for (int i = 0; i < slots.size(); i++) {
+            String[] s = slots.get(i);
+            Map<String, Object> slot = new HashMap<>();
+            slot.put("slotNumber", s[1]);
+            slot.put("floor", s[2]);
+            slot.put("zone", s[3]);
+            slot.put("vehicleType", s[4]);
+            String st = status.get(i);
+            slot.put("status", st == null ? Constants.SLOT_AVAILABLE : st);
+            slot.put("pricePerHour", Constants.VEHICLE_CAR.equals(s[4]) ? carRate : bikeRate);
+            u.put(Constants.NODE_SLOTS + "/" + locationId + "/" + s[0], slot);
+        }
     }
 }

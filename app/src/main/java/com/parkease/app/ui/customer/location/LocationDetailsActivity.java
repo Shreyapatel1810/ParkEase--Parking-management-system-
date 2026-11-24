@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.chip.Chip;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.parkease.app.R;
 import com.parkease.app.adapters.ImagePagerAdapter;
 import com.parkease.app.adapters.LocationAdapter;
@@ -30,6 +29,7 @@ import com.parkease.app.repository.LocationRepository;
 import com.parkease.app.repository.ReviewRepository;
 import com.parkease.app.repository.Subscription;
 import com.parkease.app.ui.common.BaseActivity;
+import com.parkease.app.ui.customer.booking.SlotSelectionActivity;
 import com.parkease.app.utils.Constants;
 import com.parkease.app.utils.FormatUtils;
 import com.parkease.app.utils.InsetsHelper;
@@ -83,11 +83,11 @@ public class LocationDetailsActivity extends BaseActivity {
         binding.btnBack.setOnClickListener(v -> finish());
         binding.btnFavourite.setOnClickListener(v -> toggleFavourite());
         binding.btnDirections.setOnClickListener(v -> openDirections());
-        binding.btnBook.setOnClickListener(v -> new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.details_booking_next_title)
-                .setMessage(R.string.details_booking_next_msg)
-                .setPositiveButton(R.string.action_ok, null)
-                .show());
+        binding.btnBook.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SlotSelectionActivity.class);
+            intent.putExtra(Constants.EXTRA_LOCATION_ID, locationId);
+            startActivity(intent);
+        });
 
         binding.galleryPager.setAdapter(galleryAdapter);
         binding.galleryPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {

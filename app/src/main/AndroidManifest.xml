@@ -73,6 +73,11 @@
             android:name=".ui.customer.notification.NotificationsActivity"
             android:exported="false" />
 
+        <!-- Step 9: interactive slot layout + server-verified reservation -->
+        <activity
+            android:name=".ui.customer.booking.SlotSelectionActivity"
+            android:exported="false" />
+
         <!-- Step 5: admin dashboard (placeholder until the admin module) -->
         <activity
             android:name=".ui.admin.AdminMainActivity"

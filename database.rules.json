@@ -57,12 +57,37 @@
       }
     },
 
+    "slots": {
+      ".read": "auth != null",
+      "$locationId": {
+        ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        "$slotId": {
+          ".validate": "newData.hasChildren(['slotNumber', 'vehicleType', 'status', 'pricePerHour']) && newData.child('status').val().matches(/^(AVAILABLE|RESERVED|OCCUPIED|MAINTENANCE)$/) && newData.child('vehicleType').val().matches(/^(CAR|BIKE)$/)"
+        }
+      }
+    },
+
+    "slotSchedule": {
+      ".read": "auth != null",
+      "$locationId": {
+        "$date": {
+          "$slotId": {
+            "$time": {
+              ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'admin' || !data.exists() || data.child('userId').val() === auth.uid || (data.child('status').val() === 'HOLD' && data.child('holdUntil').val() < now))",
+              ".validate": "root.child('users').child(auth.uid).child('role').val() === 'admin' || (newData.hasChildren(['bookingId', 'userId', 'status', 'holdUntil']) && newData.child('userId').val() === auth.uid && newData.child('status').val() === 'HOLD' && newData.child('holdUntil').val() > now && newData.child('holdUntil').val() <= now + 900000 && $time.matches(/^([01][0-9]|2[0-3])(00|30)$/) && root.child('slots').child($locationId).child($slotId).exists() && root.child('slots').child($locationId).child($slotId).child('status').val() !== 'MAINTENANCE' && newData.parent().parent().parent().parent().parent().child('bookings').child(newData.child('bookingId').val()).child('userId').val() === auth.uid)"
+            }
+          }
+        }
+      }
+    },
+
     "bookings": {
       ".read": "auth != null && ((query.orderByChild === 'userId' && query.equalTo === auth.uid) || root.child('users').child(auth.uid).child('role').val() === 'admin')",
       ".indexOn": ["userId", "locationId", "status"],
       "$bookingId": {
         ".read": "auth != null && data.child('userId').val() === auth.uid",
-        ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'"
+        ".write": "auth != null && (root.child('users').child(auth.uid).child('role').val() === 'admin' || (!data.exists() && newData.child('userId').val() === auth.uid && newData.child('status').val() === 'PENDING_PAYMENT') || (data.child('userId').val() === auth.uid && data.child('status').val() === 'PENDING_PAYMENT' && !newData.exists()))",
+        ".validate": "!newData.exists() || root.child('users').child(auth.uid).child('role').val() === 'admin' || (newData.hasChildren(['bookingCode', 'userId', 'locationId', 'slotId', 'startTime', 'endTime', 'status', 'amount', 'holdUntil', 'createdAt']) && newData.child('endTime').val() > newData.child('startTime').val() && newData.child('startTime').val() > now - 1800000 && newData.child('endTime').val() - newData.child('startTime').val() <= 43200000 && newData.child('amount').isNumber() && newData.child('holdUntil').val() <= now + 900000)"
       }
     },
 

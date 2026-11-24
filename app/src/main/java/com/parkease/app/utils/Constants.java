@@ -47,6 +47,14 @@ public final class Constants {
     public static final String BOOKING_CANCELLED = "CANCELLED";
     public static final String BOOKING_EXPIRED = "EXPIRED";
 
+    // ---------- Slot schedule (Step 9) ----------
+    /** Each slot's day is split into 30-minute blocks: slotSchedule/{loc}/{yyyyMMdd}/{slot}/{HHmm}. */
+    public static final int BLOCK_MINUTES = 30;
+    /** A reservation is held this long while the customer pays. */
+    public static final int HOLD_MINUTES = 10;
+    public static final String SCHEDULE_HOLD = "HOLD";       // waiting for payment
+    public static final String SCHEDULE_BOOKED = "BOOKED";   // paid / confirmed
+
     // ---------- Vehicle types ----------
     public static final String VEHICLE_CAR = "CAR";
     public static final String VEHICLE_BIKE = "BIKE";

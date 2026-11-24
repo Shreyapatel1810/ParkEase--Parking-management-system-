@@ -34,6 +34,7 @@ public class Booking {
     private long endTime;
     private String status;
     private double amount;
+    private long holdUntil;        // PENDING_PAYMENT only: slot is held until this time
     private long createdAt;
 
     /** Required by Firebase. */
@@ -80,6 +81,9 @@ public class Booking {
 
     public double getAmount() { return amount; }
     public void setAmount(double amount) { this.amount = amount; }
+
+    public long getHoldUntil() { return holdUntil; }
+    public void setHoldUntil(long holdUntil) { this.holdUntil = holdUntil; }
 
     public long getCreatedAt() { return createdAt; }
     public void setCreatedAt(long createdAt) { this.createdAt = createdAt; }

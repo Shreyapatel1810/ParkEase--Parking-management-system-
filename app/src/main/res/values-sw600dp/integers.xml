@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Columns in the parking slot grid (tablets) -->
+    <integer name="slot_grid_columns">7</integer>
+</resources>

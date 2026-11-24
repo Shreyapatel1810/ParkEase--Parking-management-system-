@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Text for slot selection and reservation (Step 9 onwards) -->
+<resources>
+    <string name="slots_title">Choose a slot</string>
+    <string name="slots_refresh">Refresh availability</string>
+    <string name="slots_refreshed">Availability updated</string>
+    <string name="slots_free_count">%1$d free</string>
+    <string name="slots_zone_header">Zone %1$s · %2$d free</string>
+    <string name="slots_floor_chip">%1$s · %2$d free</string>
+    <string name="slots_none_title">No slots set up yet</string>
+    <string name="slots_none_msg">The ParkEase team hasn\'t added slots for this place. Try another location.</string>
+    <string name="slots_none_vehicle">No %1$s slots at this place.</string>
+    <string name="slots_tap_hint">Tap a green slot to select it</string>
+    <string name="slots_selected_title">Slot %1$s</string>
+    <string name="slots_selected_place">%1$s · Zone %2$s</string>
+    <string name="slots_selected_info">%1$s · %2$s per hour · %3$s</string>
+    <string name="slots_selected_id">Slot ID: %1$s</string>
+    <string name="slots_selection_lost">Slot %1$s was just taken. Please choose another.</string>
+    <string name="slots_reserve">Reserve slot</string>
+    <string name="slots_reserving">Checking availability with the server…</string>
+
+    <!-- Why a slot can't be selected -->
+    <string name="slot_why_occupied">Slot %1$s is occupied – a vehicle is parked there.</string>
+    <string name="slot_why_reserved">Slot %1$s is already reserved for this time.</string>
+    <string name="slot_why_maintenance">Slot %1$s is under maintenance.</string>
+
+    <!-- Time pickers -->
+    <string name="time_date">Date</string>
+    <string name="time_start">Start</string>
+    <string name="time_duration">Duration</string>
+    <string name="time_pick_date">Choose a date</string>
+    <string name="time_pick_start">Start time</string>
+    <string name="time_pick_duration">How long will you park?</string>
+    <string name="time_summary">%1$s · %2$s – %3$s</string>
+    <string name="time_err_duration">Choose between 30 minutes and 12 hours.</string>
+    <string name="time_err_step">Start time must be on the hour or half hour.</string>
+    <string name="time_err_past">This time has already passed. Choose a later start.</string>
+    <string name="time_err_midnight">Bookings must end by midnight. Shorten the duration or pick an earlier start.</string>
+    <string name="time_err_hours">This place is closed for part of that time. Check the opening hours.</string>
+    <string name="duration_hours">%1$s h</string>
+    <string name="duration_minutes">30 min</string>
+
+    <!-- Reservation result -->
+    <string name="slot_err_taken">Sorry, someone just reserved this slot for that time. Please choose another slot.</string>
+    <string name="slot_err_maintenance">This slot is under maintenance and can\'t be booked.</string>
+    <string name="hold_title">Slot %1$s is reserved for you</string>
+    <string name="hold_message">%1$s\n%2$s\nTotal: %3$s · Code %4$s\n\nThe server confirmed this slot is free and is holding it for you until %5$s. Choose your vehicle and pay in the next step to confirm it.</string>
+    <string name="hold_release">Release slot</string>
+    <string name="hold_keep">Keep</string>
+    <string name="hold_released">Slot released</string>
+    <string name="vehicle_car">Car</string>
+    <string name="vehicle_bike">Bike</string>
+</resources>
